@@ -7,8 +7,19 @@
 
 import UIKit
 import SwiftUI
+import Combine
+
+import PopcornShareHome
+import PopcornShareNetwork
+import PopcornShareUtilities
+
+protocol TabCoordinatorDelegate: AnyObject {
+    func didSignOut()
+}
 
 public final class TabCoordinator: NSObject, Coordinator {
+
+    weak var delegate: TabCoordinatorDelegate?
 
     var navigationController: UINavigationController
     
@@ -18,71 +29,67 @@ public final class TabCoordinator: NSObject, Coordinator {
     
     var type: CoordinatorType = .tab
     
+    var cancelSet = Set<AnyCancellable>()
+    
+    let networkManager: NetworkManagerType = NetworkManager()
+    
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
         self.tabBarController = UITabBarController()
     }
     
     func start() {
-        tabBarController.viewControllers = TabBarPage.allCases.map { makeViewController(for: $0) }
-        tabBarController.tabBar.backgroundColor = UIColor(.customBackground)
+        tabBarController.viewControllers = [
+            makePopularMovies(),
+            makeFavoriteMovies(),
+            makeProfile()
+        ]
         tabBarController.tabBar.tintColor = UIColor(.primaryRed)
+
+        navigationController.setNavigationBarHidden(true, animated: false)
         navigationController.setViewControllers([tabBarController], animated: false)
     }
-}
-
-extension TabCoordinator {
-    private func makeViewController(for tabBarPage: TabBarPage) -> UIViewController {
-        switch tabBarPage {
-        case .movies:
-            let viewModel = LoginViewModel()
-            let view = LoginView(viewModel: viewModel)
-            let viewController = UIHostingController(rootView: view)
-            viewController.tabBarItem = tabBarPage.tabBarItem
-            return viewController
-        case .favorite:
-            let viewModel = LoginViewModel()
-            let view = LoginView(viewModel: viewModel)
-            let viewController = UIHostingController(rootView: view)
-            viewController.tabBarItem = tabBarPage.tabBarItem
-            return viewController
-        }
-    }
-}
-
-enum TabBarPage: Int, CaseIterable {
-    case movies = 0
-    case favorite = 1
     
-    var title: String {
-        switch self {
-        case .movies:
-            "Movies"
-        case .favorite:
-            "Favorites"
-        }
+    private func makePopularMovies() -> UINavigationController {
+//        let viewModel = PopularMoviesViewModel(serviceManager: networkManager)
+//        let view = PopularMoviesView(viewModel: viewModel)
+        let view = HomeView(viewModel: HomeViewModel())
+        let viewController = UIHostingController(rootView: view)
+        viewController.tabBarItem = TabBarPage.movies.tabBarItem
+
+        let navController = UINavigationController(rootViewController: viewController)
+        navController.setNavigationBarHidden(true, animated: false)
+        return navController
     }
     
-    var image: UIImage? {
-        switch self {
-        case .movies:
-            return UIImage(systemName: "popcorn")
-        case .favorite:
-            return UIImage(systemName: "heart")
-        }
-    }
-
-    var selectedImage: UIImage? {
-        switch self {
-        case .movies:
-            return UIImage(systemName: "popcorn.fill")
-        case .favorite:
-            return UIImage(systemName: "heart.fill")
-        }
+    func makeFavoriteMovies() -> UIViewController {
+        let viewModel = FavoriteMoviesViewModel(serviceManager: networkManager)
+        let view = FavoriteMoviesView(viewModel: viewModel)
+        let viewController = UIHostingController(rootView: view)
+        viewController.tabBarItem = TabBarPage.favorite.tabBarItem
+        
+        let navController = UINavigationController(rootViewController: viewController)
+        navController.setNavigationBarHidden(true, animated: false)
+        return navController
     }
     
-    var tabBarItem: UITabBarItem {
-        UITabBarItem(title: self.title, image: self.image, selectedImage: self.selectedImage)
+    func makeProfile() -> UIViewController {
+        let viewModel = ProfileViewModel()
+        let view = ProfileView(viewModel: viewModel)
+        let viewController = UIHostingController(rootView: view)
+        viewController.tabBarItem = TabBarPage.profile.tabBarItem
+        
+        viewModel.events
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] events in
+                switch events {
+                case .onSignOutTapped:
+                    self?.delegate?.didSignOut()
+                }
+            }.store(in: &cancelSet)
+        
+        let navController = UINavigationController(rootViewController: viewController)
+        navController.setNavigationBarHidden(true, animated: false)
+        return navController
     }
 }
-

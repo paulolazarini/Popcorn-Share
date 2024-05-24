@@ -7,49 +7,82 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E00CB87B2C004E6700D49547 /* View+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00CB87A2C004E6700D49547 /* View+extension.swift */; };
 		E00CB87D2C004EAA00D49547 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00CB87C2C004EAA00D49547 /* LoginViewModel.swift */; };
-		E00CB8802C004ED700D49547 /* PopcornShareIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00CB87F2C004ED700D49547 /* PopcornShareIcon.swift */; };
+		E00CB8852C00526500D49547 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = E00CB8842C00526500D49547 /* FirebaseAnalytics */; };
+		E00CB8872C00526500D49547 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = E00CB8862C00526500D49547 /* FirebaseAuth */; };
+		E00CB88B2C00526500D49547 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = E00CB88A2C00526500D49547 /* FirebaseCrashlytics */; };
+		E00CB88D2C00526500D49547 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = E00CB88C2C00526500D49547 /* FirebaseFirestore */; };
+		E00CB8912C00526500D49547 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E00CB8902C00526500D49547 /* FirebaseFirestoreSwift */; };
+		E00CB8932C00526500D49547 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = E00CB8922C00526500D49547 /* FirebaseMessaging */; };
+		E00CB8952C00526500D49547 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = E00CB8942C00526500D49547 /* FirebaseStorage */; };
+		E00CB89F2C00602F00D49547 /* PopularMoviesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00CB89E2C00602F00D49547 /* PopularMoviesView.swift */; };
+		E00CB8A12C00603700D49547 /* PopularMoviesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00CB8A02C00603700D49547 /* PopularMoviesViewModel.swift */; };
+		E00CB8A82C00D3F700D49547 /* MoviesGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00CB8A72C00D3F700D49547 /* MoviesGridView.swift */; };
+		E00CB8AB2C00D4F000D49547 /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00CB8AA2C00D4F000D49547 /* AuthCoordinator.swift */; };
+		E00CB8AE2C00D62100D49547 /* MovieViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00CB8AD2C00D62100D49547 /* MovieViewData.swift */; };
+		E00CB8B22C00EA8300D49547 /* MovieGridCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00CB8B12C00EA8300D49547 /* MovieGridCardView.swift */; };
+		E00CB8B42C00F96500D49547 /* MoviesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00CB8B32C00F96500D49547 /* MoviesManager.swift */; };
+		E00CB8B62C00FC0700D49547 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00CB8B52C00FC0700D49547 /* AuthenticationManager.swift */; };
+		E00CB8B92C00FE8B00D49547 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00CB8B82C00FE8B00D49547 /* SignUpView.swift */; };
+		E00CB8BB2C00FE9900D49547 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00CB8BA2C00FE9900D49547 /* SignUpViewModel.swift */; };
+		E040945A2D49282C007A3D37 /* PopcornShareNetwork in Frameworks */ = {isa = PBXBuildFile; productRef = E04094592D49282C007A3D37 /* PopcornShareNetwork */; };
 		E041C9002C0024BB002100BE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E041C8FF2C0024BB002100BE /* AppDelegate.swift */; };
 		E041C9022C0024BB002100BE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E041C9012C0024BB002100BE /* SceneDelegate.swift */; };
 		E041C9092C0024C8002100BE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E041C9082C0024C8002100BE /* Assets.xcassets */; };
 		E041C90C2C0024C8002100BE /* Base in Resources */ = {isa = PBXBuildFile; fileRef = E041C90B2C0024C8002100BE /* Base */; };
-		E0D45E742C002A32005ED237 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0D45E692C002A32005ED237 /* NetworkManager.swift */; };
-		E0D45E752C002A32005ED237 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0D45E6B2C002A32005ED237 /* Book.swift */; };
-		E0D45E762C002A32005ED237 /* NetworkRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0D45E6D2C002A32005ED237 /* NetworkRequest.swift */; };
-		E0D45E772C002A32005ED237 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0D45E6F2C002A32005ED237 /* Endpoint.swift */; };
-		E0D45E782C002A32005ED237 /* HTTPService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0D45E702C002A32005ED237 /* HTTPService.swift */; };
-		E0D45E792C002A32005ED237 /* RequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0D45E712C002A32005ED237 /* RequestError.swift */; };
+		E088391B2D48805D00F2BAAB /* PopcornShareHome in Frameworks */ = {isa = PBXBuildFile; productRef = E088391A2D48805D00F2BAAB /* PopcornShareHome */; };
+		E0B2141E2C017F27005DF2EF /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0B2141D2C017F27005DF2EF /* ProfileView.swift */; };
+		E0B214202C017F32005DF2EF /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0B2141F2C017F32005DF2EF /* ProfileViewModel.swift */; };
+		E0B214262C040E97005DF2EF /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0B214252C040E97005DF2EF /* UserManager.swift */; };
+		E0B2142A2C06E4FC005DF2EF /* FavoriteMoviesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0B214292C06E4FC005DF2EF /* FavoriteMoviesView.swift */; };
+		E0B2142C2C06E509005DF2EF /* FavoriteMoviesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0B2142B2C06E509005DF2EF /* FavoriteMoviesViewModel.swift */; };
+		E0C616EE2D3A8E8E00318155 /* TabBarPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0C616ED2D3A8E8E00318155 /* TabBarPage.swift */; };
+		E0CFDF162D15304D0077C10B /* PopcornShareUtilities in Frameworks */ = {isa = PBXBuildFile; productRef = E0CFDF152D15304D0077C10B /* PopcornShareUtilities */; };
 		E0D45E7D2C002DFF005ED237 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0D45E7C2C002DFF005ED237 /* Coordinator.swift */; };
 		E0D45E7F2C002E6D005ED237 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0D45E7E2C002E6D005ED237 /* AppCoordinator.swift */; };
 		E0D45E822C002EE0005ED237 /* TabCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0D45E812C002EE0005ED237 /* TabCoordinator.swift */; };
 		E0D45E872C00370E005ED237 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0D45E862C00370E005ED237 /* LoginView.swift */; };
-		E0D45E8A2C00396F005ED237 /* Color+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0D45E892C00396F005ED237 /* Color+extension.swift */; };
-		E0D45E8C2C003B88005ED237 /* CGFloat+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0D45E8B2C003B88005ED237 /* CGFloat+extension.swift */; };
+		E0F2EC562D3A026900A470DF /* PopcornShareNetworkCore in Frameworks */ = {isa = PBXBuildFile; productRef = E0F2EC552D3A026900A470DF /* PopcornShareNetworkCore */; };
+		E0F7E20A2C839500002584ED /* DetailsMovieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F7E2092C839500002584ED /* DetailsMovieView.swift */; };
+		E0F7E20C2C839583002584ED /* DetailsMovieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F7E20B2C839583002584ED /* DetailsMovieViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		E00CB87A2C004E6700D49547 /* View+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+extension.swift"; sourceTree = "<group>"; };
 		E00CB87C2C004EAA00D49547 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
-		E00CB87F2C004ED700D49547 /* PopcornShareIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopcornShareIcon.swift; sourceTree = "<group>"; };
+		E00CB89E2C00602F00D49547 /* PopularMoviesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularMoviesView.swift; sourceTree = "<group>"; };
+		E00CB8A02C00603700D49547 /* PopularMoviesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularMoviesViewModel.swift; sourceTree = "<group>"; };
+		E00CB8A72C00D3F700D49547 /* MoviesGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesGridView.swift; sourceTree = "<group>"; };
+		E00CB8AA2C00D4F000D49547 /* AuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
+		E00CB8AD2C00D62100D49547 /* MovieViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewData.swift; sourceTree = "<group>"; };
+		E00CB8B12C00EA8300D49547 /* MovieGridCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieGridCardView.swift; sourceTree = "<group>"; };
+		E00CB8B32C00F96500D49547 /* MoviesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesManager.swift; sourceTree = "<group>"; };
+		E00CB8B52C00FC0700D49547 /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
+		E00CB8B82C00FE8B00D49547 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		E00CB8BA2C00FE9900D49547 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
+		E0384F502D5A344A003BA8AC /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
+		E0384F532D5A3768003BA8AC /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E041C8FC2C0024BB002100BE /* PopcornShare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PopcornShare.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E041C8FF2C0024BB002100BE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E041C9012C0024BB002100BE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		E041C9082C0024C8002100BE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E041C90B2C0024C8002100BE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E041C90D2C0024C8002100BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E0D45E692C002A32005ED237 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
-		E0D45E6B2C002A32005ED237 /* Book.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
-		E0D45E6D2C002A32005ED237 /* NetworkRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkRequest.swift; sourceTree = "<group>"; };
-		E0D45E6F2C002A32005ED237 /* Endpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
-		E0D45E702C002A32005ED237 /* HTTPService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPService.swift; sourceTree = "<group>"; };
-		E0D45E712C002A32005ED237 /* RequestError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestError.swift; sourceTree = "<group>"; };
+		E08839192D487ED900F2BAAB /* PopcornShareHome */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PopcornShareHome; sourceTree = "<group>"; };
+		E09220D22D3ACA9B002DABE5 /* PopcornShareNetworkCore */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PopcornShareNetworkCore; sourceTree = "<group>"; };
+		E0B2141D2C017F27005DF2EF /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		E0B2141F2C017F32005DF2EF /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		E0B214252C040E97005DF2EF /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		E0B214292C06E4FC005DF2EF /* FavoriteMoviesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMoviesView.swift; sourceTree = "<group>"; };
+		E0B2142B2C06E509005DF2EF /* FavoriteMoviesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMoviesViewModel.swift; sourceTree = "<group>"; };
+		E0B242012D49252E00A2D436 /* PopcornShareNetwork */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PopcornShareNetwork; sourceTree = "<group>"; };
+		E0BAE3CB2D1530040098FBC9 /* PopcornShareUtilities */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PopcornShareUtilities; sourceTree = "<group>"; };
+		E0C616ED2D3A8E8E00318155 /* TabBarPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarPage.swift; sourceTree = "<group>"; };
 		E0D45E7C2C002DFF005ED237 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		E0D45E7E2C002E6D005ED237 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		E0D45E812C002EE0005ED237 /* TabCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabCoordinator.swift; sourceTree = "<group>"; };
 		E0D45E862C00370E005ED237 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
-		E0D45E892C00396F005ED237 /* Color+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+extension.swift"; sourceTree = "<group>"; };
-		E0D45E8B2C003B88005ED237 /* CGFloat+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+extension.swift"; sourceTree = "<group>"; };
+		E0F7E2092C839500002584ED /* DetailsMovieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsMovieView.swift; sourceTree = "<group>"; };
+		E0F7E20B2C839583002584ED /* DetailsMovieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsMovieViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,24 +90,87 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E00CB8932C00526500D49547 /* FirebaseMessaging in Frameworks */,
+				E040945A2D49282C007A3D37 /* PopcornShareNetwork in Frameworks */,
+				E00CB8852C00526500D49547 /* FirebaseAnalytics in Frameworks */,
+				E00CB8952C00526500D49547 /* FirebaseStorage in Frameworks */,
+				E0F2EC562D3A026900A470DF /* PopcornShareNetworkCore in Frameworks */,
+				E00CB88B2C00526500D49547 /* FirebaseCrashlytics in Frameworks */,
+				E00CB8912C00526500D49547 /* FirebaseFirestoreSwift in Frameworks */,
+				E0CFDF162D15304D0077C10B /* PopcornShareUtilities in Frameworks */,
+				E088391B2D48805D00F2BAAB /* PopcornShareHome in Frameworks */,
+				E00CB88D2C00526500D49547 /* FirebaseFirestore in Frameworks */,
+				E00CB8872C00526500D49547 /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		E00CB87E2C004EC300D49547 /* Components */ = {
+		E00CB8962C00597800D49547 /* Movie */ = {
 			isa = PBXGroup;
 			children = (
-				E00CB87F2C004ED700D49547 /* PopcornShareIcon.swift */,
+				E00CB8AC2C00D61500D49547 /* Models */,
+				E00CB8A62C00D38600D49547 /* Components */,
+				E0B214282C06E4E4005DF2EF /* Favorite */,
+				E0B214272C06CBA7005DF2EF /* Details */,
+				E00CB89D2C00601900D49547 /* Popular */,
+			);
+			path = Movie;
+			sourceTree = "<group>";
+		};
+		E00CB89D2C00601900D49547 /* Popular */ = {
+			isa = PBXGroup;
+			children = (
+				E00CB89E2C00602F00D49547 /* PopularMoviesView.swift */,
+				E00CB8A02C00603700D49547 /* PopularMoviesViewModel.swift */,
+			);
+			path = Popular;
+			sourceTree = "<group>";
+		};
+		E00CB8A62C00D38600D49547 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				E00CB8A72C00D3F700D49547 /* MoviesGridView.swift */,
+				E00CB8B12C00EA8300D49547 /* MovieGridCardView.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		E00CB8A92C00D4DC00D49547 /* AuthCoordinator */ = {
+			isa = PBXGroup;
+			children = (
+				E00CB8AA2C00D4F000D49547 /* AuthCoordinator.swift */,
+			);
+			path = AuthCoordinator;
+			sourceTree = "<group>";
+		};
+		E00CB8AC2C00D61500D49547 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E00CB8AD2C00D62100D49547 /* MovieViewData.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		E00CB8B72C00FE6800D49547 /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				E00CB8B82C00FE8B00D49547 /* SignUpView.swift */,
+				E00CB8BA2C00FE9900D49547 /* SignUpViewModel.swift */,
+			);
+			path = SignUp;
 			sourceTree = "<group>";
 		};
 		E041C8F32C0024BB002100BE = {
 			isa = PBXGroup;
 			children = (
+				E0384F502D5A344A003BA8AC /* Secrets.xcconfig */,
 				E041C8FE2C0024BB002100BE /* PopcornShare */,
+				E08839192D487ED900F2BAAB /* PopcornShareHome */,
+				E0BAE3CB2D1530040098FBC9 /* PopcornShareUtilities */,
+				E0B242002D49242700A2D436 /* PopcornShareNetwork */,
+				E0CFDF142D15304D0077C10B /* Frameworks */,
 				E041C8FD2C0024BB002100BE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -90,82 +186,93 @@
 		E041C8FE2C0024BB002100BE /* PopcornShare */ = {
 			isa = PBXGroup;
 			children = (
+				E0B214242C040E87005DF2EF /* Firestore */,
+				E0B2141C2C017F14005DF2EF /* Profile */,
+				E00CB8962C00597800D49547 /* Movie */,
 				E0D45E7A2C002C39005ED237 /* Coordinators */,
-				E0D45E882C00395E005ED237 /* Extensions */,
 				E0D45E842C0036EC005ED237 /* Auth */,
-				E0D45E732C002A32005ED237 /* Network */,
 				E0D45E832C00361D005ED237 /* Application */,
 				E041C90D2C0024C8002100BE /* Info.plist */,
+				E0384F532D5A3768003BA8AC /* GoogleService-Info.plist */,
 			);
 			path = PopcornShare;
 			sourceTree = "<group>";
 		};
-		E0D45E6A2C002A32005ED237 /* Manager */ = {
+		E0B2141C2C017F14005DF2EF /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				E0D45E692C002A32005ED237 /* NetworkManager.swift */,
+				E0B2141D2C017F27005DF2EF /* ProfileView.swift */,
+				E0B2141F2C017F32005DF2EF /* ProfileViewModel.swift */,
 			);
-			path = Manager;
+			path = Profile;
 			sourceTree = "<group>";
 		};
-		E0D45E6C2C002A32005ED237 /* Model */ = {
+		E0B214242C040E87005DF2EF /* Firestore */ = {
 			isa = PBXGroup;
 			children = (
-				E0D45E6B2C002A32005ED237 /* Book.swift */,
+				E00CB8B32C00F96500D49547 /* MoviesManager.swift */,
+				E0B214252C040E97005DF2EF /* UserManager.swift */,
 			);
-			path = Model;
+			path = Firestore;
 			sourceTree = "<group>";
 		};
-		E0D45E6E2C002A32005ED237 /* Request */ = {
+		E0B214272C06CBA7005DF2EF /* Details */ = {
 			isa = PBXGroup;
 			children = (
-				E0D45E6D2C002A32005ED237 /* NetworkRequest.swift */,
+				E0F7E2092C839500002584ED /* DetailsMovieView.swift */,
+				E0F7E20B2C839583002584ED /* DetailsMovieViewModel.swift */,
 			);
-			path = Request;
+			path = Details;
 			sourceTree = "<group>";
 		};
-		E0D45E722C002A32005ED237 /* Utils */ = {
+		E0B214282C06E4E4005DF2EF /* Favorite */ = {
 			isa = PBXGroup;
 			children = (
-				E0D45E6F2C002A32005ED237 /* Endpoint.swift */,
-				E0D45E702C002A32005ED237 /* HTTPService.swift */,
-				E0D45E712C002A32005ED237 /* RequestError.swift */,
+				E0B214292C06E4FC005DF2EF /* FavoriteMoviesView.swift */,
+				E0B2142B2C06E509005DF2EF /* FavoriteMoviesViewModel.swift */,
+			);
+			path = Favorite;
+			sourceTree = "<group>";
+		};
+		E0B242002D49242700A2D436 /* PopcornShareNetwork */ = {
+			isa = PBXGroup;
+			children = (
+				E0B242012D49252E00A2D436 /* PopcornShareNetwork */,
+				E09220D22D3ACA9B002DABE5 /* PopcornShareNetworkCore */,
+			);
+			path = PopcornShareNetwork;
+			sourceTree = "<group>";
+		};
+		E0C616EC2D3A8E7F00318155 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				E0C616ED2D3A8E8E00318155 /* TabBarPage.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
 		};
-		E0D45E732C002A32005ED237 /* Network */ = {
+		E0CFDF142D15304D0077C10B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E0D45E722C002A32005ED237 /* Utils */,
-				E0D45E6C2C002A32005ED237 /* Model */,
-				E0D45E6A2C002A32005ED237 /* Manager */,
-				E0D45E6E2C002A32005ED237 /* Request */,
 			);
-			path = Network;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		E0D45E7A2C002C39005ED237 /* Coordinators */ = {
 			isa = PBXGroup;
 			children = (
-				E0D45E7C2C002DFF005ED237 /* Coordinator.swift */,
-				E0D45E7B2C002C49005ED237 /* AppCoordinator */,
+				E00CB8A92C00D4DC00D49547 /* AuthCoordinator */,
 				E0D45E802C002ECA005ED237 /* TabCoordinator */,
+				E0D45E7E2C002E6D005ED237 /* AppCoordinator.swift */,
+				E0D45E7C2C002DFF005ED237 /* Coordinator.swift */,
 			);
 			path = Coordinators;
-			sourceTree = "<group>";
-		};
-		E0D45E7B2C002C49005ED237 /* AppCoordinator */ = {
-			isa = PBXGroup;
-			children = (
-				E0D45E7E2C002E6D005ED237 /* AppCoordinator.swift */,
-			);
-			path = AppCoordinator;
 			sourceTree = "<group>";
 		};
 		E0D45E802C002ECA005ED237 /* TabCoordinator */ = {
 			isa = PBXGroup;
 			children = (
+				E0C616EC2D3A8E7F00318155 /* Utils */,
 				E0D45E812C002EE0005ED237 /* TabCoordinator.swift */,
 			);
 			path = TabCoordinator;
@@ -185,29 +292,20 @@
 		E0D45E842C0036EC005ED237 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
-				E00CB87E2C004EC300D49547 /* Components */,
-				E0D45E852C0036F6005ED237 /* Login */,
+				E00CB8B72C00FE6800D49547 /* SignUp */,
+				E0D45E852C0036F6005ED237 /* SignIn */,
+				E00CB8B52C00FC0700D49547 /* AuthenticationManager.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
 		};
-		E0D45E852C0036F6005ED237 /* Login */ = {
+		E0D45E852C0036F6005ED237 /* SignIn */ = {
 			isa = PBXGroup;
 			children = (
 				E0D45E862C00370E005ED237 /* LoginView.swift */,
 				E00CB87C2C004EAA00D49547 /* LoginViewModel.swift */,
 			);
-			path = Login;
-			sourceTree = "<group>";
-		};
-		E0D45E882C00395E005ED237 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				E0D45E892C00396F005ED237 /* Color+extension.swift */,
-				E0D45E8B2C003B88005ED237 /* CGFloat+extension.swift */,
-				E00CB87A2C004E6700D49547 /* View+extension.swift */,
-			);
-			path = Extensions;
+			path = SignIn;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -226,6 +324,19 @@
 			dependencies = (
 			);
 			name = PopcornShare;
+			packageProductDependencies = (
+				E00CB8842C00526500D49547 /* FirebaseAnalytics */,
+				E00CB8862C00526500D49547 /* FirebaseAuth */,
+				E00CB88A2C00526500D49547 /* FirebaseCrashlytics */,
+				E00CB88C2C00526500D49547 /* FirebaseFirestore */,
+				E00CB8902C00526500D49547 /* FirebaseFirestoreSwift */,
+				E00CB8922C00526500D49547 /* FirebaseMessaging */,
+				E00CB8942C00526500D49547 /* FirebaseStorage */,
+				E0CFDF152D15304D0077C10B /* PopcornShareUtilities */,
+				E0F2EC552D3A026900A470DF /* PopcornShareNetworkCore */,
+				E088391A2D48805D00F2BAAB /* PopcornShareHome */,
+				E04094592D49282C007A3D37 /* PopcornShareNetwork */,
+			);
 			productName = PopcornShare;
 			productReference = E041C8FC2C0024BB002100BE /* PopcornShare.app */;
 			productType = "com.apple.product-type.application";
@@ -254,6 +365,9 @@
 				Base,
 			);
 			mainGroup = E041C8F32C0024BB002100BE;
+			packageReferences = (
+				E00CB8832C00526400D49547 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = E041C8FD2C0024BB002100BE /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -281,22 +395,30 @@
 			buildActionMask = 2147483647;
 			files = (
 				E0D45E7F2C002E6D005ED237 /* AppCoordinator.swift in Sources */,
-				E0D45E8A2C00396F005ED237 /* Color+extension.swift in Sources */,
-				E0D45E772C002A32005ED237 /* Endpoint.swift in Sources */,
-				E0D45E742C002A32005ED237 /* NetworkManager.swift in Sources */,
+				E0F7E20A2C839500002584ED /* DetailsMovieView.swift in Sources */,
 				E00CB87D2C004EAA00D49547 /* LoginViewModel.swift in Sources */,
+				E00CB8B92C00FE8B00D49547 /* SignUpView.swift in Sources */,
+				E0B214262C040E97005DF2EF /* UserManager.swift in Sources */,
 				E0D45E7D2C002DFF005ED237 /* Coordinator.swift in Sources */,
+				E0F7E20C2C839583002584ED /* DetailsMovieViewModel.swift in Sources */,
+				E0B2142C2C06E509005DF2EF /* FavoriteMoviesViewModel.swift in Sources */,
+				E00CB8B62C00FC0700D49547 /* AuthenticationManager.swift in Sources */,
 				E041C9002C0024BB002100BE /* AppDelegate.swift in Sources */,
-				E0D45E752C002A32005ED237 /* Book.swift in Sources */,
+				E00CB8A82C00D3F700D49547 /* MoviesGridView.swift in Sources */,
+				E00CB8AB2C00D4F000D49547 /* AuthCoordinator.swift in Sources */,
+				E0B214202C017F32005DF2EF /* ProfileViewModel.swift in Sources */,
+				E00CB8BB2C00FE9900D49547 /* SignUpViewModel.swift in Sources */,
 				E0D45E872C00370E005ED237 /* LoginView.swift in Sources */,
-				E00CB8802C004ED700D49547 /* PopcornShareIcon.swift in Sources */,
-				E0D45E8C2C003B88005ED237 /* CGFloat+extension.swift in Sources */,
-				E0D45E782C002A32005ED237 /* HTTPService.swift in Sources */,
-				E00CB87B2C004E6700D49547 /* View+extension.swift in Sources */,
-				E0D45E762C002A32005ED237 /* NetworkRequest.swift in Sources */,
+				E00CB8B22C00EA8300D49547 /* MovieGridCardView.swift in Sources */,
+				E0C616EE2D3A8E8E00318155 /* TabBarPage.swift in Sources */,
+				E0B2141E2C017F27005DF2EF /* ProfileView.swift in Sources */,
+				E0B2142A2C06E4FC005DF2EF /* FavoriteMoviesView.swift in Sources */,
+				E00CB89F2C00602F00D49547 /* PopularMoviesView.swift in Sources */,
 				E041C9022C0024BB002100BE /* SceneDelegate.swift in Sources */,
+				E00CB8AE2C00D62100D49547 /* MovieViewData.swift in Sources */,
+				E00CB8B42C00F96500D49547 /* MoviesManager.swift in Sources */,
+				E00CB8A12C00603700D49547 /* PopularMoviesViewModel.swift in Sources */,
 				E0D45E822C002EE0005ED237 /* TabCoordinator.swift in Sources */,
-				E0D45E792C002A32005ED237 /* RequestError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -316,6 +438,7 @@
 /* Begin XCBuildConfiguration section */
 		E041C90E2C0024C8002100BE /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E0384F502D5A344A003BA8AC /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -443,10 +566,13 @@
 				DEVELOPMENT_TEAM = H348674NXB;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PopcornShare/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Popcorn Share";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -470,10 +596,13 @@
 				DEVELOPMENT_TEAM = H348674NXB;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PopcornShare/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Popcorn Share";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -509,6 +638,71 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E00CB8832C00526400D49547 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.26.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E00CB8842C00526500D49547 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E00CB8832C00526400D49547 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		E00CB8862C00526500D49547 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E00CB8832C00526400D49547 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		E00CB88A2C00526500D49547 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E00CB8832C00526400D49547 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		E00CB88C2C00526500D49547 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E00CB8832C00526400D49547 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		E00CB8902C00526500D49547 /* FirebaseFirestoreSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E00CB8832C00526400D49547 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestoreSwift;
+		};
+		E00CB8922C00526500D49547 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E00CB8832C00526400D49547 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+		E00CB8942C00526500D49547 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E00CB8832C00526400D49547 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+		E04094592D49282C007A3D37 /* PopcornShareNetwork */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PopcornShareNetwork;
+		};
+		E088391A2D48805D00F2BAAB /* PopcornShareHome */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PopcornShareHome;
+		};
+		E0CFDF152D15304D0077C10B /* PopcornShareUtilities */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PopcornShareUtilities;
+		};
+		E0F2EC552D3A026900A470DF /* PopcornShareNetworkCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PopcornShareNetworkCore;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E041C8F42C0024BB002100BE /* Project object */;
 }
