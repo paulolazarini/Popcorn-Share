@@ -108,13 +108,7 @@ struct PSCardView: View {
     }
 }
 
-//#Preview {
-//    NavigationView {
-//        HomeView(movies: [.mock(), .mock(), .mock(), .mock(), .mock(), .mock(), .mock(), .mock(), .mock(), .mock(), .mock(), .mock()])
-//    }
-//}
-
-//#Preview {
-//    @Previewable @Namespace var animationId
-//    PSCardView(movie: .constant(.mock()), animationId: animationId) { _ in}
-//}
+#Preview {
+    @Previewable @Namespace var animationId
+    PSCardView(movie: .constant(.mock()), animationId: animationId) { _ in}
+}

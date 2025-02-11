@@ -11,6 +11,8 @@ public struct HomeButtonStyle: ButtonStyle {
     let backgroundColor: Color
     let foregroundColor: Color
     
+    @State private var isTapped = false
+    
     public init(
         backgroundColor: Color,
         foregroundColor: Color
@@ -28,13 +30,16 @@ public struct HomeButtonStyle: ButtonStyle {
             .shadow(radius: .extraSmall)
             .background(
                 backgroundColor
-                    .opacity(configuration.isPressed ? 0.8 : 1.0),
+                    .opacity(configuration.isPressed || isTapped ? 0.8 : 1.0),
                 in: .rect(cornerRadius: .medium)
             )
-            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
-            .animation(
-                .spring(response: 0.3, dampingFraction: 0.5),
-                value: configuration.isPressed
-            )
+            .scaleEffect(configuration.isPressed || isTapped ? 0.95 : 1.0)
+            .animation(.spring(duration: 0.1), value: configuration.isPressed || isTapped)
+            .onTapGesture {
+                isTapped = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    isTapped = false
+                }
+            }
     }
 }
