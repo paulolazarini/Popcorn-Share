@@ -58,7 +58,6 @@
 		E00CB8B52C00FC0700D49547 /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
 		E00CB8B82C00FE8B00D49547 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		E00CB8BA2C00FE9900D49547 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
-		E0384F502D5A344A003BA8AC /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		E041C8FC2C0024BB002100BE /* PopcornShare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PopcornShare.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E041C8FF2C0024BB002100BE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E041C9012C0024BB002100BE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -74,6 +73,7 @@
 		E0B214292C06E4FC005DF2EF /* FavoriteMoviesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMoviesView.swift; sourceTree = "<group>"; };
 		E0B2142B2C06E509005DF2EF /* FavoriteMoviesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMoviesViewModel.swift; sourceTree = "<group>"; };
 		E0B242012D49252E00A2D436 /* PopcornShareNetwork */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PopcornShareNetwork; sourceTree = "<group>"; };
+		E0BA93162D5FBDCD00F09E93 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		E0BAE3CB2D1530040098FBC9 /* PopcornShareUtilities */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PopcornShareUtilities; sourceTree = "<group>"; };
 		E0C616ED2D3A8E8E00318155 /* TabBarPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarPage.swift; sourceTree = "<group>"; };
 		E0D45E7C2C002DFF005ED237 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
@@ -155,7 +155,7 @@
 		E041C8F32C0024BB002100BE = {
 			isa = PBXGroup;
 			children = (
-				E0384F502D5A344A003BA8AC /* Secrets.xcconfig */,
+				E0BA93162D5FBDCD00F09E93 /* Secrets.xcconfig */,
 				E041C8FE2C0024BB002100BE /* PopcornShare */,
 				E08839192D487ED900F2BAAB /* PopcornShareHome */,
 				E0BAE3CB2D1530040098FBC9 /* PopcornShareUtilities */,
@@ -428,7 +428,7 @@
 /* Begin XCBuildConfiguration section */
 		E041C90E2C0024C8002100BE /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E0384F502D5A344A003BA8AC /* Secrets.xcconfig */;
+			baseConfigurationReference = E0BA93162D5FBDCD00F09E93 /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;

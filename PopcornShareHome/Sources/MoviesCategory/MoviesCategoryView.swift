@@ -12,6 +12,7 @@ import PopcornShareNetwork
 protocol MoviesCategoryViewModeling: ObservableObject {
     var movies: [MovieViewData] { get set }
     var networkManager: NetworkManagerType { get }
+    var isLoading: Bool { get }
     var page: Int { get set }
     
     var navigationTitle: String { get }
@@ -46,22 +47,13 @@ struct MoviesCategoryView<ViewModel: MoviesCategoryViewModeling & Sendable>: Vie
                 }
             }
             .background(Color.Background.yellow)
-            .task(priority: .high) { [viewModel] in
-                await viewModel.getMovies()
-            }
-            
     }
     
     private var moviesGridView: some View {
         PSGridView(
             gridItems: gridItems,
             orientation: .vertical,
-            didLoadLastCell: {
-                viewModel.page += 1
-                Task(priority: .high) {
-                    await viewModel.getMovies()
-                }
-            },
+            didLoadLastCell: fetchNexPage,
             data: $viewModel.movies) { index, movie in
                 NavigationLink {
                     DetailsMovieView(viewModel: DetailsMovieViewModel(movie: movie))
@@ -78,6 +70,21 @@ struct MoviesCategoryView<ViewModel: MoviesCategoryViewModeling & Sendable>: Vie
                     .padding(.small)
                 }
                 .id(UUID())
+        }
+            .safeAreaInset(edge: .bottom) {
+                if viewModel.isLoading {
+                    ProgressView()
+                        .tint(.black)
+                        .controlSize(.large)
+                        .padding(.vertical, .medium)
+                }
+            }
+    }
+    
+    private func fetchNexPage() {
+        Task(priority: .high) {
+            viewModel.page += 1
+            await viewModel.getMovies()
         }
     }
 }

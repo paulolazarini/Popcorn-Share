@@ -15,6 +15,8 @@ struct PSMovieCategoryCell: View {
     }
     
     @Binding var movie: MovieViewData
+    @State var viewDidLoad = true
+    
     let animationId: Namespace.ID
     let onFavoriteTapped: (MovieViewData) -> Void
     
@@ -30,6 +32,10 @@ struct PSMovieCategoryCell: View {
         }
         .overlay(alignment: .topTrailing) { favoriteButton }
         .task(priority: .high) {
+            guard viewDidLoad else { return }
+            
+            viewDidLoad = false
+            
             let result = await NetworkImageManager().getMovieImage(using: .makePosterPath(movie.posterPath))
             
             switch result {
@@ -54,7 +60,7 @@ struct PSMovieCategoryCell: View {
             ProgressView()
                 .tint(.white)
                 .scaledToFill()
-                .imageScale(.large)
+                .controlSize(.large)
         }
     }
     

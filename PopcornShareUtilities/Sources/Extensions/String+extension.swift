@@ -11,6 +11,6 @@ public extension String {
     static var empty: String { "" }
     
     static func makePosterPath(_ posterPath: String) -> String {
-        "https://image.tmdb.org/t/p/original/" + posterPath
+        "https://image.tmdb.org/t/p/original" + posterPath
     }
 }

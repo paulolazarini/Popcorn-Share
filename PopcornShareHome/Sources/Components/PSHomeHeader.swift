@@ -41,8 +41,8 @@ struct PSHomeHeader: View {
         if let image = images[movie.id] {
             image
                 .resizable()
-                .scaledToFill()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .scaledToFill()
                 .overlay(gradientOverlay)
         } else {
             ProgressView()
