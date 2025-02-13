@@ -11,17 +11,20 @@ struct PSGridView<Data: Hashable, Content: View>: View {
     @Binding var data: [Data]
     let gridItems: [GridItem]
     let orientation: Orientation
+    let didLoadLastCell: (() -> Void)?
     @ViewBuilder let content: (Int, Data) -> Content
     
     public init(
         gridItems: [GridItem],
         orientation: Orientation = .vertical,
+        didLoadLastCell: (() -> Void)? = nil,
         data: Binding<[Data]>,
         @ViewBuilder content: @escaping (Int, Data) -> Content
     ) {
         self._data = data
         self.gridItems = gridItems
         self.orientation = orientation
+        self.didLoadLastCell = didLoadLastCell
         self.content = content
     }
     
@@ -47,6 +50,11 @@ struct PSGridView<Data: Hashable, Content: View>: View {
     var gridContent: some View {
         ForEach(Array(data.enumerated()), id: \.element) { index, item in
             content(index, item)
+                .onAppear {
+                    if let didLoadLastCell, data[index] == data.last {
+                        didLoadLastCell()
+                    }
+                }
         }
     }
 }

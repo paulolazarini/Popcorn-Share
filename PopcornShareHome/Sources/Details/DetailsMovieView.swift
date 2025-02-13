@@ -18,42 +18,40 @@ public struct DetailsMovieView: View {
     @Environment(\.dismiss) private var dismiss
 
     public var body: some View {
-        ZStack {
-            Color.Background.yellow.ignoresSafeArea()
-            stateView
-        }
-        .navigationTitle(viewModel.movie.title)
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationBarBackButtonHidden()
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                Button {
-                    dismiss()
-                } label: {
-                    Image(systemName: "arrow.left")
-                        .foregroundStyle(.black)
+        stateView
+            .background(Color.Background.yellow.ignoresSafeArea())
+            .navigationTitle(viewModel.movie.title)
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarBackButtonHidden()
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "arrow.left")
+                            .foregroundStyle(.black)
+                    }
                 }
             }
-        }
-        .task(priority: .userInitiated) {
-            do {
-                async let backdropImage = getMovieBackdrop()
-                async let posterImage = getMoviePoster()
-                
-                let (backdropImageResult, posterImageResult) = try await (
-                    backdropImage,
-                    posterImage
-                )
-                
-                await MainActor.run {
-                    self.posterImage = posterImageResult
-                    self.backdropImage = backdropImageResult
-                    viewModel.state = .details
+            .task(priority: .userInitiated) {
+                do {
+                    async let backdropImage = getMovieBackdrop()
+                    async let posterImage = getMoviePoster()
+                    
+                    let (backdropImageResult, posterImageResult) = try await (
+                        backdropImage,
+                        posterImage
+                    )
+                    
+                    await MainActor.run {
+                        self.posterImage = posterImageResult
+                        self.backdropImage = backdropImageResult
+                        viewModel.state = .details
+                    }
+                } catch {
+                    print(error.localizedDescription)
                 }
-            } catch {
-                print(error.localizedDescription)
             }
-        }
     }
 
     @ViewBuilder
@@ -67,12 +65,13 @@ public struct DetailsMovieView: View {
     }
 
     var detailsView: some View {
-        ScrollView {
+        VStack(spacing: .medium) {
             movieHeader
             
             Text(viewModel.movie.overview)
-                .padding()
         }
+        .vAlignment(.top)
+        .padding(.large)
     }
 
     var movieHeader: some View {
@@ -97,7 +96,6 @@ public struct DetailsMovieView: View {
             Color.Background.gray,
             in: .rect(cornerRadius: .medium)
         )
-        .padding(.small)
     }
 
     var movieHeaderInfo: some View {
@@ -151,6 +149,7 @@ public struct DetailsMovieView: View {
     var loadingView: some View {
         ProgressView()
             .controlSize(.extraLarge)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
     func getMoviePoster() async throws -> Image {

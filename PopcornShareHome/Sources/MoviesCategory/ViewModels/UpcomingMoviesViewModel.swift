@@ -14,20 +14,21 @@ public final class UpcomingMoviesViewModel: MoviesCategoryViewModeling, @uncheck
     @Published var movies: [MovieViewData] = []
     
     let navigationTitle: String = "Upcoming Movies"
-    
     let networkManager: NetworkManagerType
+    
+    var page: Int = 1
     
     init(networkManager: NetworkManagerType = NetworkManager()) {
         self.networkManager = networkManager
     }
     
-    func getMovies(page: Int = 1) async {
+    func getMovies() async {
         let result = await networkManager.getUpcomingMovies(page: page)
         
         switch result {
         case .success(let movies):
             await MainActor.run { [weak self] in
-                self?.movies = movies.results.map(\.toMovieViewData)
+                self?.movies.append(contentsOf: movies.results.map(\.toMovieViewData))
             }
         case .failure(let error):
             print(error.localizedDescription)
