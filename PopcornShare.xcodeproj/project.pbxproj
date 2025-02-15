@@ -30,12 +30,12 @@
 		E041C9092C0024C8002100BE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E041C9082C0024C8002100BE /* Assets.xcassets */; };
 		E041C90C2C0024C8002100BE /* Base in Resources */ = {isa = PBXBuildFile; fileRef = E041C90B2C0024C8002100BE /* Base */; };
 		E088391B2D48805D00F2BAAB /* PopcornShareHome in Frameworks */ = {isa = PBXBuildFile; productRef = E088391A2D48805D00F2BAAB /* PopcornShareHome */; };
-		E0A8492D2D5A40D500D62972 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E0A8492C2D5A40D500D62972 /* GoogleService-Info.plist */; };
 		E0B2141E2C017F27005DF2EF /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0B2141D2C017F27005DF2EF /* ProfileView.swift */; };
 		E0B214202C017F32005DF2EF /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0B2141F2C017F32005DF2EF /* ProfileViewModel.swift */; };
 		E0B214262C040E97005DF2EF /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0B214252C040E97005DF2EF /* UserManager.swift */; };
 		E0B2142A2C06E4FC005DF2EF /* FavoriteMoviesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0B214292C06E4FC005DF2EF /* FavoriteMoviesView.swift */; };
 		E0B2142C2C06E509005DF2EF /* FavoriteMoviesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0B2142B2C06E509005DF2EF /* FavoriteMoviesViewModel.swift */; };
+		E0BA931B2D60E49200F09E93 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E0BA931A2D60E49200F09E93 /* GoogleService-Info.plist */; };
 		E0C616EE2D3A8E8E00318155 /* TabBarPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0C616ED2D3A8E8E00318155 /* TabBarPage.swift */; };
 		E0CFDF162D15304D0077C10B /* PopcornShareUtilities in Frameworks */ = {isa = PBXBuildFile; productRef = E0CFDF152D15304D0077C10B /* PopcornShareUtilities */; };
 		E0D45E7D2C002DFF005ED237 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0D45E7C2C002DFF005ED237 /* Coordinator.swift */; };
@@ -66,7 +66,6 @@
 		E041C90D2C0024C8002100BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E08839192D487ED900F2BAAB /* PopcornShareHome */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PopcornShareHome; sourceTree = "<group>"; };
 		E09220D22D3ACA9B002DABE5 /* PopcornShareNetworkCore */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PopcornShareNetworkCore; sourceTree = "<group>"; };
-		E0A8492C2D5A40D500D62972 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E0B2141D2C017F27005DF2EF /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		E0B2141F2C017F32005DF2EF /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		E0B214252C040E97005DF2EF /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
@@ -74,6 +73,7 @@
 		E0B2142B2C06E509005DF2EF /* FavoriteMoviesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMoviesViewModel.swift; sourceTree = "<group>"; };
 		E0B242012D49252E00A2D436 /* PopcornShareNetwork */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PopcornShareNetwork; sourceTree = "<group>"; };
 		E0BA93162D5FBDCD00F09E93 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
+		E0BA931A2D60E49200F09E93 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E0BAE3CB2D1530040098FBC9 /* PopcornShareUtilities */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PopcornShareUtilities; sourceTree = "<group>"; };
 		E0C616ED2D3A8E8E00318155 /* TabBarPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarPage.swift; sourceTree = "<group>"; };
 		E0D45E7C2C002DFF005ED237 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
@@ -183,7 +183,7 @@
 				E0D45E842C0036EC005ED237 /* Auth */,
 				E0D45E832C00361D005ED237 /* Application */,
 				E041C90D2C0024C8002100BE /* Info.plist */,
-				E0A8492C2D5A40D500D62972 /* GoogleService-Info.plist */,
+				E0BA931A2D60E49200F09E93 /* GoogleService-Info.plist */,
 			);
 			path = PopcornShare;
 			sourceTree = "<group>";
@@ -373,8 +373,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E041C9092C0024C8002100BE /* Assets.xcassets in Resources */,
+				E0BA931B2D60E49200F09E93 /* GoogleService-Info.plist in Resources */,
 				E041C90C2C0024C8002100BE /* Base in Resources */,
-				E0A8492D2D5A40D500D62972 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
