@@ -41,6 +41,7 @@ public final class TabCoordinator: NSObject, Coordinator {
     func start() {
         tabBarController.viewControllers = [
             makePopularMovies(),
+            makeSearchMovies(),
             makeFavoriteMovies(),
             makeProfile()
         ]
@@ -50,9 +51,17 @@ public final class TabCoordinator: NSObject, Coordinator {
         navigationController.setViewControllers([tabBarController], animated: false)
     }
     
+    private func makeSearchMovies() -> UINavigationController {
+        let view = SearchView(viewModel: SearchViewModel())
+        let viewController = UIHostingController(rootView: view)
+        viewController.tabBarItem = TabBarPage.search.tabBarItem
+
+        let navController = UINavigationController(rootViewController: viewController)
+        navController.setNavigationBarHidden(true, animated: false)
+        return navController
+    }
+    
     private func makePopularMovies() -> UINavigationController {
-//        let viewModel = PopularMoviesViewModel(serviceManager: networkManager)
-//        let view = PopularMoviesView(viewModel: viewModel)
         let view = HomeView(viewModel: HomeViewModel())
         let viewController = UIHostingController(rootView: view)
         viewController.tabBarItem = TabBarPage.movies.tabBarItem

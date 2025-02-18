@@ -1,21 +1,19 @@
 //
-//  PSMovieCategoryCell.swift
-//  PopcornShareHome
+//  SearchMovieCell.swift
+//  PopcornShare
 //
-//  Created by Paulo Lazarini on 13/02/25.
+//  Created by Paulo Lazarini on 17/02/25.
 //
 
 import SwiftUI
 
+import PopcornShareHome
 import PopcornShareNetwork
 import PopcornShareUtilities
 
-struct PSMovieCategoryCell: View {
-    enum Constants {
-        static let movieCardHeight: CGFloat = 250
-    }
-    
+struct SearchMovieCell: View {
     @Binding var movie: MovieViewData
+    
     @State var viewDidLoad = true
     @State var image: Image?
     
@@ -23,14 +21,23 @@ struct PSMovieCategoryCell: View {
     let onFavoriteTapped: (MovieViewData) -> Void
     
     var body: some View {
-        VStack(spacing: .small) {
+        HStack(alignment: .center) {
             moviePoster
-                .frame(height: Constants.movieCardHeight)
+                .frame(width: 70, height: 100)
                 .clipShape(.rect(cornerRadius: .medium))
             
-            movieTitle
+            movieInfoView
         }
-        .overlay(alignment: .topTrailing) { favoriteButton }
+        .frame(height: 130)
+        .padding(.horizontal, .medium)
+        .background(
+            Color.Background.gray,
+            in: .rect(cornerRadius: .large)
+        )
+        .overlay(alignment: .topTrailing) {
+            favoriteButton
+        }
+        .padding(.horizontal, .medium)
         .task(priority: .high) {
             guard viewDidLoad else { return }
             
@@ -47,6 +54,27 @@ struct PSMovieCategoryCell: View {
                 print(error)
             }
         }
+
+    }
+    
+    private var movieInfoView: some View {
+        VStack {
+            movieTitle
+            
+            Text(movie.posterPath)
+                .font(.footnote)
+                .foregroundColor(.secondary)
+        }
+    }
+    
+    private var movieTitle: some View {
+        Text(movie.title)
+            .font(.body)
+            .bold()
+            .multilineTextAlignment(.center)
+            .lineLimit(1)
+            .foregroundStyle(.black)
+            .frame(maxWidth: .infinity)
     }
     
     @ViewBuilder
@@ -64,16 +92,6 @@ struct PSMovieCategoryCell: View {
         }
     }
     
-    private var movieTitle: some View {
-        Text(movie.title)
-            .font(.body)
-            .bold()
-            .multilineTextAlignment(.center)
-            .lineLimit(1)
-            .foregroundStyle(.black)
-            .frame(maxWidth: .infinity)
-    }
-    
     private var favoriteButton: some View {
         Button {
             onFavoriteTapped(movie)
@@ -82,15 +100,11 @@ struct PSMovieCategoryCell: View {
                 ProgressView()
                     .tint(.white)
             } else {
-                Image(systemName: movie.favorite ? "heart.fill" : "heart")
-                    .foregroundStyle(movie.favorite ? Color.yellow : Color.Background.yellow)
+                Image(systemName: "heart.fill")
+                    .imageScale(.large)
+                    .foregroundStyle(movie.favorite ? Color.Background.yellow : Color.white)
             }
         }
         .padding(.medium)
     }
-}
-
-
-#Preview {
-    MoviesCategoryView(viewModel: PopularMoviesViewModel())
 }

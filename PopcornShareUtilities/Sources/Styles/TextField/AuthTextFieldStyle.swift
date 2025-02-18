@@ -7,10 +7,14 @@
 
 import SwiftUI
 
-struct AuthTextFieldStyle: TextFieldStyle {
+public extension TextFieldStyle where Self == AuthTextFieldStyle {
+    static var authTextFieldStyle: AuthTextFieldStyle { .init() }
+}
+
+public struct AuthTextFieldStyle: TextFieldStyle {
     @FocusState var focus: Bool
     
-    func _body(configuration: TextField<Self._Label>) -> some View {
+    public func _body(configuration: TextField<Self._Label>) -> some View {
         configuration
             .frame(height: 55)
             .padding(.horizontal, .medium)

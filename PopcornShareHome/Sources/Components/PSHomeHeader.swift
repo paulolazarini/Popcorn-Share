@@ -22,7 +22,7 @@ struct PSHomeHeader: View {
             }
         }
         .tabViewStyle(PageTabViewStyle())
-        .frame(height: 430)
+        .frame(height: 550)
         .onAppear {
             UIPageControl.appearance().currentPageIndicatorTintColor = UIColor.yellow
             UIPageControl.appearance().pageIndicatorTintColor = UIColor.lightGray
@@ -51,7 +51,7 @@ struct PSHomeHeader: View {
     }
     
     func loadImage(for movie: MovieViewData) async {
-        if let image = await getImage(url: movie.backdropPath) {
+        if let image = await getImage(url: movie.posterPath) {
             await MainActor.run {
                 images[movie.id] = image
             }

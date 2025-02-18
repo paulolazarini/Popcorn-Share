@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 import PopcornShareUtilities
 
-final class DetailsMovieViewModel: ObservableObject {
+public final class DetailsMovieViewModel: ObservableObject {
     enum State {
         case loading, details
     }
@@ -17,7 +17,7 @@ final class DetailsMovieViewModel: ObservableObject {
     @Published var state: State = .loading
     @Published var movie: MovieViewData
     
-    init(
+    public init(
         movie: MovieViewData
     ) {
         self.movie = movie

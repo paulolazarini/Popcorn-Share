@@ -9,8 +9,9 @@ import UIKit
 
 enum TabBarPage: Int, CaseIterable {
     case movies = 0
-    case favorite = 1
-    case profile = 2
+    case search = 1
+    case favorite = 2
+    case profile = 3
     
     var title: String {
         switch self {
@@ -20,6 +21,8 @@ enum TabBarPage: Int, CaseIterable {
             "Favorites"
         case .profile:
             "Profile"
+        case .search:
+            "Search"
         }
     }
     
@@ -31,6 +34,8 @@ enum TabBarPage: Int, CaseIterable {
             return UIImage(systemName: "heart")
         case .profile:
             return UIImage(systemName: "person.crop.circle")
+        case .search:
+            return UIImage(systemName: "magnifyingglass")
         }
     }
 
@@ -42,6 +47,8 @@ enum TabBarPage: Int, CaseIterable {
             return UIImage(systemName: "heart.fill")
         case .profile:
             return UIImage(systemName: "person.crop.circle.fill")
+        case .search:
+            return UIImage(systemName: "magnifyingglass.fill")
         }
     }
     

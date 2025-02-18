@@ -29,7 +29,8 @@ struct MoviesCategoryView<ViewModel: MoviesCategoryViewModeling & Sendable>: Vie
     
     let gridItems = Array(
         repeating: GridItem(spacing: .small),
-        count: 2)
+        count: 2
+    )
 
     var body: some View {
         moviesGridView

@@ -16,11 +16,16 @@ public struct DetailsMovieView: View {
     @State var backdropImage: Image?
     
     @Environment(\.dismiss) private var dismiss
+    
+    public init(viewModel: DetailsMovieViewModel) {
+        self._viewModel = ObservedObject(initialValue: viewModel) 
+    }
 
     public var body: some View {
         stateView
             .background(Color.Background.yellow.ignoresSafeArea())
             .navigationTitle(viewModel.movie.title)
+            .toolbarVisibility(.visible, for: .navigationBar)
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarBackButtonHidden()
             .toolbar {

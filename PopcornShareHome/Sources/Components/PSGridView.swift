@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PSGridView<Data: Hashable, Content: View>: View {
+public struct PSGridView<Data: Hashable, Content: View>: View {
     @Binding var data: [Data]
     let gridItems: [GridItem]
     let orientation: Orientation
@@ -28,7 +28,7 @@ struct PSGridView<Data: Hashable, Content: View>: View {
         self.content = content
     }
     
-    var body: some View {
+    public var body: some View {
         gridView
             .animation(.default, value: data)
     }
@@ -59,7 +59,7 @@ struct PSGridView<Data: Hashable, Content: View>: View {
     }
 }
 
-extension PSGridView {
+public extension PSGridView {
     enum Orientation {
         case horizontal, vertical
     }
