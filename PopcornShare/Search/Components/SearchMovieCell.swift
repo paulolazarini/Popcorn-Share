@@ -61,7 +61,7 @@ struct SearchMovieCell: View {
         VStack {
             movieTitle
             
-            Text(movie.posterPath)
+            Text(movie.releaseDateString ?? .empty)
                 .font(.footnote)
                 .foregroundColor(.secondary)
         }

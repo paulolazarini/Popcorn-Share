@@ -91,9 +91,10 @@ public struct DetailsMovieView: View {
                         .frame(width: 120, height: 180)
                         .cornerRadius(.medium)
                         .offset(x: 24, y: 70)
-                        .shadow(radius: 5)
                 }
             }
+            .compositingGroup()
+            .shadow(radius: 5)
             
             movieHeaderInfo
         }
@@ -114,7 +115,7 @@ public struct DetailsMovieView: View {
                 .font(.subheadline)
                 .foregroundColor(.secondary)
 
-            Text(viewModel.movie.releaseDate)
+            Text(viewModel.movie.releaseDateString ?? .empty)
                 .font(.footnote)
                 .foregroundColor(.secondary)
             
@@ -123,7 +124,7 @@ public struct DetailsMovieView: View {
                     .font(.footnote)
                     .foregroundColor(.primary)
                 
-                Label(viewModel.movie.releaseDate, systemImage: "calendar")
+                Label(viewModel.movie.releaseDateString ?? .empty, systemImage: "calendar")
                     .font(.footnote)
                     .foregroundColor(.primary)
                 

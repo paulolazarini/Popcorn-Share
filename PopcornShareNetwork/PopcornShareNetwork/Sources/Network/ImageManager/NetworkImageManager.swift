@@ -12,7 +12,7 @@ public protocol NetworkImageManagerType {
     func getMovieImage(using imageUrl: String) async -> Result<UIImage, RequestError>
 }
 
-public final class NetworkImageManager: NetworkImageManagerType {
+public final class NetworkImageManager: NetworkImageManagerType, Sendable {
     private let cacheManager: CacheManager = CacheManager()
     
     public init() {}

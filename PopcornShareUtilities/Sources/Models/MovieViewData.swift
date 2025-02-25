@@ -50,6 +50,22 @@ public struct MovieViewData: Hashable, Identifiable, Equatable, Sendable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
+    
+    public var releaseDateString: String? {
+        let inputDateString = releaseDate
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "yyyy-MM-dd"
+        
+        var outputDateString: String?
+        
+        if let date = inputFormatter.date(from: inputDateString) {
+            let outputFormatter = DateFormatter()
+            outputFormatter.dateFormat = "MMMM, yyyy"
+            outputDateString = outputFormatter.string(from: date)
+        }
+        
+        return outputDateString
+    }
 }
 
 public extension MovieViewData {

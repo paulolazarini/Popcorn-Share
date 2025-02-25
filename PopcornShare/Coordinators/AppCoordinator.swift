@@ -30,7 +30,7 @@ class AppCoordinator: AppCoordinatorProtocol {
     
     func start() {
         let user = try? AuthenticationManager.shared.getAuthenticatedUser()
-        if let user {
+        if user != nil {
             presentTabCoordinator()
         } else {
             presentAuthCoordinator()
