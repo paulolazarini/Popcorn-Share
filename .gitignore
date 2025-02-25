@@ -29,6 +29,7 @@ DerivedData/
 !default.perspectivev3
 PopcornShare/GoogleService-Info.plist
 Secrets.xcconfig
+.DS_Store
 
 ## Obj-C/Swift specific
 *.hmap
