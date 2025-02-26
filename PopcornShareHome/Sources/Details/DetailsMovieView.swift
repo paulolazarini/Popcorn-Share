@@ -6,14 +6,11 @@
 //
 
 import SwiftUI
-import PopcornShareNetwork
 import PopcornShareUtilities
+import PopcornShareNetworkModel
 
 public struct DetailsMovieView: View {
     @ObservedObject var viewModel: DetailsMovieViewModel
-
-    @State var posterImage: Image?
-    @State var backdropImage: Image?
     
     @Environment(\.dismiss) private var dismiss
     
@@ -24,39 +21,10 @@ public struct DetailsMovieView: View {
     public var body: some View {
         stateView
             .background(Color.Background.yellow.ignoresSafeArea())
-            .navigationTitle(viewModel.movie.title)
             .toolbarVisibility(.visible, for: .navigationBar)
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarBackButtonHidden()
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Image(systemName: "arrow.left")
-                            .foregroundStyle(.black)
-                    }
-                }
-            }
-            .task(priority: .userInitiated) {
-                do {
-                    async let backdropImage = getMovieBackdrop()
-                    async let posterImage = getMoviePoster()
-                    
-                    let (backdropImageResult, posterImageResult) = try await (
-                        backdropImage,
-                        posterImage
-                    )
-                    
-                    await MainActor.run {
-                        self.posterImage = posterImageResult
-                        self.backdropImage = backdropImageResult
-                        viewModel.state = .details
-                    }
-                } catch {
-                    print(error.localizedDescription)
-                }
-            }
+            .toolbar { ToolbarDismissButton() }
     }
 
     @ViewBuilder
@@ -70,13 +38,17 @@ public struct DetailsMovieView: View {
     }
 
     var detailsView: some View {
-        VStack(spacing: .medium) {
-            movieHeader
+        ScrollView {
+            backdropImageView
             
-            Text(viewModel.movie.overview)
+            if let movie = viewModel.movie, let credits = viewModel.credits {
+                movieHeaderInfo(movie, credits: credits)
+            }
+            
+            Text(viewModel.movie?.overview ?? .empty)
+                .padding(.medium)
         }
-        .vAlignment(.top)
-        .padding(.large)
+        .ignoresSafeArea(edges: .top)
     }
 
     var movieHeader: some View {
@@ -85,7 +57,7 @@ public struct DetailsMovieView: View {
                 backdropImageView
                     .padding(.medium)
 
-                if let posterImage = posterImage {
+                if let posterImage = viewModel.posterImage {
                     posterImage
                         .resizable()
                         .frame(width: 120, height: 180)
@@ -96,7 +68,9 @@ public struct DetailsMovieView: View {
             .compositingGroup()
             .shadow(radius: 5)
             
-            movieHeaderInfo
+            if let movie = viewModel.movie, let credits = viewModel.credits {
+                movieHeaderInfo(movie, credits: credits)
+            }
         }
         .background(
             Color.Background.gray,
@@ -104,27 +78,28 @@ public struct DetailsMovieView: View {
         )
     }
 
-    var movieHeaderInfo: some View {
+    func movieHeaderInfo(
+        _ movie: MovieViewData,
+        credits: CreditsResponse
+    ) -> some View {
         VStack(alignment: .leading, spacing: .medium) {
-            Text(viewModel.movie.title)
+            Text(movie.title)
                 .font(.title2)
                 .foregroundColor(.primary)
                 .bold()
-
-            Text("Directed by \(viewModel.movie.title)")
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-
-            Text(viewModel.movie.releaseDateString ?? .empty)
-                .font(.footnote)
-                .foregroundColor(.secondary)
+            
+            if let director = credits.crew.first(where: { $0.knownForDepartment == "Directing" }) {
+                Text("Directed by \(director.name ?? .empty)")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+            }
             
             HStack {
-                Label("\(viewModel.movie.runtime) minutes", systemImage: "clock")
+                Label("\(movie.runtimeString)", systemImage: "clock")
                     .font(.footnote)
                     .foregroundColor(.primary)
                 
-                Label(viewModel.movie.releaseDateString ?? .empty, systemImage: "calendar")
+                Label(movie.releaseDateString ?? .empty, systemImage: "calendar")
                     .font(.footnote)
                     .foregroundColor(.primary)
                 
@@ -133,17 +108,16 @@ public struct DetailsMovieView: View {
                     .foregroundColor(.primary)
             }
         }
-        .padding(.medium)
     }
 
     @ViewBuilder
     var backdropImageView: some View {
-        if let backdropImage {
+        if let backdropImage = viewModel.backdropImage {
             backdropImage
                 .resizable()
                 .scaledToFill()
-                .frame(height: 200)
-                .clipShape(.rect(cornerRadius: .medium))
+                .frame(maxWidth: .infinity)
+                .overlay(gradientOverlay)
         } else {
             loadingView
                 .frame(height: 200)
@@ -157,34 +131,19 @@ public struct DetailsMovieView: View {
             .controlSize(.extraLarge)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
-
-    func getMoviePoster() async throws -> Image {
-        let result = await NetworkImageManager()
-            .getMovieImage(using: .makePosterPath(viewModel.movie.posterPath))
-        
-        switch result {
-        case .success(let image):
-            return Image(uiImage: image)
-        case .failure(let error):
-            print(error)
-            throw error
-        }
-    }
-
-    func getMovieBackdrop() async throws -> Image {
-        let result = await NetworkImageManager()
-            .getMovieImage(using: .makePosterPath(viewModel.movie.backdropPath))
-        
-        switch result {
-        case .success(let image):
-            return Image(uiImage: image)
-        case .failure(let error):
-            print(error)
-            throw error
-        }
+    
+    var gradientOverlay: some View {
+        LinearGradient(
+            colors: [
+                .Background.yellow,
+                .clear
+            ],
+            startPoint: .bottom,
+            endPoint: UnitPoint(x: 0.5, y: 0.3)
+        )
     }
 }
 
 #Preview {
-    DetailsMovieView(viewModel: DetailsMovieViewModel(movie: .mock()))
+    DetailsMovieView(viewModel: DetailsMovieViewModel(movieId: "1"))
 }

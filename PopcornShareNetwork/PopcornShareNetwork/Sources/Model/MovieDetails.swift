@@ -64,7 +64,7 @@ public extension MovieDetails {
             backdropPath: self.backdropPath ?? "",
             overview: self.overview ?? "",
             releaseDate: self.releaseDate ?? "",
-            runtime: String(self.runtime ?? 0),
+            runtime: self.runtime ?? 0,
             favorite: false,
             genres: self.genres?.map { GenreViewData(id: $0.id, name: $0.name) } ?? []
         )

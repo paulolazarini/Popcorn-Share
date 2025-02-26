@@ -37,16 +37,7 @@ struct MoviesCategoryView<ViewModel: MoviesCategoryViewModeling & Sendable>: Vie
             .navigationTitle(viewModel.navigationTitle)
             .navigationBarTitleDisplayMode(.large)
             .navigationBarBackButtonHidden()
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Image(systemName: "arrow.left")
-                            .foregroundStyle(.black)
-                    }
-                }
-            }
+            .toolbar { ToolbarDismissButton() }
             .background(Color.Background.yellow)
     }
     
@@ -57,7 +48,7 @@ struct MoviesCategoryView<ViewModel: MoviesCategoryViewModeling & Sendable>: Vie
             didLoadLastCell: fetchNexPage,
             data: $viewModel.movies) { index, movie in
                 NavigationLink {
-                    DetailsMovieView(viewModel: DetailsMovieViewModel(movie: movie))
+                    DetailsMovieView(viewModel: DetailsMovieViewModel(movieId: movie.id))
                         .navigationTransition(.zoom(sourceID: movie.id, in: animationId))
                 } label: {
                     PSMovieCategoryCell(
@@ -83,7 +74,7 @@ struct MoviesCategoryView<ViewModel: MoviesCategoryViewModeling & Sendable>: Vie
     }
     
     private func fetchNexPage() {
-        Task(priority: .high) {
+        Task(priority: .userInitiated) {
             viewModel.page += 1
             await viewModel.getMovies()
         }

@@ -27,7 +27,7 @@ struct SearchView: View {
         }
         .overlay(alignment: .center) { loadingView }
         .toolbarVisibility(.hidden, for: .navigationBar)
-        .vAlignment(.top)        
+        .vAlignment(.top)
     }
     
     @ViewBuilder
@@ -45,7 +45,7 @@ struct SearchView: View {
             gridItems: [GridItem(spacing: .zero)],
             data: $viewModel.movies) { index, movie in
                 NavigationLink {
-                    PopcornShareHome.DetailsMovieView(viewModel: PopcornShareHome.DetailsMovieViewModel(movie: movie))
+                    PopcornShareHome.DetailsMovieView(viewModel: PopcornShareHome.DetailsMovieViewModel(movieId: movie.id))
                         .navigationTransition(.zoom(sourceID: movie.id, in: animationId))
                 } label: {
                     SearchMovieCell(

@@ -16,6 +16,7 @@ public protocol NetworkManagerType: HTTPClient {
     func getUpcomingMovies(page: Int) async -> Result<Movies, RequestError>
     func searchMovies(using query: String) async -> Result<Movies, RequestError>
     func getMovie(using id: String) async -> Result<MovieDetails, RequestError>
+    func getCredits(using id: String) async -> Result<CreditsResponse, RequestError>
 }
 
 public struct NetworkManager: NetworkManagerType {
@@ -44,5 +45,9 @@ public struct NetworkManager: NetworkManagerType {
     
     public func getUpcomingMovies(page: Int) async -> Result<Movies, RequestError> {
         await requestModel(endpoint: NetworkRequest.fetchUpcomingMovies(page: page))
+    }
+    
+    public func getCredits(using id: String) async -> Result<CreditsResponse, RequestError> {
+        await requestModel(endpoint: NetworkRequest.fetchCredits(id: id))
     }
 }

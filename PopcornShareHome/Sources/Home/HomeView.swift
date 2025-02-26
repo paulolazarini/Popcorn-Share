@@ -33,7 +33,6 @@ public struct HomeView: View {
                     makeMovieSection(category)
                 }
             }
-            .ignoresSafeArea(edges: .top)
             .task(priority: .userInitiated) {
                 await viewModel.fetchMovies()
             }
@@ -42,26 +41,6 @@ public struct HomeView: View {
     
     private var homeHeaderView: some View {
         PSHomeHeader(headerMovies: $viewModel.headerMovies)
-            .overlay(alignment: .bottom) {
-                HStack(spacing: .medium) {
-                    PSHomeButton(backgroundColor: Color.Custom.gray) {
-                        print("test")
-                    } label: {
-                        Label(
-                            "Wishlist",
-                            systemImage: "plus"
-                        )
-                    }
-                    
-                    PSHomeButton {
-                        print("test")
-                    } label: {
-                        Text("Details")
-                    }
-                }
-                .padding(.bottom, 55)
-                .padding(.horizontal, .large)
-            }
     }
     
     private func makeMovieSection(_ category: MovieCategory) -> some View {
@@ -155,7 +134,7 @@ public struct HomeView: View {
     
     private func makeNavigationLink(movie: Binding<MovieViewData>) -> some View {
         NavigationLink {
-            DetailsMovieView(viewModel: DetailsMovieViewModel(movie: movie.wrappedValue))
+            DetailsMovieView(viewModel: DetailsMovieViewModel(movieId: movie.id))
                 .navigationTransition(.zoom(sourceID: movie.id, in: animationId))
         } label: {
             PSCardView(

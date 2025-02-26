@@ -14,7 +14,7 @@ public struct MovieViewData: Hashable, Identifiable, Equatable, Sendable {
     public let backdropPath: String
     public let overview: String
     public let releaseDate: String
-    public let runtime: String
+    public let runtime: Int
     public let genres: [GenreViewData]
     public var favorite: Bool
     public var isLoadingFavorite: Bool
@@ -26,7 +26,7 @@ public struct MovieViewData: Hashable, Identifiable, Equatable, Sendable {
         backdropPath: String,
         overview: String,
         releaseDate: String,
-        runtime: String,
+        runtime: Int,
         favorite: Bool,
         isLoadingFavorite: Bool = false,
         genres: [GenreViewData]
@@ -49,6 +49,18 @@ public struct MovieViewData: Hashable, Identifiable, Equatable, Sendable {
     
     public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
+    }
+    
+    public var runtimeString: String {
+        let hours = runtime / 60
+        let minutes = runtime % 60
+        
+        switch (hours, minutes) {
+        case (0, 0): return "-"
+        case (_, 0): return "\(hours)h"
+        case (0, _): return "\(minutes)min"
+        default: return "\(hours)h \(minutes)min"
+        }
     }
     
     public var releaseDateString: String? {
@@ -77,7 +89,7 @@ public extension MovieViewData {
             backdropPath: "/b85bJfrTOSJ7M5Ox0yp4lxIxdG1.jpg",
             overview: "Following their explosive showdown, Godzilla and Kong must reunite against a colossal undiscovered threat hidden within our world, challenging their very existence – and our own.",
             releaseDate: "2024-03-27",
-            runtime: "139",
+            runtime: 139,
             favorite: false,
             genres: []
         )

@@ -21,12 +21,14 @@ struct PSHomeHeader: View {
                 buildImage(for: movie)
             }
         }
-        .tabViewStyle(PageTabViewStyle())
-        .frame(height: 550)
+        .tabViewStyle(.page)
+        .frame(height: 182)
+        .clipShape(.rect(cornerRadius: .small))
         .onAppear {
             UIPageControl.appearance().currentPageIndicatorTintColor = UIColor.yellow
             UIPageControl.appearance().pageIndicatorTintColor = UIColor.lightGray
         }
+        .padding(.horizontal, .medium)
         .onChange(of: headerMovies) { _, movies in
             movies.forEach { movie in
                 Task(priority: .high) {
@@ -41,9 +43,7 @@ struct PSHomeHeader: View {
         if let image = images[movie.id] {
             image
                 .resizable()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .scaledToFill()
-                .overlay(gradientOverlay)
         } else {
             ProgressView()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -51,7 +51,7 @@ struct PSHomeHeader: View {
     }
     
     func loadImage(for movie: MovieViewData) async {
-        if let image = await getImage(url: movie.posterPath) {
+        if let image = await getImage(url: movie.backdropPath) {
             await MainActor.run {
                 images[movie.id] = image
             }
@@ -68,20 +68,6 @@ struct PSHomeHeader: View {
             print("Error fetching image: \(error)")
             return nil
         }
-    }
-    
-    var gradientOverlay: some View {
-        LinearGradient(
-            colors: [
-                .white.opacity(0),
-                .white.opacity(0.2),
-                .white.opacity(0.8),
-                .white,
-                .white
-            ],
-            startPoint: .center,
-            endPoint: .bottom
-        )
     }
 }
 

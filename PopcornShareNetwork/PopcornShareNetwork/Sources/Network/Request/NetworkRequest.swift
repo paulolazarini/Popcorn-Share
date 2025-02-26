@@ -15,6 +15,7 @@ enum NetworkRequest {
     case fetchUpcomingMovies(page: Int)
     case fetchSearchMovies(query: String)
     case fetchMovie(id: String)
+    case fetchCredits(id: String)
 }
 
 extension NetworkRequest: Endpoint {
@@ -41,6 +42,8 @@ extension NetworkRequest: Endpoint {
             return "/3/movie/upcoming"
         case .fetchMovie(let id):
             return "/3/movie/\(id)"
+        case .fetchCredits(let id):
+            return "/3/movie/\(id)/credits"
         }
     }
     

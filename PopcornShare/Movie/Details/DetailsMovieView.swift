@@ -24,16 +24,7 @@ public struct DetailsMovieView: View {
         .navigationTitle(viewModel.movie.title)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden()
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                Button {
-                    dismiss()
-                } label: {
-                    Image(systemName: "arrow.left")
-                        .foregroundStyle(.black)
-                }
-            }
-        }
+        .toolbar { ToolbarDismissButton() }
         .task(priority: .high) {
             await getMovieBackdrop()
             await getMoviePoster()
