@@ -33,7 +33,7 @@ public struct HomeView: View {
                     makeMovieSection(category)
                 }
             }
-            .task(priority: .userInitiated) {
+            .task(priority: .high) {
                 await viewModel.fetchMovies()
             }
         }

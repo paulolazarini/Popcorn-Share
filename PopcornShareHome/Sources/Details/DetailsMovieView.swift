@@ -20,7 +20,8 @@ public struct DetailsMovieView: View {
 
     public var body: some View {
         stateView
-            .background(Color.Background.yellow.ignoresSafeArea())
+            .background(Color.Background.yellow)
+            .ignoresSafeArea(edges: .top)
             .toolbarVisibility(.visible, for: .navigationBar)
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarBackButtonHidden()
@@ -48,7 +49,6 @@ public struct DetailsMovieView: View {
             Text(viewModel.movie?.overview ?? .empty)
                 .padding(.medium)
         }
-        .ignoresSafeArea(edges: .top)
     }
 
     var movieHeader: some View {

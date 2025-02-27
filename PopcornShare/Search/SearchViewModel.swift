@@ -39,7 +39,6 @@ final class SearchViewModel: ObservableObject {
                 guard let self else { return }
                 
                 guard !text.isEmpty else {
-                    self.movies.removeAll()
                     self.getPopularMovies()
                     return
                 }
@@ -49,13 +48,13 @@ final class SearchViewModel: ObservableObject {
     }
     
     private func getPopularMovies() {
-        isLoading(true)
         Task { [weak self] in
             guard let self else { return }
+            await isLoading(true)
             
             let result = await self.serviceManager.getPopularMovies(page: 1)
             
-            self.isLoading(false)
+            await isLoading(false)
             
             switch result {
             case .success(let movies):
@@ -70,13 +69,14 @@ final class SearchViewModel: ObservableObject {
 
     
     private func searchMovies(using query: String) {
-        isLoading(true)
         Task { [weak self] in
             guard let self else { return }
             
+            await isLoading(true)
+            
             let result = await self.serviceManager.searchMovies(using: query)
             
-            self.isLoading(false)
+            await isLoading(false)
             
             switch result {
             case let .success(movies):
@@ -87,6 +87,7 @@ final class SearchViewModel: ObservableObject {
                     }
                     
                     self.movies = movies.results.map { $0.toMovieViewData }
+                    self.state = .movies
                 }
             case let .failure(error):
                 print(error)
@@ -94,9 +95,8 @@ final class SearchViewModel: ObservableObject {
         }
     }
     
+    @MainActor
     private func isLoading(_ bool: Bool) {
-        DispatchQueue.main.async { [weak self] in
-            self?.isLoading = bool
-        }
+        self.isLoading = bool
     }
 }

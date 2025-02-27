@@ -75,29 +75,27 @@ struct SearchView: View {
     
     private var searchTextField: some View {
         HStack {
-            HStack {
+            HStack(spacing: .extraSmall) {
                 Image(systemName: "magnifyingglass")
                     .foregroundStyle(.gray)
                 
                 TextField("", text: $viewModel.searchText)
-                    .frame(height: 55)
+                    .frame(height: 35)
                     .autocorrectionDisabled()
                     .autocapitalization(.none)
                     .focused($focus)
-                    .padding(.horizontal, .medium)
                     .submitLabel(.search)
                     .overlay(alignment: .leading) {
                         if !focus && viewModel.searchText.isEmpty{
-                            Text("Search...")
-                                .padding(.horizontal, .medium)
+                            Text("Search")
                                 .foregroundStyle(.gray)
                         }
                     }
             }
-            .padding(.horizontal, .medium)
+            .padding(.horizontal, .small)
             .background(
-                Color.Background.gray,
-                in: .rect(cornerRadius: .large)
+                .gray.quaternary,
+                in: .rect(cornerRadius: .small)
             )
             
             if !viewModel.searchText.isEmpty {

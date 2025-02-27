@@ -74,7 +74,7 @@ struct MoviesCategoryView<ViewModel: MoviesCategoryViewModeling & Sendable>: Vie
     }
     
     private func fetchNexPage() {
-        Task(priority: .userInitiated) {
+        Task(priority: .high) {
             viewModel.page += 1
             await viewModel.getMovies()
         }

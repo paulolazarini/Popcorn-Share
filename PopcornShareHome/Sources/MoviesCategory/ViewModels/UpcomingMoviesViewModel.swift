@@ -27,6 +27,8 @@ public final class UpcomingMoviesViewModel: MoviesCategoryViewModeling, @uncheck
     }
     
     func getMovies() async {
+        guard !isLoading else { return }
+        
         isLoading(true)
         defer { isLoading(false) }
         

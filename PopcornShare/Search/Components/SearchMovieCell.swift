@@ -31,8 +31,8 @@ struct SearchMovieCell: View {
         .frame(height: 130)
         .padding(.horizontal, .medium)
         .background(
-            Color.Background.gray,
-            in: .rect(cornerRadius: .large)
+            .gray.quaternary,
+            in: .rect(cornerRadius: .small)
         )
         .overlay(alignment: .topTrailing) {
             favoriteButton

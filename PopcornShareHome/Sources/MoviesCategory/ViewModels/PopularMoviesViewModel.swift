@@ -26,6 +26,8 @@ public final class PopularMoviesViewModel: MoviesCategoryViewModeling, @unchecke
     }
     
     func getMovies() async {
+        guard !isLoading else { return }
+        
         isLoading(true)
         defer { isLoading(false) }
         

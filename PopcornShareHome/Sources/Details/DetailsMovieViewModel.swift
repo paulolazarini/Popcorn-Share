@@ -30,7 +30,7 @@ public final class DetailsMovieViewModel: ObservableObject, @unchecked Sendable 
     ) {
         self.serviceManager = serviceManager
         
-        Task(priority: .userInitiated) {
+        Task(priority: .high) {
             do {
                 try await fetchAllData(using: movieId)
             } catch {
