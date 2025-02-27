@@ -31,7 +31,7 @@ struct PSHomeHeader: View {
         .padding(.horizontal, .medium)
         .onChange(of: headerMovies) { _, movies in
             movies.forEach { movie in
-                Task(priority: .high) {
+                Task(priority: .utility) {
                     await loadImage(for: movie)
                 }
             }
@@ -59,7 +59,7 @@ struct PSHomeHeader: View {
     }
     
     func getImage(url: String) async -> Image? {
-        let result = await NetworkImageManager().getMovieImage(using: .makePosterPath(url))
+        let result = await NetworkImageManager.shared.getMovieImage(using: .makePosterPath(url))
         
         switch result {
         case .success(let uiImage):

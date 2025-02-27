@@ -95,7 +95,7 @@ public final class DetailsMovieViewModel: ObservableObject, @unchecked Sendable 
     }
     
     private func getMoviePoster() async throws -> Image {
-        let result = await NetworkImageManager()
+        let result = await NetworkImageManager.shared
             .getMovieImage(using: .makePosterPath(movie?.posterPath ?? .empty))
         
         switch result {
@@ -108,7 +108,7 @@ public final class DetailsMovieViewModel: ObservableObject, @unchecked Sendable 
     }
     
     private func getMovieBackdrop() async throws -> Image {
-        let result = await NetworkImageManager()
+        let result = await NetworkImageManager.shared
             .getMovieImage(using: .makePosterPath(movie?.backdropPath ?? .empty))
         
         switch result {

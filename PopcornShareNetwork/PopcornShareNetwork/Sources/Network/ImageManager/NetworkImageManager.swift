@@ -13,9 +13,11 @@ public protocol NetworkImageManagerType {
 }
 
 public final class NetworkImageManager: NetworkImageManagerType, Sendable {
-    private let cacheManager: CacheManager = CacheManager()
+    public static let shared = NetworkImageManager()
     
-    public init() {}
+    private let cacheManager: ImageCache = ImageCache()
+    
+    private init() {}
     
     public func getMovieImage(using imageUrl: String) async -> Result<UIImage, RequestError> {
         guard let url = URL(string: imageUrl) else { return .failure(.invalidURL) }

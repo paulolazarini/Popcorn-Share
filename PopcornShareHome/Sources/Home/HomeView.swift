@@ -133,13 +133,9 @@ public struct HomeView: View {
     }
     
     private func makeNavigationLink(movie: Binding<MovieViewData>) -> some View {
-        NavigationLink {
-            DetailsMovieView(viewModel: DetailsMovieViewModel(movieId: movie.id))
-                .navigationTransition(.zoom(sourceID: movie.id, in: animationId))
-        } label: {
+        NavigationLinkToMovieDetails(movie: movie.wrappedValue) {
             PSCardView(
                 movie: movie,
-                animationId: animationId,
                 onFavoriteTapped: { movie in }
             )
         }

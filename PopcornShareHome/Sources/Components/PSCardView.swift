@@ -17,7 +17,6 @@ struct PSCardView: View {
     }
     
     @Binding var movie: MovieViewData
-    let animationId: Namespace.ID
     let onFavoriteTapped: (MovieViewData) -> Void
     
     @State var image: Image?
@@ -35,19 +34,11 @@ struct PSCardView: View {
             height: Constants.movieCardHeight
         )
         .clipShape(.rect(cornerRadius: .medium))
-        .overlay(alignment: .topTrailing) {
-            favoriteButton
-        }
-        .task(priority: .high) {
-            let result = await NetworkImageManager().getMovieImage(using: .makePosterPath(movie.posterPath))
-            
-            switch result {
-            case .success(let image):
-                await MainActor.run {
-                    self.image = Image(uiImage: image)
-                }
-            case .failure(let error):
-                print(error)
+        .overlay(alignment: .topTrailing) { favoriteButton }
+        .task(priority: .utility) {
+            let result = await NetworkImageManager.shared.getMovieImage(using: .makePosterPath(movie.posterPath))
+            if case .success(let image) = result {
+                await MainActor.run { self.image = Image(uiImage: image) }
             }
         }
     }
@@ -106,9 +97,4 @@ struct PSCardView: View {
         }
         .padding(.medium)
     }
-}
-
-#Preview {
-    @Previewable @Namespace var animationId
-    PSCardView(movie: .constant(.mock()), animationId: animationId) { _ in}
 }

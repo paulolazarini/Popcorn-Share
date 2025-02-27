@@ -16,10 +16,8 @@ struct PSMovieCategoryCell: View {
     }
     
     @Binding var movie: MovieViewData
-    @State var viewDidLoad = true
     @State var image: Image?
     
-    let animationId: Namespace.ID
     let onFavoriteTapped: (MovieViewData) -> Void
     
     var body: some View {
@@ -31,20 +29,10 @@ struct PSMovieCategoryCell: View {
             movieTitle
         }
         .overlay(alignment: .topTrailing) { favoriteButton }
-        .task(priority: .high) {
-            guard viewDidLoad else { return }
-            
-            viewDidLoad = false
-            
-            let result = await NetworkImageManager().getMovieImage(using: .makePosterPath(movie.posterPath))
-            
-            switch result {
-            case .success(let image):
-                await MainActor.run {
-                    self.image = Image(uiImage: image)
-                }
-            case .failure(let error):
-                print(error)
+        .task(priority: .utility) {
+            let result = await NetworkImageManager.shared.getMovieImage(using: .makePosterPath(movie.posterPath))
+            if case .success(let image) = result {
+                await MainActor.run { self.image = Image(uiImage: image) }
             }
         }
     }

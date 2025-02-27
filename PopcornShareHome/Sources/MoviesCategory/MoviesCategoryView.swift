@@ -47,21 +47,16 @@ struct MoviesCategoryView<ViewModel: MoviesCategoryViewModeling & Sendable>: Vie
             orientation: .vertical,
             didLoadLastCell: fetchNexPage,
             data: $viewModel.movies) { index, movie in
-                NavigationLink {
-                    DetailsMovieView(viewModel: DetailsMovieViewModel(movieId: movie.id))
-                        .navigationTransition(.zoom(sourceID: movie.id, in: animationId))
-                } label: {
+                NavigationLinkToMovieDetails(movie: movie) {
                     PSMovieCategoryCell(
                         movie: Binding(
                             get: { return movie },
                             set: { viewModel.movies[index] = $0 }
                         ),
-                        animationId: animationId,
                         onFavoriteTapped: { movie in }
                     )
                     .padding(.small)
                 }
-                .id(UUID())
         }
             .safeAreaInset(edge: .bottom) {
                 if viewModel.isLoading {

@@ -13,8 +13,6 @@ import PopcornShareUtilities
 
 struct SearchMovieCell: View {
     @Binding var movie: MovieViewData
-    
-    @State var viewDidLoad = true
     @State var image: Image?
     
     let animationId: Namespace.ID
@@ -39,19 +37,9 @@ struct SearchMovieCell: View {
         }
         .padding(.horizontal, .medium)
         .task(priority: .high) {
-            guard viewDidLoad else { return }
-            
-            viewDidLoad = false
-            
-            let result = await NetworkImageManager().getMovieImage(using: .makePosterPath(movie.posterPath))
-            
-            switch result {
-            case .success(let image):
-                await MainActor.run {
-                    self.image = Image(uiImage: image)
-                }
-            case .failure(let error):
-                print(error)
+            let result = await NetworkImageManager.shared.getMovieImage(using: .makePosterPath(movie.posterPath))
+            if case .success(let image) = result {
+                await MainActor.run { self.image = Image(uiImage: image) }
             }
         }
 
