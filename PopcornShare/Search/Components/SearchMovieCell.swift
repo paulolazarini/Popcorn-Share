@@ -36,13 +36,12 @@ struct SearchMovieCell: View {
             favoriteButton
         }
         .padding(.horizontal, .medium)
-        .task(priority: .high) {
+        .task(priority: .utility) {
             let result = await NetworkImageManager.shared.getMovieImage(using: .makePosterPath(movie.posterPath))
             if case .success(let image) = result {
                 await MainActor.run { self.image = Image(uiImage: image) }
             }
         }
-
     }
     
     private var movieInfoView: some View {

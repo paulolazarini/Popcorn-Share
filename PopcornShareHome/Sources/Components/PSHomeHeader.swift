@@ -11,14 +11,15 @@ import PopcornShareNetwork
 import PopcornShareUtilities
 
 struct PSHomeHeader: View {
-    
     @Binding var headerMovies: [MovieViewData]
     @State private var images: [String: Image] = [:]
 
     var body: some View {
         TabView {
             ForEach(headerMovies, id: \.self) { movie in
-                buildImage(for: movie)
+                NavigationLinkToMovieDetails(movie: movie) {
+                    buildImage(for: movie)
+                }
             }
         }
         .tabViewStyle(.page)
