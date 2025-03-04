@@ -31,6 +31,11 @@
 		E041C9022C0024BB002100BE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E041C9012C0024BB002100BE /* SceneDelegate.swift */; };
 		E041C9092C0024C8002100BE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E041C9082C0024C8002100BE /* Assets.xcassets */; };
 		E041C90C2C0024C8002100BE /* Base in Resources */ = {isa = PBXBuildFile; fileRef = E041C90B2C0024C8002100BE /* Base */; };
+		E04F13CC2D7743AF00F1F3F5 /* PopcornShareSearch in Frameworks */ = {isa = PBXBuildFile; productRef = E04F13CB2D7743AF00F1F3F5 /* PopcornShareSearch */; };
+		E04F13CE2D7743B400F1F3F5 /* PopcornShareProfile in Frameworks */ = {isa = PBXBuildFile; productRef = E04F13CD2D7743B400F1F3F5 /* PopcornShareProfile */; };
+		E06731292D773A0100CE9DBD /* PopcornShareAuthentication in Frameworks */ = {isa = PBXBuildFile; productRef = E06731282D773A0100CE9DBD /* PopcornShareAuthentication */; };
+		E067312B2D773B8C00CE9DBD /* PopcornShareProfile in Resources */ = {isa = PBXBuildFile; fileRef = E067312A2D773B8C00CE9DBD /* PopcornShareProfile */; };
+		E067312D2D773DF500CE9DBD /* PopcornShareSearch in Resources */ = {isa = PBXBuildFile; fileRef = E067312C2D773DF500CE9DBD /* PopcornShareSearch */; };
 		E077E9502D63EACF0015314D /* SearchMovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E077E94F2D63EACF0015314D /* SearchMovieCell.swift */; };
 		E088391B2D48805D00F2BAAB /* PopcornShareHome in Frameworks */ = {isa = PBXBuildFile; productRef = E088391A2D48805D00F2BAAB /* PopcornShareHome */; };
 		E0B2141E2C017F27005DF2EF /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0B2141D2C017F27005DF2EF /* ProfileView.swift */; };
@@ -45,6 +50,7 @@
 		E0D45E7F2C002E6D005ED237 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0D45E7E2C002E6D005ED237 /* AppCoordinator.swift */; };
 		E0D45E822C002EE0005ED237 /* TabCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0D45E812C002EE0005ED237 /* TabCoordinator.swift */; };
 		E0D45E872C00370E005ED237 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0D45E862C00370E005ED237 /* LoginView.swift */; };
+		E0D6C77C2D77398700E7EAB2 /* PopcornShareAuthentication in Resources */ = {isa = PBXBuildFile; fileRef = E0D6C77B2D77398700E7EAB2 /* PopcornShareAuthentication */; };
 		E0F2EC562D3A026900A470DF /* PopcornShareNetworkCore in Frameworks */ = {isa = PBXBuildFile; productRef = E0F2EC552D3A026900A470DF /* PopcornShareNetworkCore */; };
 		E0F7E20A2C839500002584ED /* DetailsMovieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F7E2092C839500002584ED /* DetailsMovieView.swift */; };
 		E0F7E20C2C839583002584ED /* DetailsMovieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F7E20B2C839583002584ED /* DetailsMovieViewModel.swift */; };
@@ -69,6 +75,8 @@
 		E041C9082C0024C8002100BE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E041C90B2C0024C8002100BE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E041C90D2C0024C8002100BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E067312A2D773B8C00CE9DBD /* PopcornShareProfile */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PopcornShareProfile; sourceTree = "<group>"; };
+		E067312C2D773DF500CE9DBD /* PopcornShareSearch */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PopcornShareSearch; sourceTree = "<group>"; };
 		E077E94F2D63EACF0015314D /* SearchMovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMovieCell.swift; sourceTree = "<group>"; };
 		E08839192D487ED900F2BAAB /* PopcornShareHome */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PopcornShareHome; sourceTree = "<group>"; };
 		E09220D22D3ACA9B002DABE5 /* PopcornShareNetworkCore */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PopcornShareNetworkCore; sourceTree = "<group>"; };
@@ -86,6 +94,7 @@
 		E0D45E7E2C002E6D005ED237 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		E0D45E812C002EE0005ED237 /* TabCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabCoordinator.swift; sourceTree = "<group>"; };
 		E0D45E862C00370E005ED237 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		E0D6C77B2D77398700E7EAB2 /* PopcornShareAuthentication */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PopcornShareAuthentication; sourceTree = "<group>"; };
 		E0F7E2092C839500002584ED /* DetailsMovieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsMovieView.swift; sourceTree = "<group>"; };
 		E0F7E20B2C839583002584ED /* DetailsMovieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsMovieViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -99,12 +108,15 @@
 				E040945A2D49282C007A3D37 /* PopcornShareNetwork in Frameworks */,
 				E00CB8852C00526500D49547 /* FirebaseAnalytics in Frameworks */,
 				E00CB8952C00526500D49547 /* FirebaseStorage in Frameworks */,
+				E04F13CE2D7743B400F1F3F5 /* PopcornShareProfile in Frameworks */,
 				E0F2EC562D3A026900A470DF /* PopcornShareNetworkCore in Frameworks */,
 				E00CB88B2C00526500D49547 /* FirebaseCrashlytics in Frameworks */,
 				E00CB8912C00526500D49547 /* FirebaseFirestoreSwift in Frameworks */,
 				E0CFDF162D15304D0077C10B /* PopcornShareUtilities in Frameworks */,
 				E088391B2D48805D00F2BAAB /* PopcornShareHome in Frameworks */,
 				E00CB88D2C00526500D49547 /* FirebaseFirestore in Frameworks */,
+				E06731292D773A0100CE9DBD /* PopcornShareAuthentication in Frameworks */,
+				E04F13CC2D7743AF00F1F3F5 /* PopcornShareSearch in Frameworks */,
 				E00CB8872C00526500D49547 /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -173,6 +185,9 @@
 			children = (
 				E0BA93162D5FBDCD00F09E93 /* Secrets.xcconfig */,
 				E041C8FE2C0024BB002100BE /* PopcornShare */,
+				E067312C2D773DF500CE9DBD /* PopcornShareSearch */,
+				E067312A2D773B8C00CE9DBD /* PopcornShareProfile */,
+				E0D6C77B2D77398700E7EAB2 /* PopcornShareAuthentication */,
 				E08839192D487ED900F2BAAB /* PopcornShareHome */,
 				E0BAE3CB2D1530040098FBC9 /* PopcornShareUtilities */,
 				E0B242002D49242700A2D436 /* PopcornShareNetwork */,
@@ -351,6 +366,9 @@
 				E0F2EC552D3A026900A470DF /* PopcornShareNetworkCore */,
 				E088391A2D48805D00F2BAAB /* PopcornShareHome */,
 				E04094592D49282C007A3D37 /* PopcornShareNetwork */,
+				E06731282D773A0100CE9DBD /* PopcornShareAuthentication */,
+				E04F13CB2D7743AF00F1F3F5 /* PopcornShareSearch */,
+				E04F13CD2D7743B400F1F3F5 /* PopcornShareProfile */,
 			);
 			productName = PopcornShare;
 			productReference = E041C8FC2C0024BB002100BE /* PopcornShare.app */;
@@ -398,7 +416,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				E041C9092C0024C8002100BE /* Assets.xcassets in Resources */,
+				E067312B2D773B8C00CE9DBD /* PopcornShareProfile in Resources */,
+				E067312D2D773DF500CE9DBD /* PopcornShareSearch in Resources */,
 				E0BA931B2D60E49200F09E93 /* GoogleService-Info.plist in Resources */,
+				E0D6C77C2D77398700E7EAB2 /* PopcornShareAuthentication in Resources */,
 				E041C90C2C0024C8002100BE /* Base in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -707,6 +728,18 @@
 		E04094592D49282C007A3D37 /* PopcornShareNetwork */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PopcornShareNetwork;
+		};
+		E04F13CB2D7743AF00F1F3F5 /* PopcornShareSearch */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PopcornShareSearch;
+		};
+		E04F13CD2D7743B400F1F3F5 /* PopcornShareProfile */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PopcornShareProfile;
+		};
+		E06731282D773A0100CE9DBD /* PopcornShareAuthentication */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PopcornShareAuthentication;
 		};
 		E088391A2D48805D00F2BAAB /* PopcornShareHome */ = {
 			isa = XCSwiftPackageProductDependency;

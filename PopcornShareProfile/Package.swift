@@ -1,16 +1,13 @@
-// swift-tools-version: 6.0
-// The swift-tools-version declares the minimum version of Swift required to build this package.
-
 // swift-tools-version:6.0
 import PackageDescription
 
 let package = Package(
-    name: "PopcornShareHome",
+    name: "PopcornShareProfile",
     platforms: [.iOS(.v18)],
     products: [
         .library(
-            name: "PopcornShareHome",
-            targets: ["PopcornShareHome"])
+            name: "PopcornShareProfile",
+            targets: ["PopcornShareProfile"])
     ],
     dependencies: [
         .package(path: "PopcornShareUtilities"),
@@ -18,17 +15,17 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "PopcornShareHome",
+            name: "PopcornShareProfile",
             dependencies: [
                 .product(name: "PopcornShareUtilities", package: "PopcornShareUtilities"),
                 .product(name: "PopcornShareNetwork", package: "PopcornShareNetwork")
             ],
-            path: "Sources/",
-            resources: [.process("Resources")]
+            path: "Sources/"
+//            resources: [.process("Resources")]
         ),
         .testTarget(
-            name: "PopcornShareHomeTests",
-            dependencies: ["PopcornShareHome"]
+            name: "PopcornShareProfileTests",
+            dependencies: ["PopcornShareProfile"]
         ),
     ]
 )
