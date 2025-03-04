@@ -37,7 +37,7 @@ struct MoviesCategoryView<ViewModel: MoviesCategoryViewModeling & Sendable>: Vie
             .navigationTitle(viewModel.navigationTitle)
             .navigationBarTitleDisplayMode(.large)
             .navigationBarBackButtonHidden()
-            .toolbar { ToolbarDismissButton() }
+            .toolbar { PSToolbarDismissButton() }
             .background(Color.Background.white)
     }
     

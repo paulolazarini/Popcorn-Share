@@ -24,7 +24,7 @@ public struct DetailsMovieView: View {
         .navigationTitle(viewModel.movie.title)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden()
-        .toolbar { ToolbarDismissButton() }
+        .toolbar { PSToolbarDismissButton() }
         .task(priority: .high) {
             await getMovieBackdrop()
             await getMoviePoster()

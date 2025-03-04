@@ -25,7 +25,7 @@ public struct DetailsMovieView: View {
             .toolbarVisibility(.visible, for: .navigationBar)
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarBackButtonHidden()
-            .toolbar { ToolbarDismissButton() }
+            .toolbar { PSToolbarDismissButton() }
     }
 
     @ViewBuilder
@@ -42,40 +42,14 @@ public struct DetailsMovieView: View {
         ScrollView {
             backdropImageView
             
-            if let movie = viewModel.movie, let credits = viewModel.credits {
+            if let movie = viewModel.movie,
+               let credits = viewModel.credits {
                 movieHeaderInfo(movie, credits: credits)
             }
             
             Text(viewModel.movie?.overview ?? .empty)
                 .padding(.medium)
         }
-    }
-
-    var movieHeader: some View {
-        VStack(alignment: .leading) {
-            ZStack(alignment: .topLeading) {
-                backdropImageView
-                    .padding(.medium)
-
-                if let posterImage = viewModel.posterImage {
-                    posterImage
-                        .resizable()
-                        .frame(width: 120, height: 180)
-                        .cornerRadius(.medium)
-                        .offset(x: 24, y: 70)
-                }
-            }
-            .compositingGroup()
-            .shadow(radius: 5)
-            
-            if let movie = viewModel.movie, let credits = viewModel.credits {
-                movieHeaderInfo(movie, credits: credits)
-            }
-        }
-        .background(
-            Color.Background.gray,
-            in: .rect(cornerRadius: .medium)
-        )
     }
 
     func movieHeaderInfo(
@@ -112,11 +86,8 @@ public struct DetailsMovieView: View {
 
     @ViewBuilder
     var backdropImageView: some View {
-        if let backdropImage = viewModel.backdropImage {
-            backdropImage
-                .resizable()
-                .scaledToFill()
-                .frame(maxWidth: .infinity)
+        if let movie = viewModel.movie {
+            PSMovieImage(for: movie, type: .backdrop)
                 .overlay(gradientOverlay)
         } else {
             loadingView

@@ -1,5 +1,5 @@
 //
-//  DismissToolbarButton.swift
+//  PSToolbarDismissButton.swift
 //  PopcornShareUtilities
 //
 //  Created by Paulo Lazarini on 25/02/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct ToolbarDismissButton: ToolbarContent {
+public struct PSToolbarDismissButton: ToolbarContent {
     @Environment(\.dismiss) private var dismiss
     
     public init() {}
@@ -19,6 +19,12 @@ public struct ToolbarDismissButton: ToolbarContent {
             } label: {
                 Image(systemName: "arrow.left")
                     .foregroundStyle(.black)
+                    .padding(.small)
+                    .background {
+                        Circle()
+                            .fill(Color.Background.yellow)
+                            .opacity(0.3)
+                    }
             }
         }
     }
