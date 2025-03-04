@@ -36,7 +36,7 @@ public struct HomeView: View {
     }
     
     private var homeHeaderView: some View {
-        PSHomeHeader(headerMovies: $viewModel.headerMovies)
+        HomeCarouselView(headerMovies: $viewModel.headerMovies)
     }
     
     private func makeMovieSection(_ category: MovieCategory) -> some View {

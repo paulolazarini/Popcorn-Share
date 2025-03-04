@@ -81,6 +81,6 @@ extension NetworkRequest {
             return movieAPIKey
         }
         
-        return .empty
+        return ""
     }
 }

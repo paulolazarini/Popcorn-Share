@@ -1,5 +1,5 @@
 //
-//  PSMovieCategoryCell.swift
+//  MovieCategoryCell.swift
 //  PopcornShareHome
 //
 //  Created by Paulo Lazarini on 13/02/25.
@@ -10,7 +10,7 @@ import SwiftUI
 import PopcornShareNetwork
 import PopcornShareUtilities
 
-struct PSMovieCategoryCell: View {
+struct MovieCategoryCell: View {
     enum Constants {
         static let movieCardHeight: CGFloat = 250
     }

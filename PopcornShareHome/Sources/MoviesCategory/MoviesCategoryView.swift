@@ -48,7 +48,7 @@ struct MoviesCategoryView<ViewModel: MoviesCategoryViewModeling & Sendable>: Vie
             didLoadLastCell: fetchNexPage,
             data: $viewModel.movies) { index, movie in
                 NavigationLinkToMovieDetails(movie: movie) {
-                    PSMovieCategoryCell(
+                    MovieCategoryCell(
                         movie: Binding(
                             get: { return movie },
                             set: { viewModel.movies[index] = $0 }

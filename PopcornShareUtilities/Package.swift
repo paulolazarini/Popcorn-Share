@@ -11,9 +11,18 @@ let package = Package(
             name: "PopcornShareUtilities",
             targets: ["PopcornShareUtilities"]),
     ],
+    dependencies: [
+        .package(path: "PopcornShareNetwork/PopcornShareNetwork")
+    ],
     targets: [
         .target(
-            name: "PopcornShareUtilities"
-        ),
+            name: "PopcornShareUtilities",
+            dependencies: [
+                .product(
+                    name: "PopcornShareNetwork",
+                    package: "PopcornShareNetwork"
+                )
+            ]
+        )
     ]
 )

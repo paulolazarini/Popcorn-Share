@@ -1,5 +1,5 @@
 //
-//  PSHomeHeader.swift
+//  HomeCarouselView.swift
 //  PopcornShareHome
 //
 //  Created by Paulo Lazarini on 28/01/25.
@@ -10,7 +10,7 @@ import Combine
 import PopcornShareNetwork
 import PopcornShareUtilities
 
-struct PSHomeHeader: View {
+struct HomeCarouselView: View {
     @Binding var headerMovies: [MovieViewData]
     
     var body: some View {
@@ -38,7 +38,7 @@ struct PSHomeHeader: View {
 
 #Preview {
     ScrollView {
-        PSHomeHeader(headerMovies: .constant(
+        HomeCarouselView(headerMovies: .constant(
             [.mock(), .mock(), .mock(), .mock(), .mock()]
         ))
     }

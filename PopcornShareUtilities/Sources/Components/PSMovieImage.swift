@@ -1,5 +1,5 @@
 //
-//  PSMovieImage.swift
+//  MovieImage.swift
 //  PopcornShareHome
 //
 //  Created by Paulo Lazarini on 02/03/25.
@@ -7,7 +7,6 @@
 
 import SwiftUI
 import PopcornShareNetwork
-import PopcornShareUtilities
 
 public struct PSMovieImage: View {
     public enum ImageType {

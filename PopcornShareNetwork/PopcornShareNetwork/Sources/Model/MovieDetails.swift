@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import PopcornShareUtilities
 
 public struct MovieDetails: Codable, Sendable {
     public let id: Int
@@ -53,20 +52,4 @@ public struct MovieDetails: Codable, Sendable {
 public struct Genre: Codable, Sendable {
     public let id: Int
     public let name: String
-}
-
-public extension MovieDetails {
-    var toMovieViewData: MovieViewData {
-        MovieViewData(
-            title: self.title ?? "",
-            id: String(self.id),
-            posterPath: self.posterPath ?? "",
-            backdropPath: self.backdropPath ?? "",
-            overview: self.overview ?? "",
-            releaseDate: self.releaseDate ?? "",
-            runtime: self.runtime ?? 0,
-            favorite: false,
-            genres: self.genres?.map { GenreViewData(id: $0.id, name: $0.name) } ?? []
-        )
-    }
 }
