@@ -6,18 +6,13 @@
 //
 
 import Foundation
-import FirebaseAuth
+import PopcornShareAuthentication
 
-protocol AuthenticationManagerType {
-    func getAuthenticatedUser() throws -> AuthDataResultModel
-    func createUser(username: String, email: String, password: String) async throws -> AuthDataResultModel
-    func signIn(email: String, password: String) async throws -> AuthDataResultModel
-    func signOut() throws
-}
+import FirebaseAuth
 
 final class AuthenticationManager: AuthenticationManagerType {
     
-    static let shared = AuthenticationManager()
+    @MainActor static let shared = AuthenticationManager()
     
     private init() { }
     
@@ -35,10 +30,15 @@ final class AuthenticationManager: AuthenticationManagerType {
         password: String
     ) async throws -> AuthDataResultModel {
         let authDataResult = try await Auth.auth().createUser(withEmail: email, password: password)
-        return AuthDataResultModel(
+        
+        let authDataResultModel = AuthDataResultModel(
             user: authDataResult.user,
             name: username
         )
+        
+        try await UserManager.shared.createNewUser(auth: authDataResultModel)
+        
+        return authDataResultModel
     }
     
     func signIn(email: String, password: String) async throws -> AuthDataResultModel {
@@ -48,29 +48,5 @@ final class AuthenticationManager: AuthenticationManagerType {
     
     func signOut() throws {
         try Auth.auth().signOut()
-    }
-}
-
-struct AuthDataResultModel {
-    let uid: String
-    let email: String?
-    var username: String?
-    let photoUrl: String?
-    
-    init(
-        user: User,
-        name: String
-    ) {
-        self.uid = user.uid
-        self.email = user.email
-        self.username = name
-        self.photoUrl = user.photoURL?.absoluteString
-    }
-    
-    init(user: User) {
-        self.uid = user.uid
-        self.email = user.email
-        self.username = user.displayName
-        self.photoUrl = user.photoURL?.absoluteString
     }
 }

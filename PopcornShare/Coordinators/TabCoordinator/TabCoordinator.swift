@@ -18,20 +18,15 @@ protocol TabCoordinatorDelegate: AnyObject {
 }
 
 public final class TabCoordinator: NSObject, Coordinator {
-
     weak var delegate: TabCoordinatorDelegate?
-
-    var navigationController: UINavigationController
-    
     var childCoordinators: [Coordinator] = []
     
-    var tabBarController: UITabBarController
+    let navigationController: UINavigationController
+    let type: CoordinatorType = .tab
+    let tabBarController: UITabBarController
     
-    var type: CoordinatorType = .tab
-    
-    var cancelSet = Set<AnyCancellable>()
-    
-    let networkManager: NetworkManagerType = NetworkManager()
+    private var cancelSet = Set<AnyCancellable>()
+    private let networkManager: NetworkManagerType = NetworkManager()
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -40,11 +35,12 @@ public final class TabCoordinator: NSObject, Coordinator {
     
     func start() {
         tabBarController.viewControllers = [
-            makePopularMovies(),
+            makeHomeMovies(),
             makeSearchMovies(),
             makeFavoriteMovies(),
             makeProfile()
         ]
+        
         tabBarController.tabBar.tintColor = UIColor(.primaryRed)
 
         navigationController.setNavigationBarHidden(true, animated: false)
@@ -61,7 +57,7 @@ public final class TabCoordinator: NSObject, Coordinator {
         return navController
     }
     
-    private func makePopularMovies() -> UINavigationController {
+    private func makeHomeMovies() -> UINavigationController {
         let view = HomeView()
         let viewController = UIHostingController(rootView: view)
         viewController.tabBarItem = TabBarPage.movies.tabBarItem

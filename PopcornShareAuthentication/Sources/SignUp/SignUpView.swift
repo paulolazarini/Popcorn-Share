@@ -135,7 +135,3 @@ struct SignUpView: View {
         .padding(.horizontal, .large)
     }
 }
-
-#Preview {
-    SignUpView(viewModel: SignUpViewModel() { })
-}

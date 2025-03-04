@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import PopcornShareAuthentication
 import Combine
 
 final class ProfileViewModel: ObservableObject {

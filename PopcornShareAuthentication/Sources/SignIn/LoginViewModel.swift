@@ -11,7 +11,7 @@ import Combine
 import FirebaseCore
 import FirebaseAuth
 
-class LoginViewModel: ObservableObject {
+class LoginViewModel: ObservableObject, @unchecked Sendable {
     enum Events {
         case signUpTapped
         case didSignIn
@@ -25,7 +25,7 @@ class LoginViewModel: ObservableObject {
     let events = PassthroughSubject<Events, Never>()
     
     init(
-        authManager: AuthenticationManagerType = AuthenticationManager.shared
+        authManager: AuthenticationManagerType
     ) {
         self.authManager = authManager
     }

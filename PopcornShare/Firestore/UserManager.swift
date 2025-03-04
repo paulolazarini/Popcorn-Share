@@ -6,6 +6,9 @@
 //
 
 import Foundation
+import PopcornShareUtilities
+import PopcornShareAuthentication
+
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 

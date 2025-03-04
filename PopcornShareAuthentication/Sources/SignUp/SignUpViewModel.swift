@@ -10,22 +10,19 @@ import SwiftUI
 import FirebaseCore
 import FirebaseAuth
 
-final class SignUpViewModel: ObservableObject {
+final class SignUpViewModel: ObservableObject, @unchecked Sendable {
     @Published var name: String = ""
     @Published var email: String = ""
     @Published var password: String = ""
     
     let authManager: AuthenticationManagerType
-    let userManager: UserManagerType
     let dismiss: () -> Void
     
     init(
-        authManager: AuthenticationManagerType = AuthenticationManager.shared,
-        userManager: UserManagerType = UserManager.shared,
+        authManager: AuthenticationManagerType,
         dismiss: @escaping () -> Void
     ) {
         self.authManager = authManager
-        self.userManager = userManager
         self.dismiss = dismiss
     }
     
@@ -44,7 +41,7 @@ final class SignUpViewModel: ObservableObject {
                     email: email,
                     password: password
                 )
-                try await UserManager.shared.createNewUser(auth: userData)
+                
                 dismiss()
             } catch {
                 print("Error: \(error.localizedDescription)")

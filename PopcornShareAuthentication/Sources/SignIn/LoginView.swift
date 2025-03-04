@@ -130,7 +130,3 @@ struct LoginView: View {
         .padding(.horizontal, .large)
     }
 }
-
-#Preview {
-    LoginView(viewModel: .init())
-}

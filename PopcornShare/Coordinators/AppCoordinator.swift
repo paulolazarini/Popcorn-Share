@@ -7,19 +7,17 @@
 
 import UIKit
 import SwiftUI
+import PopcornShareAuthentication
+
 import FirebaseCore
 import FirebaseAuth
 
-protocol AppCoordinatorProtocol: Coordinator {
-    func start()
-}
-
-class AppCoordinator: AppCoordinatorProtocol {
-    var navigationController: UINavigationController
+final class AppCoordinator: Coordinator {
+    let navigationController: UINavigationController
     
     var childCoordinators = [Coordinator]()
 
-    var type: CoordinatorType = .app
+    let type: CoordinatorType = .app
 
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -28,6 +26,7 @@ class AppCoordinator: AppCoordinatorProtocol {
     var authCoordinator: AuthCoordinator?
     var tabCoordinator: TabCoordinator?
     
+    @MainActor
     func start() {
         let user = try? AuthenticationManager.shared.getAuthenticatedUser()
         if user != nil {
@@ -37,13 +36,17 @@ class AppCoordinator: AppCoordinatorProtocol {
         }
     }
     
+    @MainActor
     private func presentAuthCoordinator() {
         navigationController.viewControllers.removeAll()
-        authCoordinator = AuthCoordinator(navigationController: navigationController)
+        authCoordinator = AuthCoordinator(
+            navigationController: navigationController,
+            authManager: AuthenticationManager.shared
+        )
         authCoordinator?.delegate = self
         guard let authCoordinator else { return }
         authCoordinator.start()
-        childCoordinators.append(authCoordinator)
+        childCoordinators.append(authCoordinator as! Coordinator)
     }
     
     private func presentTabCoordinator() {
@@ -59,13 +62,13 @@ class AppCoordinator: AppCoordinatorProtocol {
 extension AppCoordinator: AuthCoordinatorDelegate {
     func didFinishAuthFlow() {
         navigationController.viewControllers.removeAll()
-        start()
+        Task { await start() }
     }
 }
 
 extension AppCoordinator: TabCoordinatorDelegate {
     func didSignOut() {
         navigationController.viewControllers.removeAll()
-        start()
+        Task { await start() }
     }
 }

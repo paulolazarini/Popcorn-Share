@@ -8,13 +8,14 @@
 import UIKit
 import SwiftUI
 
-protocol Coordinator: AnyObject {
-    var navigationController: UINavigationController { get }
+@MainActor
+public protocol Coordinator: AnyObject {
+    var navigationController: UINavigationController { get set }
     var childCoordinators: [Coordinator] { get set }
-    var type: CoordinatorType { get }
+    var type: CoordinatorType { get set }
 }
 
-extension Coordinator {
+public extension Coordinator {
     var childCoordinators: [Coordinator] { [] }
     
     func dismiss() {
@@ -41,6 +42,6 @@ extension Coordinator {
     }
 }
 
-enum CoordinatorType {
+public enum CoordinatorType {
     case app, auth, tab, tabItem, profile
 }

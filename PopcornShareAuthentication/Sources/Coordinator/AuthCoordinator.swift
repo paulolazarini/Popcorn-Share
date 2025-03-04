@@ -1,43 +1,41 @@
 //
-//  AuthCoordinator.swift
-//  PopcornShare
+//  AuthenticationCoordinator.swift
+//  PopcornShareSearch
 //
-//  Created by Paulo Lazarini on 24/05/24.
+//  Created by Paulo Lazarini on 04/03/25.
 //
 
 import UIKit
 import SwiftUI
 import Combine
-
 import FirebaseCore
 import FirebaseAuth
+import PopcornShareUtilities
 
-protocol AuthCoordinatorDelegate: AnyObject {
+public protocol AuthCoordinatorDelegate: AnyObject {
     func didFinishAuthFlow()
 }
 
-protocol AuthCoordinatorProtocol: Coordinator {
-    func start()
-}
-
-class AuthCoordinator: AuthCoordinatorProtocol {
+public final class AuthCoordinator: Coordinator {
+    public weak var delegate: AuthCoordinatorDelegate?
+    public var navigationController: UINavigationController
+    public var childCoordinators = [Coordinator]()
+    public var type: CoordinatorType = .auth
     
-    weak var delegate: AuthCoordinatorDelegate?
+    let authManager: AuthenticationManagerType
     
-    var navigationController: UINavigationController
+    private var cancelSet = Set<AnyCancellable>()
     
-    var childCoordinators = [Coordinator]()
-
-    var type: CoordinatorType = .auth
-
-    var cancelSet = Set<AnyCancellable>()
-    
-    init(navigationController: UINavigationController) {
+    public init(
+        navigationController: UINavigationController,
+        authManager: AuthenticationManagerType
+    ) {
         self.navigationController = navigationController
+        self.authManager = authManager
     }
     
-    func start() {
-        let viewModel = LoginViewModel()
+    public func start() {
+        let viewModel = LoginViewModel(authManager: authManager)
         let view = LoginView(viewModel: viewModel)
         
         viewModel.events
@@ -57,7 +55,7 @@ class AuthCoordinator: AuthCoordinatorProtocol {
     }
     
     func presentSignInFlow() {
-        let viewModel = SignUpViewModel() { [weak self] in
+        let viewModel = SignUpViewModel(authManager: authManager) { [weak self] in
             self?.dismiss()
         }
         let view = SignUpView(viewModel: viewModel)
