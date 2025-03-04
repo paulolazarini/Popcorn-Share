@@ -9,11 +9,9 @@ import SwiftUI
 import PopcornShareUtilities
 
 public struct HomeView: View {
-    @ObservedObject var viewModel: HomeViewModel
+    @StateObject var viewModel: HomeViewModel = HomeViewModel()
     
-    public init(viewModel: HomeViewModel) {
-        self._viewModel = ObservedObject(wrappedValue: viewModel)
-    }
+    public init() {}
     
     @Namespace var animationId
     
@@ -33,9 +31,7 @@ public struct HomeView: View {
                     makeMovieSection(category)
                 }
             }
-            .task(priority: .high) {
-                await viewModel.fetchMovies()
-            }
+            .ignoresSafeArea(edges: .top)
         }
     }
     
@@ -145,6 +141,6 @@ public struct HomeView: View {
 
 #Preview {
     NavigationView {
-        HomeView(viewModel: HomeViewModel())
+        HomeView()
     }
 }

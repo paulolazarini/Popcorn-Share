@@ -38,7 +38,7 @@ struct MoviesCategoryView<ViewModel: MoviesCategoryViewModeling & Sendable>: Vie
             .navigationBarTitleDisplayMode(.large)
             .navigationBarBackButtonHidden()
             .toolbar { ToolbarDismissButton() }
-            .background(Color.Background.yellow)
+            .background(Color.Background.white)
     }
     
     private var moviesGridView: some View {

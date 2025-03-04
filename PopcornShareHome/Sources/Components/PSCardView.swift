@@ -6,8 +6,6 @@
 //
 
 import SwiftUI
-
-import PopcornShareNetwork
 import PopcornShareUtilities
 
 struct PSCardView: View {
@@ -19,43 +17,25 @@ struct PSCardView: View {
     @Binding var movie: MovieViewData
     let onFavoriteTapped: (MovieViewData) -> Void
     
-    @State var image: Image?
-    
     var body: some View {
-        ZStack(alignment: .bottom) {
+        ZStack {
             Color.primaryRed
-                
-            moviePoster
             
-            movieCardFooter
+            moviePoster
         }
         .frame(
             width: Constants.movieCardWidth,
             height: Constants.movieCardHeight
         )
-        .clipShape(.rect(cornerRadius: .medium))
         .overlay(alignment: .topTrailing) { favoriteButton }
-        .task(priority: .utility) {
-            let result = await NetworkImageManager.shared.getMovieImage(using: .makePosterPath(movie.posterPath))
-            if case .success(let image) = result {
-                await MainActor.run { self.image = Image(uiImage: image) }
-            }
-        }
+        .overlay(alignment: .bottom) { movieCardFooter }
+        .clipShape(.rect(cornerRadius: .medium))
     }
-    
-    @ViewBuilder
+}
+
+private extension PSCardView {
     var moviePoster: some View {
-        if let image {
-            image
-                .resizable()
-                .scaledToFill()
-                .clipped()
-        } else {
-            ProgressView()
-                .tint(.white)
-                .scaledToFill()
-                .imageScale(.large)
-        }
+        PSMovieImage(for: movie)
     }
     
     var movieCardFooter: some View {
@@ -64,10 +44,7 @@ struct PSCardView: View {
             .padding(.vertical, .small)
             .background {
                 LinearGradient(
-                    colors: [
-                        Color.black.opacity(0),
-                        Color.black
-                    ],
+                    colors: [.clear, .black],
                     startPoint: .top,
                     endPoint: .bottom
                 )

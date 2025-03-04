@@ -16,40 +16,21 @@ struct PSMovieCategoryCell: View {
     }
     
     @Binding var movie: MovieViewData
-    @State var image: Image?
     
     let onFavoriteTapped: (MovieViewData) -> Void
     
     var body: some View {
         VStack(spacing: .small) {
             moviePoster
-                .frame(height: Constants.movieCardHeight)
-                .clipShape(.rect(cornerRadius: .medium))
-            
             movieTitle
         }
         .overlay(alignment: .topTrailing) { favoriteButton }
-        .task(priority: .utility) {
-            let result = await NetworkImageManager.shared.getMovieImage(using: .makePosterPath(movie.posterPath))
-            if case .success(let image) = result {
-                await MainActor.run { self.image = Image(uiImage: image) }
-            }
-        }
     }
     
-    @ViewBuilder
     private var moviePoster: some View {
-        if let image {
-            image
-                .resizable()
-                .scaledToFill()
-                .clipped()
-        } else {
-            ProgressView()
-                .tint(.white)
-                .scaledToFill()
-                .controlSize(.large)
-        }
+        PSMovieImage(for: movie)
+            .frame(height: Constants.movieCardHeight)
+            .clipShape(.rect(cornerRadius: .medium))
     }
     
     private var movieTitle: some View {

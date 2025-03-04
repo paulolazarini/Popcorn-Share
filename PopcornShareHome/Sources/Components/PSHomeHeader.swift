@@ -12,62 +12,26 @@ import PopcornShareUtilities
 
 struct PSHomeHeader: View {
     @Binding var headerMovies: [MovieViewData]
-    @State private var images: [String: Image] = [:]
-
+    
     var body: some View {
         TabView {
             ForEach(headerMovies, id: \.self) { movie in
                 NavigationLinkToMovieDetails(movie: movie) {
-                    buildImage(for: movie)
+                    PSMovieImage(for: movie)
+                        .overlay {
+                            LinearGradient(
+                                colors: [.clear, .white],
+                                startPoint: .center,
+                                endPoint: .bottom)
+                        }
                 }
             }
         }
         .tabViewStyle(.page)
-        .frame(height: 182)
-        .clipShape(.rect(cornerRadius: .small))
+        .frame(height: 600)
         .onAppear {
             UIPageControl.appearance().currentPageIndicatorTintColor = UIColor.yellow
             UIPageControl.appearance().pageIndicatorTintColor = UIColor.lightGray
-        }
-        .padding(.horizontal, .medium)
-        .onChange(of: headerMovies) { _, movies in
-            movies.forEach { movie in
-                Task(priority: .utility) {
-                    await loadImage(for: movie)
-                }
-            }
-        }
-    }
-    
-    @ViewBuilder
-    func buildImage(for movie: MovieViewData) -> some View {
-        if let image = images[movie.id] {
-            image
-                .resizable()
-                .scaledToFill()
-        } else {
-            ProgressView()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-        }
-    }
-    
-    func loadImage(for movie: MovieViewData) async {
-        if let image = await getImage(url: movie.backdropPath) {
-            await MainActor.run {
-                images[movie.id] = image
-            }
-        }
-    }
-    
-    func getImage(url: String) async -> Image? {
-        let result = await NetworkImageManager.shared.getMovieImage(using: .makePosterPath(url))
-        
-        switch result {
-        case .success(let uiImage):
-            return Image(uiImage: uiImage)
-        case .failure(let error):
-            print("Error fetching image: \(error)")
-            return nil
         }
     }
 }

@@ -32,7 +32,9 @@ public struct PSGridView<Data: Hashable, Content: View>: View {
         gridView
             .animation(.default, value: data)
     }
-    
+}
+
+private extension PSGridView {
     @ViewBuilder
     var gridView: some View {
         switch orientation {

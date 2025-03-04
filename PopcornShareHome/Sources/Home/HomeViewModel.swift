@@ -40,6 +40,10 @@ public final class HomeViewModel: ObservableObject, @unchecked Sendable {
 
     public init(serviceManager: NetworkManagerType = NetworkManager()) {
         self.serviceManager = serviceManager
+        
+        Task(priority: .utility) {
+            await fetchMovies()
+        }
     }
     
     func fetchMovies(

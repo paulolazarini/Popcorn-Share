@@ -62,7 +62,7 @@ public final class TabCoordinator: NSObject, Coordinator {
     }
     
     private func makePopularMovies() -> UINavigationController {
-        let view = HomeView(viewModel: HomeViewModel())
+        let view = HomeView()
         let viewController = UIHostingController(rootView: view)
         viewController.tabBarItem = TabBarPage.movies.tabBarItem
 
