@@ -43,5 +43,5 @@ public extension Coordinator {
 }
 
 public enum CoordinatorType {
-    case app, auth, tab, tabItem, profile
+    case app, auth, tab, tabItem, profile, home, search
 }

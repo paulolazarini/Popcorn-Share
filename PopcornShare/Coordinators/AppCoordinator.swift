@@ -49,6 +49,7 @@ final class AppCoordinator: Coordinator {
         childCoordinators.append(authCoordinator as! Coordinator)
     }
     
+    @MainActor
     private func presentTabCoordinator() {
         navigationController.viewControllers.removeAll()
         tabCoordinator = TabCoordinator(navigationController: navigationController)

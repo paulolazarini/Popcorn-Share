@@ -6,9 +6,6 @@
 //
 
 import SwiftUI
-
-import PopcornShareHome
-import PopcornShareNetwork
 import PopcornShareUtilities
 
 struct SearchMovieCell: View {
@@ -36,12 +33,6 @@ struct SearchMovieCell: View {
             favoriteButton
         }
         .padding(.horizontal, .medium)
-        .task(priority: .utility) {
-            let result = await NetworkImageManager.shared.getMovieImage(using: .makePosterPath(movie.posterPath))
-            if case .success(let image) = result {
-                await MainActor.run { self.image = Image(uiImage: image) }
-            }
-        }
     }
     
     private var movieInfoView: some View {
@@ -66,17 +57,7 @@ struct SearchMovieCell: View {
     
     @ViewBuilder
     private var moviePoster: some View {
-        if let image {
-            image
-                .resizable()
-                .scaledToFill()
-                .clipped()
-        } else {
-            ProgressView()
-                .tint(.white)
-                .scaledToFill()
-                .controlSize(.large)
-        }
+        PSMovieImage(for: movie)
     }
     
     private var favoriteButton: some View {

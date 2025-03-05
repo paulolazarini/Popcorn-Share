@@ -11,7 +11,7 @@ import Combine
 import PopcornShareNetwork
 import PopcornShareUtilities
 
-final class SearchViewModel: ObservableObject {
+final class SearchViewModel: ObservableObject, @unchecked Sendable {
     enum State {
         case movies, empty
     }

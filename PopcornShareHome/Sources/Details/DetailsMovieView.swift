@@ -88,12 +88,8 @@ public struct DetailsMovieView: View {
     var backdropImageView: some View {
         if let movie = viewModel.movie {
             PSMovieImage(for: movie, type: .backdrop)
+                .frame(height: 300)
                 .overlay(gradientOverlay)
-        } else {
-            loadingView
-                .frame(height: 200)
-                .hAlignment(.center)
-                .background(in: .rect(cornerRadius: .medium))
         }
     }
 

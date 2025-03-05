@@ -24,38 +24,36 @@ struct ProfileView: View {
     }
     
     var body: some View {
-        NavigationStack {
-            VStack(spacing: .small) {
-                profileImage
-                
-                ScrollView {
-                    VStack(spacing: .medium) {
-                        usernameView
+        VStack(spacing: .small) {
+            profileImage
+            
+            ScrollView {
+                VStack(spacing: .medium) {
+                    usernameView
+                    
+                    locationView
+                    
+                    biographyView
+                    
+                    PSButton("Follow") {
                         
-                        locationView
-                        
-                        biographyView
-                        
-                        PSButton("Follow") {
-                            
-                        }
-                        .padding(.top, .medium)
                     }
+                    .padding(.top, .medium)
                 }
             }
-            .frame(
-                maxWidth: .infinity,
-                maxHeight: .infinity,
-                alignment: .top
-            )
-            .background(buildBackground)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    profileOptionsButton
-                        .popover(isPresented: $isPresentingProfileOptionsPopover) {
-                            profileOptionPopover
-                        }
-                }
+        }
+        .frame(
+            maxWidth: .infinity,
+            maxHeight: .infinity,
+            alignment: .top
+        )
+        .background(buildBackground)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                profileOptionsButton
+                    .popover(isPresented: $isPresentingProfileOptionsPopover) {
+                        profileOptionPopover
+                    }
             }
         }
     }
@@ -110,7 +108,7 @@ struct ProfileView: View {
     
     var buildBackground: some View {
         ZStack(alignment: .top) {
-            Image(.icon)
+            Image("icon", bundle: .main)
                 .resizable()
                 .frame(height: 300)
                 .blur(radius: .small)
@@ -123,7 +121,7 @@ struct ProfileView: View {
     }
     
     var profileImage: some View {
-        Image(.icon)
+        Image("icon", bundle: .main)
             .resizable()
             .scaledToFit()
             .frame(width: 200, height: 200)
@@ -132,6 +130,6 @@ struct ProfileView: View {
     }
 }
 
-#Preview {
-    ProfileView(viewModel: ProfileViewModel())
-}
+//#Preview {
+//    ProfileView(viewModel: ProfileViewModel(user: .init(userId: "")))
+//}

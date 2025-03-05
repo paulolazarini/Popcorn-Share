@@ -13,18 +13,16 @@ struct PopularMoviesView: View {
     @ObservedObject var viewModel: PopularMoviesViewModel
     
     var body: some View {
-        NavigationStack {
-            stateView
-                .navigationTitle("Popular Movies")
-                .onAppear {
-                    viewModel.getPopularMovies()
-                }
-                .searchable(
-                    text: $viewModel.searchText,
-                    placement: .navigationBarDrawer(displayMode: .always)
-                )
-                .isLoading(viewModel.isLoading)
-        }
+        stateView
+            .navigationTitle("Popular Movies")
+            .onAppear {
+                viewModel.getPopularMovies()
+            }
+            .searchable(
+                text: $viewModel.searchText,
+                placement: .navigationBarDrawer(displayMode: .always)
+            )
+            .isLoading(viewModel.isLoading)
     }
     
     @ViewBuilder

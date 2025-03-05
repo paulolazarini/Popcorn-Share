@@ -5,11 +5,12 @@
 //  Created by Paulo Lazarini on 24/05/24.
 //
 
-import Foundation
-import PopcornShareAuthentication
+import SwiftUI
 import Combine
 
-final class ProfileViewModel: ObservableObject {
+import PopcornShareUtilities
+
+final class ProfileViewModel: ObservableObject, @unchecked Sendable {
     enum Events {
         case onSignOutTapped
     }
@@ -29,30 +30,28 @@ final class ProfileViewModel: ObservableObject {
     
     let events = PassthroughSubject<Events, Never>()
     
-    let authManager: AuthenticationManagerType
     let userManager: UserManagerType
+    let userUuid: String
     
     init(
-        authManager: AuthenticationManagerType = AuthenticationManager.shared,
-        userManager: UserManagerType = UserManager.shared
+        userManager: UserManagerType,
+        userUuid: String
     ) {
-        self.authManager = authManager
         self.userManager = userManager
+        self.userUuid = userUuid
+        
+//        Task { await loadCurrentUser() }
     }
     
     @MainActor func loadCurrentUser() async {
         do {
-            let authDataResult = try authManager.getAuthenticatedUser()
-            self.user = try await userManager.getUser(userId: authDataResult.uid)
+            self.user = try await userManager.getUser(userId: userUuid)
         } catch {
             print("Error: \(error.localizedDescription)")
         }
     }
     
     func signOut() {
-        do {
-            try authManager.signOut()
-            events.send(.onSignOutTapped)
-        } catch { print(error.localizedDescription) }
+        events.send(.onSignOutTapped)
     }
 }

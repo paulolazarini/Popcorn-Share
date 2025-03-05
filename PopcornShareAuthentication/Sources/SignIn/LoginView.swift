@@ -20,45 +20,43 @@ struct LoginView: View {
     }
     
     @ObservedObject var viewModel: LoginViewModel
-
+    
     var body: some View {
-        NavigationStack {
-            ZStack(alignment: .top) {
-                Color.Background.white.ignoresSafeArea()
+        ZStack(alignment: .top) {
+            Color.Background.white.ignoresSafeArea()
+            
+            VStack(spacing: .large) {
+                popcornShareIcon
                 
-                VStack(spacing: .large) {
-                    popcornShareIcon
+                Text(Constants.signInToPopcornShare)
+                    .font(.title)
+                    .bold()
+                
+                signUpOptionsStack
+                
+                Text(Constants.orDoViaEmail)
+                    .font(.subheadline)
+                    .foregroundStyle(.gray)
+                    .horizontalDivider
+                
+                VStack(spacing: .small) {
+                    emailTextfield
                     
-                    Text(Constants.signInToPopcornShare)
-                        .font(.title)
-                        .bold()
-                    
-                    signUpOptionsStack
-                    
-                    Text(Constants.orDoViaEmail)
-                        .font(.subheadline)
-                        .foregroundStyle(.gray)
-                        .horizontalDivider
-                    
-                    VStack(spacing: .small) {
-                        emailTextfield
-                        
-                        passwordTextfield
-                    }
-                    
-                    loginButton
+                    passwordTextfield
                 }
-                .padding(.horizontal, .large)
+                
+                loginButton
             }
-            .safeAreaInset(
-                edge: .bottom,
-                content: footerView
-            )
+            .padding(.horizontal, .large)
         }
+        .safeAreaInset(
+            edge: .bottom,
+            content: footerView
+        )
     }
     
     var popcornShareIcon: some View {
-        PopcornShareIcon(
+        PSIcon(
             size: CGSize(
                 width: 200,
                 height: 200

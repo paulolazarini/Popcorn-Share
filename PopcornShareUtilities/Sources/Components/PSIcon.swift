@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-public struct PopcornShareIcon: View {
+public struct PSIcon: View {
     let size: CGSize
     
     public init(

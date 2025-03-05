@@ -1,6 +1,6 @@
 //
-//  SearchCoordinator.swift
-//  PopcornShareSearch
+//  HomeCoordinator.swift
+//  PopcornShareHome
 //
 //  Created by Paulo Lazarini on 04/03/25.
 //
@@ -11,10 +11,10 @@ import Combine
 import PopcornShareUtilities
 
 @MainActor
-public final class SearchCoordinator: Coordinator {
+public final class HomeCoordinator: Coordinator {
     public var navigationController: UINavigationController
     public var childCoordinators = [Coordinator]()
-    public var type: CoordinatorType = .search
+    public var type: CoordinatorType = .home
     
     let tabBarItem: UITabBarItem
     
@@ -26,8 +26,8 @@ public final class SearchCoordinator: Coordinator {
     }
     
     public func start() {
-        let viewModel = SearchViewModel()
-        let view = SearchView(viewModel: viewModel)
+        let viewModel = HomeViewModel()
+        let view = HomeView(viewModel: viewModel)
         let viewController = UIHostingController(rootView: view)
         viewController.tabBarItem = tabBarItem
 

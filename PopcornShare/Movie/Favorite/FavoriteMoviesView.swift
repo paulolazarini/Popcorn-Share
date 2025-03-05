@@ -12,15 +12,13 @@ struct FavoriteMoviesView: View {
     @ObservedObject var viewModel: FavoriteMoviesViewModel
     
     var body: some View {
-        NavigationStack {
-            stateView
-                .navigationTitle("Favorite Movies")
-                .onAppear {
-                    viewModel.getFavoriteMovies()
-                }
-                .searchable(text: $viewModel.searchText)
-                .isLoading(viewModel.isLoading)
-        }
+        stateView
+            .navigationTitle("Favorite Movies")
+            .onAppear {
+                viewModel.getFavoriteMovies()
+            }
+            .searchable(text: $viewModel.searchText)
+            .isLoading(viewModel.isLoading)
     }
     
     @ViewBuilder

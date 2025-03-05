@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-import PopcornShareHome
 import PopcornShareNetwork
 import PopcornShareUtilities
 
@@ -18,12 +17,10 @@ struct SearchView: View {
     @Namespace var animationId
     
     var body: some View {
-        NavigationStack {
-            VStack(spacing: .zero) {
-                searchTextField
-                
-                contentView
-            }
+        VStack(spacing: .zero) {
+            searchTextField
+            
+            contentView
         }
         .overlay(alignment: .center) { loadingView }
         .toolbarVisibility(.hidden, for: .navigationBar)
@@ -44,20 +41,20 @@ struct SearchView: View {
         PSGridView(
             gridItems: [GridItem(spacing: .zero)],
             data: $viewModel.movies) { index, movie in
-                NavigationLink {
-                    PopcornShareHome.DetailsMovieView(viewModel: PopcornShareHome.DetailsMovieViewModel(movieId: movie.id))
-                        .navigationTransition(.zoom(sourceID: movie.id, in: animationId))
-                } label: {
-                    SearchMovieCell(
-                        movie: Binding(
-                            get: { return movie },
-                            set: { viewModel.movies[index] = $0 }
-                        ),
-                        animationId: animationId,
-                        onFavoriteTapped: { movie in }
-                    )
-                }
-                .id(UUID())
+//                NavigationLink {
+//                    PopcornShareHome.DetailsMovieView(viewModel: PopcornShareHome.DetailsMovieViewModel(movieId: movie.id))
+//                        .navigationTransition(.zoom(sourceID: movie.id, in: animationId))
+//                } label: {
+//                    SearchMovieCell(
+//                        movie: Binding(
+//                            get: { return movie },
+//                            set: { viewModel.movies[index] = $0 }
+//                        ),
+//                        animationId: animationId,
+//                        onFavoriteTapped: { movie in }
+//                    )
+//                }
+//                .id(UUID())
             }
     }
     

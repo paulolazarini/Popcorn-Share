@@ -8,34 +8,29 @@
 import SwiftUI
 import PopcornShareUtilities
 
-public struct HomeView: View {
-    @StateObject var viewModel: HomeViewModel = HomeViewModel()
-    
-    public init() {}
-    
-    @Namespace var animationId
+struct HomeView: View {
+    @StateObject var viewModel: HomeViewModel
     
     private let gridItems = Array(
         repeating: GridItem(spacing: .small),
         count: 1)
     
     public var body: some View {
-        NavigationStack {
-            ScrollView(
-                .vertical,
-                showsIndicators: false
-            ) {
-                homeHeaderView
-                
-                ForEach(MovieCategory.allCases, id: \.self) { category in
-                    makeMovieSection(category)
-                }
+        ScrollView(
+            .vertical,
+            showsIndicators: false
+        ) {
+            homeCarouselView
+            
+            ForEach(MovieCategory.allCases, id: \.self) { category in
+                makeMovieSection(category)
             }
-            .ignoresSafeArea(edges: .top)
         }
+        .toolbarVisibility(.hidden, for: .navigationBar)
+        .ignoresSafeArea(edges: .top)
     }
     
-    private var homeHeaderView: some View {
+    private var homeCarouselView: some View {
         HomeCarouselView(headerMovies: $viewModel.headerMovies)
     }
     
@@ -141,6 +136,6 @@ public struct HomeView: View {
 
 #Preview {
     NavigationView {
-        HomeView()
+        HomeView(viewModel: HomeViewModel())
     }
 }

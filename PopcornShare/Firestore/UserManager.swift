@@ -6,17 +6,12 @@
 //
 
 import Foundation
+import PopcornShareProfile
 import PopcornShareUtilities
 import PopcornShareAuthentication
 
 import FirebaseFirestore
 import FirebaseFirestoreSwift
-
-protocol UserManagerType {
-    func createNewUser(auth: AuthDataResultModel) async throws
-    func updateUser(_ user: DBUser) async throws
-    func getUser(userId: String) async throws -> DBUser
-}
 
 final class UserManager: UserManagerType {
     
@@ -87,42 +82,5 @@ final class UserManager: UserManagerType {
             biography: biography,
             favoriteIds: favoriteIds
         )
-    }
-}
-
-struct DBUser {
-    let userId: String
-    let dateCreated: Date?
-    let dateUpdated: Date?
-    let photoUrl: String?
-    let email: String?
-    let username: String?
-    let city: String?
-    let biography: String?
-    let country: String?
-    let favoriteIds: [String]?
-    
-    init(
-        userId: String,
-        dateCreated: Date? = nil,
-        dateUpdated: Date? = nil,
-        photoUrl: String? = nil,
-        email: String? = nil,
-        username: String? = nil,
-        city: String? = nil,
-        country: String? = nil,
-        biography: String? = nil,
-        favoriteIds: [String]? = nil
-    ) {
-        self.userId = userId
-        self.dateCreated = dateCreated
-        self.dateUpdated = dateUpdated
-        self.photoUrl = photoUrl
-        self.email = email
-        self.username = username
-        self.city = city
-        self.country = country
-        self.biography = biography
-        self.favoriteIds = favoriteIds
     }
 }
