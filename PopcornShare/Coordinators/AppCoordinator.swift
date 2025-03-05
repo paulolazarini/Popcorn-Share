@@ -28,7 +28,7 @@ final class AppCoordinator: Coordinator {
     
     @MainActor
     func start() {
-        let user = try? AuthenticationManager.shared.getAuthenticatedUser()
+        let user = try? AuthenticationManager.shared.currentUser()
         if user != nil {
             presentTabCoordinator()
         } else {

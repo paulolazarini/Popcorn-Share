@@ -11,15 +11,12 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "PopcornShareUtilities"),
-        .package(path: "PopcornShareNetwork/PopcornShareNetwork"),
-        .package(url: "https://github.com/firebase/firebase-ios-sdk.git", from: "10.15.0")
+        .package(path: "PopcornShareNetwork/PopcornShareNetwork")
     ],
     targets: [
         .target(
             name: "PopcornShareAuthentication",
             dependencies: [
-                .product(name: "FirebaseAuth", package: "firebase-ios-sdk"),
-                .product(name: "FirebaseFirestore", package: "firebase-ios-sdk"),
                 .product(name: "PopcornShareUtilities", package: "PopcornShareUtilities"),
                 .product(name: "PopcornShareNetwork", package: "PopcornShareNetwork")
             ],

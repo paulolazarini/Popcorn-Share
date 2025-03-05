@@ -1,14 +1,14 @@
 //
-//  AuthenticationManager.swift
-//  PopcornShare
+//  AuthenticationManagerType.swift
+//  PopcornShareUtilities
 //
-//  Created by Paulo Lazarini on 24/05/24.
+//  Created by Paulo Lazarini on 05/03/25.
 //
 
-import Foundation
+import PopcornShareFirebase
 
-public protocol AuthenticationManagerType: Sendable {
-    func getAuthenticatedUser() throws -> AuthDataResultModel
+public protocol AuthenticationManagerType {
+    func currentUser() throws -> AuthDataResultModel
     func createUser(username: String, email: String, password: String) async throws -> AuthDataResultModel
     func signIn(email: String, password: String) async throws -> AuthDataResultModel
     func signOut() throws

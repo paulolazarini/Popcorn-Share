@@ -9,6 +9,7 @@ import SwiftUI
 import Combine
 
 import PopcornShareUtilities
+import PopcornShareFirebase
 
 final class ProfileViewModel: ObservableObject, @unchecked Sendable {
     enum Events {

@@ -11,17 +11,16 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "PopcornShareUtilities"),
-        .package(path: "PopcornShareNetwork/PopcornShareNetwork")
+        .package(path: "PopcornShareNetwork/PopcornShareFirebase")
     ],
     targets: [
         .target(
             name: "PopcornShareProfile",
             dependencies: [
                 .product(name: "PopcornShareUtilities", package: "PopcornShareUtilities"),
-                .product(name: "PopcornShareNetwork", package: "PopcornShareNetwork")
+                .product(name: "PopcornShareFirebase", package: "PopcornShareFirebase")
             ],
             path: "Sources/"
-//            resources: [.process("Resources")]
         ),
         .testTarget(
             name: "PopcornShareProfileTests",

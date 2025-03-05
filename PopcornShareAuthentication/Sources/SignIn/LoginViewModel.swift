@@ -7,9 +7,7 @@
 
 import SwiftUI
 import Combine
-
-import FirebaseCore
-import FirebaseAuth
+import PopcornShareUtilities
 
 class LoginViewModel: ObservableObject, @unchecked Sendable {
     enum Events {
@@ -17,8 +15,8 @@ class LoginViewModel: ObservableObject, @unchecked Sendable {
         case didSignIn
     }
     
-    @Published var email: String = ""
-    @Published var password: String = ""
+    @Published var email: String = .empty
+    @Published var password: String = .empty
     
     let authManager: AuthenticationManagerType
     

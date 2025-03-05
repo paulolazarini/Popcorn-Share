@@ -6,34 +6,25 @@
 //
 
 import Foundation
-import PopcornShareAuthentication
-
-import FirebaseAuth
+import PopcornShareFirebase
+import PopcornShareUtilities
 
 final class AuthenticationManager: AuthenticationManagerType {
-    
     @MainActor static let shared = AuthenticationManager()
+    
+    private let authProvider: AuthProviding = FirebaseAuthService()
     
     private init() { }
     
-    func getAuthenticatedUser() throws -> AuthDataResultModel {
-        guard let user = Auth.auth().currentUser else {
-            throw URLError(.badURL)
-        }
-        
-        return AuthDataResultModel(user: user)
+    func currentUser() throws -> AuthDataResultModel {
+        try authProvider.getAuthenticatedUser()
     }
     
-    func createUser(
-        username: String,
-        email: String,
-        password: String
-    ) async throws -> AuthDataResultModel {
-        let authDataResult = try await Auth.auth().createUser(withEmail: email, password: password)
-        
-        let authDataResultModel = AuthDataResultModel(
-            user: authDataResult.user,
-            name: username
+    func createUser(username: String, email: String, password: String) async throws -> AuthDataResultModel {
+        let authDataResultModel = try await authProvider.createUser(
+            username: username,
+            email: email,
+            password: password
         )
         
         try await UserManager.shared.createNewUser(auth: authDataResultModel)
@@ -42,11 +33,10 @@ final class AuthenticationManager: AuthenticationManagerType {
     }
     
     func signIn(email: String, password: String) async throws -> AuthDataResultModel {
-        let authDataResult = try await Auth.auth().signIn(withEmail: email, password: password)
-        return AuthDataResultModel(user: authDataResult.user)
+        try await authProvider.signIn(email: email, password: password)
     }
     
     func signOut() throws {
-        try Auth.auth().signOut()
+        try authProvider.signOut()
     }
 }

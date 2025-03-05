@@ -70,7 +70,7 @@ public final class TabCoordinator: NSObject, @preconcurrency Coordinator {
         profileCoordinator = ProfileCoordinator(
             tabBarItem: TabBarPage.profile.tabBarItem,
             userManager: UserManager.shared,
-            userUuid: try! AuthenticationManager.shared.getAuthenticatedUser().uid
+            userUuid: try! AuthenticationManager.shared.currentUser().uid
         )
         profileCoordinator?.start()
         

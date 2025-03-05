@@ -6,14 +6,12 @@
 //
 
 import SwiftUI
-
-import FirebaseCore
-import FirebaseAuth
+import PopcornShareUtilities
 
 final class SignUpViewModel: ObservableObject, @unchecked Sendable {
-    @Published var name: String = ""
-    @Published var email: String = ""
-    @Published var password: String = ""
+    @Published var name: String = .empty
+    @Published var email: String = .empty
+    @Published var password: String = .empty
     
     let authManager: AuthenticationManagerType
     let dismiss: () -> Void
@@ -36,7 +34,7 @@ final class SignUpViewModel: ObservableObject, @unchecked Sendable {
             guard let self else { return }
             
             do {
-                let userData = try await authManager.createUser(
+                let _ = try await authManager.createUser(
                     username: name,
                     email: email,
                     password: password

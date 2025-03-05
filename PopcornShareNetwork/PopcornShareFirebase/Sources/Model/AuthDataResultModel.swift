@@ -1,11 +1,10 @@
 //
 //  AuthDataResultModel.swift
-//  PopcornShareAuthentication
+//  PopcornShareFirebase
 //
-//  Created by Paulo Lazarini on 04/03/25.
+//  Created by Paulo Lazarini on 05/03/25.
 //
 
-import Foundation
 import FirebaseAuth
 
 public struct AuthDataResultModel {

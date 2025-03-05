@@ -8,8 +8,6 @@
 import UIKit
 import SwiftUI
 import Combine
-import FirebaseCore
-import FirebaseAuth
 import PopcornShareUtilities
 
 public protocol AuthCoordinatorDelegate: AnyObject {
