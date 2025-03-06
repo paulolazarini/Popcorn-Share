@@ -7,13 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E00CB8852C00526500D49547 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = E00CB8842C00526500D49547 /* FirebaseAnalytics */; };
-		E00CB8872C00526500D49547 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = E00CB8862C00526500D49547 /* FirebaseAuth */; };
-		E00CB88B2C00526500D49547 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = E00CB88A2C00526500D49547 /* FirebaseCrashlytics */; };
-		E00CB88D2C00526500D49547 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = E00CB88C2C00526500D49547 /* FirebaseFirestore */; };
-		E00CB8912C00526500D49547 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E00CB8902C00526500D49547 /* FirebaseFirestoreSwift */; };
-		E00CB8932C00526500D49547 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = E00CB8922C00526500D49547 /* FirebaseMessaging */; };
-		E00CB8952C00526500D49547 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = E00CB8942C00526500D49547 /* FirebaseStorage */; };
 		E00CB8B42C00F96500D49547 /* MoviesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00CB8B32C00F96500D49547 /* MoviesManager.swift */; };
 		E00CB8B62C00FC0700D49547 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00CB8B52C00FC0700D49547 /* AuthenticationManager.swift */; };
 		E040945A2D49282C007A3D37 /* PopcornShareNetwork in Frameworks */ = {isa = PBXBuildFile; productRef = E04094592D49282C007A3D37 /* PopcornShareNetwork */; };
@@ -70,21 +63,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E00CB8932C00526500D49547 /* FirebaseMessaging in Frameworks */,
 				E040945A2D49282C007A3D37 /* PopcornShareNetwork in Frameworks */,
-				E00CB8852C00526500D49547 /* FirebaseAnalytics in Frameworks */,
-				E00CB8952C00526500D49547 /* FirebaseStorage in Frameworks */,
 				E04F13CE2D7743B400F1F3F5 /* PopcornShareProfile in Frameworks */,
 				E0F2EC562D3A026900A470DF /* PopcornShareNetworkCore in Frameworks */,
-				E00CB88B2C00526500D49547 /* FirebaseCrashlytics in Frameworks */,
-				E00CB8912C00526500D49547 /* FirebaseFirestoreSwift in Frameworks */,
 				E09C78832D78F5AF00967A23 /* PopcornShareFirebase in Frameworks */,
 				E0CFDF162D15304D0077C10B /* PopcornShareUtilities in Frameworks */,
 				E088391B2D48805D00F2BAAB /* PopcornShareHome in Frameworks */,
-				E00CB88D2C00526500D49547 /* FirebaseFirestore in Frameworks */,
 				E06731292D773A0100CE9DBD /* PopcornShareAuthentication in Frameworks */,
 				E04F13CC2D7743AF00F1F3F5 /* PopcornShareSearch in Frameworks */,
-				E00CB8872C00526500D49547 /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -102,7 +88,6 @@
 				E08839192D487ED900F2BAAB /* PopcornShareHome */,
 				E0BAE3CB2D1530040098FBC9 /* PopcornShareUtilities */,
 				E0B242002D49242700A2D436 /* PopcornShareNetwork */,
-				E0CFDF142D15304D0077C10B /* Frameworks */,
 				E041C8FD2C0024BB002100BE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -155,13 +140,6 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
-		E0CFDF142D15304D0077C10B /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		E0D45E7A2C002C39005ED237 /* Coordinators */ = {
 			isa = PBXGroup;
 			children = (
@@ -209,13 +187,6 @@
 			);
 			name = PopcornShare;
 			packageProductDependencies = (
-				E00CB8842C00526500D49547 /* FirebaseAnalytics */,
-				E00CB8862C00526500D49547 /* FirebaseAuth */,
-				E00CB88A2C00526500D49547 /* FirebaseCrashlytics */,
-				E00CB88C2C00526500D49547 /* FirebaseFirestore */,
-				E00CB8902C00526500D49547 /* FirebaseFirestoreSwift */,
-				E00CB8922C00526500D49547 /* FirebaseMessaging */,
-				E00CB8942C00526500D49547 /* FirebaseStorage */,
 				E0CFDF152D15304D0077C10B /* PopcornShareUtilities */,
 				E0F2EC552D3A026900A470DF /* PopcornShareNetworkCore */,
 				E088391A2D48805D00F2BAAB /* PopcornShareHome */,
@@ -254,7 +225,6 @@
 			);
 			mainGroup = E041C8F32C0024BB002100BE;
 			packageReferences = (
-				E00CB8832C00526400D49547 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = E041C8FD2C0024BB002100BE /* Products */;
 			projectDirPath = "";
@@ -515,53 +485,7 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		E00CB8832C00526400D49547 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 10.26.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
 /* Begin XCSwiftPackageProductDependency section */
-		E00CB8842C00526500D49547 /* FirebaseAnalytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E00CB8832C00526400D49547 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalytics;
-		};
-		E00CB8862C00526500D49547 /* FirebaseAuth */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E00CB8832C00526400D49547 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAuth;
-		};
-		E00CB88A2C00526500D49547 /* FirebaseCrashlytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E00CB8832C00526400D49547 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseCrashlytics;
-		};
-		E00CB88C2C00526500D49547 /* FirebaseFirestore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E00CB8832C00526400D49547 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseFirestore;
-		};
-		E00CB8902C00526500D49547 /* FirebaseFirestoreSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E00CB8832C00526400D49547 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseFirestoreSwift;
-		};
-		E00CB8922C00526500D49547 /* FirebaseMessaging */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E00CB8832C00526400D49547 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseMessaging;
-		};
-		E00CB8942C00526500D49547 /* FirebaseStorage */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E00CB8832C00526400D49547 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseStorage;
-		};
 		E04094592D49282C007A3D37 /* PopcornShareNetwork */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PopcornShareNetwork;
