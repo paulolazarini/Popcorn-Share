@@ -35,11 +35,12 @@ final class SearchViewModel: ObservableObject, @unchecked Sendable {
         
         $searchText
             .dropFirst()
-            .debounce(for: .seconds(0.5), scheduler: DispatchQueue.main)
+            .debounce(for: .seconds(0.1), scheduler: DispatchQueue.main)
             .sink { [weak self] text in
                 guard let self else { return }
                 
                 guard !text.isEmpty else {
+                    self.state = .movies
                     self.getPopularMovies()
                     return
                 }

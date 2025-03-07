@@ -10,23 +10,8 @@ import Combine
 import PopcornShareUtilities
 import PopcornShareNetwork
 
-protocol MoviesCategoryViewModeling: ObservableObject {
-    var movies: [MovieViewData] { get set }
-    var networkManager: NetworkManagerType { get }
-    var isLoading: Bool { get }
-    var page: Int { get set }
-    
-    var navigationTitle: String { get }
-    
-    func getMovies() async
-}
-
-struct MoviesCategoryView<ViewModel: MoviesCategoryViewModeling & Sendable>: View {
-    @ObservedObject var viewModel: ViewModel
-    
-    @Environment(\.dismiss) private var dismiss
-    let navigationEvents: PassthroughSubject<HomeNavigationEvents, Never>
-    
+struct SeeMoreCategoryView: View {
+    @ObservedObject var viewModel: SeeMoreCategoryViewModel
     
     let gridItems = Array(
         repeating: GridItem(spacing: .small),
@@ -40,7 +25,9 @@ struct MoviesCategoryView<ViewModel: MoviesCategoryViewModeling & Sendable>: Vie
             .navigationBarTitleDisplayMode(.large)
             .navigationBarBackButtonHidden()
             .toolbar {
-                PSToolbarDismissButton() { dismiss() }
+                PSToolbarDismissButton() {
+                    viewModel.navigationEvent(.pop)
+                }
             }
             .background(Color.Background.white)
     }
@@ -60,7 +47,7 @@ struct MoviesCategoryView<ViewModel: MoviesCategoryViewModeling & Sendable>: Vie
                 )
                 .padding(.small)
                 .onTapGesture {
-                    navigationEvents.send(.details(movie: movie))
+                    viewModel.navigationEvent(.details(movie: movie))
                 }
             }
             .safeAreaInset(edge: .bottom) {

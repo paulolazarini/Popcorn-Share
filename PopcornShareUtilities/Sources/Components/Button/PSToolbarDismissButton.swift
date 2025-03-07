@@ -22,11 +22,6 @@ public struct PSToolbarDismissButton: ToolbarContent {
                 Image(systemName: "arrow.left")
                     .foregroundStyle(.black)
                     .padding(.small)
-                    .background {
-                        Circle()
-                            .fill(Color.Background.yellow)
-                            .opacity(0.3)
-                    }
             }
         }
     }

@@ -10,6 +10,12 @@ import SwiftUI
 import Combine
 import PopcornShareUtilities
 
+enum HomeNavigationEvents {
+    case pop, dismiss
+    case details(movie: MovieViewData)
+    case seeMore(_ category: MovieCategory)
+}
+
 @MainActor
 public final class HomeCoordinator: Coordinator {
     public weak var detailsDelegate: MovieDetailsDelegate?
@@ -25,6 +31,10 @@ public final class HomeCoordinator: Coordinator {
         self.tabBarItem = tabBarItem
         self.navigationController = UINavigationController()
         
+        self.setupNavigationBindings()
+    }
+    
+    func setupNavigationBindings() {
         navigationEvents
             .sink { [weak self] event in
                 switch event {
@@ -32,6 +42,10 @@ public final class HomeCoordinator: Coordinator {
                     self?.detailsDelegate?.presentMovieDetails(for: movie)
                 case .seeMore(let category):
                     self?.presentSeeMore(for: category)
+                case .pop:
+                    self?.popVC()
+                case .dismiss:
+                    self?.dismiss()
                 }
                 
             }.store(in: &cancelSet)
@@ -40,34 +54,17 @@ public final class HomeCoordinator: Coordinator {
     public func start() {
         let viewModel = HomeViewModel(navigationEvents: navigationEvents)
         let view = HomeView(viewModel: viewModel)
-        let viewController = UIHostingController(rootView: view)
-        viewController.tabBarItem = tabBarItem
-
-        navigationController.pushViewController(viewController, animated: false)
+        
+        push(view, tabBarItem: tabBarItem)
     }
     
     private func presentSeeMore(for category: MovieCategory) {
-        let view = makeMovieCategoryExpandedGrid(category)
+        let viewModel = SeeMoreCategoryViewModel(
+            type: category,
+            navigationEvents: navigationEvents
+        )
+        let view = SeeMoreCategoryView(viewModel: viewModel)
         
         push(view)
     }
-    
-    @ViewBuilder
-    private func makeMovieCategoryExpandedGrid(_ category: MovieCategory) -> some View {
-        switch category {
-        case .popular:
-            MoviesCategoryView(viewModel: PopularMoviesViewModel(), navigationEvents: navigationEvents)
-        case .topRated:
-            MoviesCategoryView(viewModel: TopRatedMoviesViewModel(), navigationEvents: navigationEvents)
-        case .nowPlaying:
-            MoviesCategoryView(viewModel: NowPlayingMoviesViewModel(), navigationEvents: navigationEvents)
-        case .upcoming:
-            MoviesCategoryView(viewModel: UpcomingMoviesViewModel(), navigationEvents: navigationEvents)
-        }
-    }
-}
-
-enum HomeNavigationEvents {
-    case details(movie: MovieViewData)
-    case seeMore(_ category: MovieCategory)
 }

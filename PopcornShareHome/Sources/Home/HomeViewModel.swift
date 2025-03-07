@@ -13,23 +13,6 @@ import PopcornShareNetworkModel
 import PopcornShareNetworkCore
 import PopcornShareNetwork
 
-enum MovieCategory: CaseIterable {
-    case popular, topRated, nowPlaying, upcoming
-    
-    var title: String {
-        switch self {
-        case .popular:
-            "Popular Movies"
-        case .topRated:
-            "Top Rated"
-        case .nowPlaying:
-            "Now Playing"
-        case .upcoming:
-            "Upcoming"
-        }
-    }
-}
-
 public final class HomeViewModel: ObservableObject, @unchecked Sendable {
     @Published var headerMovies: [MovieViewData] = []
     @Published var popularMovies: [MovieViewData] = []
@@ -37,9 +20,8 @@ public final class HomeViewModel: ObservableObject, @unchecked Sendable {
     @Published var upcomingMovies: [MovieViewData] = []
     @Published var nowPlayingMovies: [MovieViewData] = []
 
-    let navigationEvents: PassthroughSubject<HomeNavigationEvents, Never>
-    
     private let serviceManager: NetworkManagerType
+    private let navigationEvents: PassthroughSubject<HomeNavigationEvents, Never>
 
     init(
         serviceManager: NetworkManagerType = NetworkManager(),
@@ -53,32 +35,10 @@ public final class HomeViewModel: ObservableObject, @unchecked Sendable {
         }
     }
     
-    func fetchMovies(
-        type: MovieCategory,
-        page: Int = 1
-    ) async -> [MovieViewData]? {
-        let result: Result<Movies, RequestError>
-        
-        switch type {
-        case .popular:
-            result = await serviceManager.getPopularMovies(page: page)
-        case .topRated:
-            result = await serviceManager.getTopRatedMovies(page: page)
-        case .nowPlaying:
-            result = await serviceManager.getNowPlayingMovies(page: page)
-        case .upcoming:
-            result = await serviceManager.getUpcomingMovies(page: page)
-        }
-        
-        switch result {
-        case .success(let movies):
-            return movies.results.map { $0.toMovieViewData }
-        case .failure(let error):
-            print("Error fetching \(type): \(error)")
-            return nil
-        }
+    func navigationEvent(_ event: HomeNavigationEvents) {
+        navigationEvents.send(event)
     }
-    
+        
     func fetchMovies() async {
         async let popularMovies = fetchMovies(type: .popular)
         async let topRatedMovies = fetchMovies(type: .topRated)
@@ -109,6 +69,32 @@ public final class HomeViewModel: ObservableObject, @unchecked Sendable {
             if let upcoming = upcoming {
                 self.upcomingMovies = upcoming
             }
+        }
+    }
+    
+    private func fetchMovies(
+        type: MovieCategory,
+        page: Int = 1
+    ) async -> [MovieViewData]? {
+        let result: Result<Movies, RequestError>
+        
+        switch type {
+        case .popular:
+            result = await serviceManager.getPopularMovies(page: page)
+        case .topRated:
+            result = await serviceManager.getTopRatedMovies(page: page)
+        case .nowPlaying:
+            result = await serviceManager.getNowPlayingMovies(page: page)
+        case .upcoming:
+            result = await serviceManager.getUpcomingMovies(page: page)
+        }
+        
+        switch result {
+        case .success(let movies):
+            return movies.results.map { $0.toMovieViewData }
+        case .failure(let error):
+            print("Error fetching \(type): \(error)")
+            return nil
         }
     }
 }

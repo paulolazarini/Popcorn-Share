@@ -46,8 +46,6 @@ public final class ProfileCoordinator: Coordinator {
             userUuid: userUuid
         )
         let view = ProfileView(viewModel: viewModel)
-        let viewController = UIHostingController(rootView: view)
-        viewController.tabBarItem = tabBarItem
         
         viewModel.events
             .receive(on: DispatchQueue.main)
@@ -60,7 +58,7 @@ public final class ProfileCoordinator: Coordinator {
                 }
             }.store(in: &cancelSet)
 
-        navigationController.pushViewController(viewController, animated: false)
+        push(view, tabBarItem: tabBarItem)
     }
     
     private func signOut() {

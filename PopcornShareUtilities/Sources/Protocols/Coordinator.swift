@@ -18,6 +18,10 @@ public extension Coordinator {
         navigationController.dismiss(animated: true)
     }
     
+    func popVC() {
+        navigationController.popViewController(animated: true)
+    }
+    
     func present(
         _ view: some View,
         animated: Bool = true,
@@ -31,9 +35,15 @@ public extension Coordinator {
     
     func push(
         _ view: some View,
-        animated: Bool = true
+        animated: Bool = true,
+        tabBarItem: UITabBarItem? = nil
     ) {
         let viewController = UIHostingController(rootView: view)
+        
+        if let tabBarItem {
+            viewController.tabBarItem = tabBarItem
+        }
+        
         navigationController.pushViewController(viewController, animated: animated)
     }
 }

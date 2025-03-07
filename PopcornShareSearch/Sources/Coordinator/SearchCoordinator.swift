@@ -27,8 +27,6 @@ public final class SearchCoordinator: Coordinator {
     public func start() {
         let viewModel = SearchViewModel()
         let view = SearchView(viewModel: viewModel)
-        let viewController = UIHostingController(rootView: view)
-        viewController.tabBarItem = tabBarItem
 
         viewModel.navigationEvents
             .sink { [weak self] event in
@@ -39,7 +37,7 @@ public final class SearchCoordinator: Coordinator {
                 
             }.store(in: &cancelSet)
         
-        navigationController.pushViewController(viewController, animated: false)
+        push(view, tabBarItem: tabBarItem)
     }
 }
 

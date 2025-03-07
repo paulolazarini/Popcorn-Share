@@ -32,33 +32,37 @@ struct HomeView: View {
     
     private var homeCarouselView: some View {
         HomeCarouselView(headerMovies: $viewModel.headerMovies) { movie in
-            viewModel.navigationEvents.send(.details(movie: movie))
+            viewModel.navigationEvent(.details(movie: movie))
         }
     }
     
     private func makeMovieSection(_ category: MovieCategory) -> some View {
         VStack(spacing: .medium) {
-            HStack {
-                Text(category.title)
-                    .font(.title)
-                    .bold()
-                
-                Spacer()
-                
-                Button {
-                    viewModel.navigationEvents.send(.seeMore(category))
-                } label: {
-                    Text("See more")
-                        .font(.callout)
-                        .bold()
-                        .foregroundStyle(Color.yellow)
-                }
-            }
+            categoryTitle(category)
                 
             makeMoviesGrid(category)
                 .fixedSize(horizontal: false, vertical: true)
         }
         .padding(.large)
+    }
+    
+    private func categoryTitle(_ category: MovieCategory) -> some View {
+        HStack {
+            Text(category.title)
+                .font(.title)
+                .bold()
+            
+            Spacer()
+            
+            Button {
+                viewModel.navigationEvent(.seeMore(category))
+            } label: {
+                Text("See more")
+                    .font(.callout)
+                    .bold()
+                    .foregroundStyle(Color.yellow)
+            }
+        }
     }
             
     @ViewBuilder
@@ -80,7 +84,7 @@ struct HomeView: View {
             gridItems: gridItems,
             orientation: .horizontal,
             data: $viewModel.popularMovies) { index, _ in
-                makeNavigationLink(movie: $viewModel.popularMovies[index])
+                makeCell(for: $viewModel.popularMovies[index])
             }
     }
     
@@ -89,7 +93,7 @@ struct HomeView: View {
             gridItems: gridItems,
             orientation: .horizontal,
             data: $viewModel.nowPlayingMovies) { index, _ in
-                makeNavigationLink(movie: $viewModel.nowPlayingMovies[index])
+                makeCell(for: $viewModel.nowPlayingMovies[index])
             }
     }
     
@@ -98,7 +102,7 @@ struct HomeView: View {
             gridItems: gridItems,
             orientation: .horizontal,
             data: $viewModel.upcomingMovies) { index, _ in
-                makeNavigationLink(movie: $viewModel.upcomingMovies[index])
+                makeCell(for: $viewModel.upcomingMovies[index])
             }
     }
     
@@ -107,17 +111,17 @@ struct HomeView: View {
             gridItems: gridItems,
             orientation: .horizontal,
             data: $viewModel.topRatedMovies) { index, _ in
-                makeNavigationLink(movie: $viewModel.topRatedMovies[index])
+                makeCell(for: $viewModel.topRatedMovies[index])
             }
     }
     
-    private func makeNavigationLink(movie: Binding<MovieViewData>) -> some View {
+    private func makeCell(for movie: Binding<MovieViewData>) -> some View {
         PSCardView(
             movie: movie,
             onFavoriteTapped: { movie in }
         )
         .onTapGesture {
-            viewModel.navigationEvents.send(.details(movie: movie.wrappedValue))
+            viewModel.navigationEvent(.details(movie: movie.wrappedValue))
         }
     }
 }

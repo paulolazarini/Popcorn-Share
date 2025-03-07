@@ -9,6 +9,10 @@ import UIKit
 
 actor ImageCache {
     private var cache = NSCache<NSString, UIImage>()
+    
+    init() {
+        cache.countLimit = 50
+    }
 
     func image(forKey key: String) -> UIImage? {
         cache.object(forKey: key as NSString)
