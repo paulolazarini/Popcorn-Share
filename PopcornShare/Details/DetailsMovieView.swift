@@ -9,23 +9,20 @@ import SwiftUI
 import PopcornShareUtilities
 import PopcornShareNetworkModel
 
-public struct DetailsMovieView: View {
+struct DetailsMovieView: View {
     @ObservedObject var viewModel: DetailsMovieViewModel
     
-    @Environment(\.dismiss) private var dismiss
-    
-    public init(viewModel: DetailsMovieViewModel) {
-        self._viewModel = ObservedObject(initialValue: viewModel) 
-    }
+    let onDismiss: () -> Void
 
-    public var body: some View {
+    var body: some View {
         stateView
             .background(Color.Background.yellow)
             .ignoresSafeArea(edges: .top)
-            .toolbarVisibility(.visible, for: .navigationBar)
-            .navigationBarTitleDisplayMode(.inline)
             .navigationBarBackButtonHidden()
-            .toolbar { PSToolbarDismissButton() }
+            .toolbarBackground(.hidden, for: .navigationBar)
+            .toolbar {
+                PSToolbarDismissButton { onDismiss() }
+            }
     }
 
     @ViewBuilder
@@ -42,13 +39,16 @@ public struct DetailsMovieView: View {
         ScrollView {
             backdropImageView
             
-            if let movie = viewModel.movie,
-               let credits = viewModel.credits {
-                movieHeaderInfo(movie, credits: credits)
+            VStack(alignment: .leading, spacing: .medium) {
+                if let movie = viewModel.movie,
+                   let credits = viewModel.credits {
+                    movieHeaderInfo(movie, credits: credits)
+                }
+                
+                Text(viewModel.movie?.overview ?? .empty)
             }
-            
-            Text(viewModel.movie?.overview ?? .empty)
-                .padding(.medium)
+            .padding(.horizontal, .medium)
+            .frame(width: UIScreen.main.bounds.width)
         }
     }
 
@@ -112,5 +112,5 @@ public struct DetailsMovieView: View {
 }
 
 #Preview {
-    DetailsMovieView(viewModel: DetailsMovieViewModel(movieId: "1"))
+    DetailsMovieView(viewModel: DetailsMovieViewModel(movieId: "1")) {}
 }

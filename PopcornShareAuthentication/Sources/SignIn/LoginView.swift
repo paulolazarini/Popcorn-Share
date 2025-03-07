@@ -22,12 +22,10 @@ struct LoginView: View {
     @ObservedObject var viewModel: LoginViewModel
     
     var body: some View {
-        ZStack(alignment: .top) {
+        ZStack(alignment: .center) {
             Color.Background.white.ignoresSafeArea()
             
             VStack(spacing: .large) {
-                popcornShareIcon
-                
                 Text(Constants.signInToPopcornShare)
                     .font(.title)
                     .bold()

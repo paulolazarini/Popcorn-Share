@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 import PopcornShareUtilities
 import PopcornShareNetwork
 
@@ -24,8 +25,8 @@ struct MoviesCategoryView<ViewModel: MoviesCategoryViewModeling & Sendable>: Vie
     @ObservedObject var viewModel: ViewModel
     
     @Environment(\.dismiss) private var dismiss
+    let navigationEvents: PassthroughSubject<HomeNavigationEvents, Never>
     
-    @Namespace var animationId
     
     let gridItems = Array(
         repeating: GridItem(spacing: .small),
@@ -35,9 +36,12 @@ struct MoviesCategoryView<ViewModel: MoviesCategoryViewModeling & Sendable>: Vie
     var body: some View {
         moviesGridView
             .navigationTitle(viewModel.navigationTitle)
+            .toolbarVisibility(.visible, for: .navigationBar)
             .navigationBarTitleDisplayMode(.large)
             .navigationBarBackButtonHidden()
-            .toolbar { PSToolbarDismissButton() }
+            .toolbar {
+                PSToolbarDismissButton() { dismiss() }
+            }
             .background(Color.Background.white)
     }
     
@@ -47,17 +51,18 @@ struct MoviesCategoryView<ViewModel: MoviesCategoryViewModeling & Sendable>: Vie
             orientation: .vertical,
             didLoadLastCell: fetchNexPage,
             data: $viewModel.movies) { index, movie in
-                NavigationLinkToMovieDetails(movie: movie) {
-                    MovieCategoryCell(
-                        movie: Binding(
-                            get: { return movie },
-                            set: { viewModel.movies[index] = $0 }
-                        ),
-                        onFavoriteTapped: { movie in }
-                    )
-                    .padding(.small)
+                MovieCategoryCell(
+                    movie: Binding(
+                        get: { return movie },
+                        set: { viewModel.movies[index] = $0 }
+                    ),
+                    onFavoriteTapped: { movie in }
+                )
+                .padding(.small)
+                .onTapGesture {
+                    navigationEvents.send(.details(movie: movie))
                 }
-        }
+            }
             .safeAreaInset(edge: .bottom) {
                 if viewModel.isLoading {
                     ProgressView()

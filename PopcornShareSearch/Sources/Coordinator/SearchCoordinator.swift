@@ -12,9 +12,8 @@ import PopcornShareUtilities
 
 @MainActor
 public final class SearchCoordinator: Coordinator {
+    public weak var detailsDelegate: MovieDetailsDelegate?
     public var navigationController: UINavigationController
-    public var childCoordinators = [Coordinator]()
-    public var type: CoordinatorType = .search
     
     let tabBarItem: UITabBarItem
     
@@ -31,6 +30,19 @@ public final class SearchCoordinator: Coordinator {
         let viewController = UIHostingController(rootView: view)
         viewController.tabBarItem = tabBarItem
 
+        viewModel.navigationEvents
+            .sink { [weak self] event in
+                switch event {
+                case .details(let movie):
+                    self?.detailsDelegate?.presentMovieDetails(for: movie)
+                }
+                
+            }.store(in: &cancelSet)
+        
         navigationController.pushViewController(viewController, animated: false)
     }
+}
+
+enum SearchNavigationEvents {
+    case details(movie: MovieViewData)
 }

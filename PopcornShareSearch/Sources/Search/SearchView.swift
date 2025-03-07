@@ -41,21 +41,19 @@ struct SearchView: View {
         PSGridView(
             gridItems: [GridItem(spacing: .zero)],
             data: $viewModel.movies) { index, movie in
-//                NavigationLink {
-//                    PopcornShareHome.DetailsMovieView(viewModel: PopcornShareHome.DetailsMovieViewModel(movieId: movie.id))
-//                        .navigationTransition(.zoom(sourceID: movie.id, in: animationId))
-//                } label: {
-//                    SearchMovieCell(
-//                        movie: Binding(
-//                            get: { return movie },
-//                            set: { viewModel.movies[index] = $0 }
-//                        ),
-//                        animationId: animationId,
-//                        onFavoriteTapped: { movie in }
-//                    )
-//                }
-//                .id(UUID())
+                SearchMovieCell(
+                    movie: Binding(
+                        get: { return movie },
+                        set: { viewModel.movies[index] = $0 }
+                    ),
+                    animationId: animationId,
+                    onFavoriteTapped: { movie in }
+                )
+                .onTapGesture {
+                    viewModel.didTapMovieCell(movie)
+                }
             }
+            .id(UUID())
     }
     
     private var loadingView: some View {

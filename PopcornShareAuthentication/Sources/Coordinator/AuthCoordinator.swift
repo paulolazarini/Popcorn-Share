@@ -17,8 +17,6 @@ public protocol AuthCoordinatorDelegate: AnyObject {
 public final class AuthCoordinator: Coordinator {
     public weak var delegate: AuthCoordinatorDelegate?
     public var navigationController: UINavigationController
-    public var childCoordinators = [Coordinator]()
-    public var type: CoordinatorType = .auth
     
     let authManager: AuthenticationManagerType
     

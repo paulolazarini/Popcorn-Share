@@ -21,6 +21,7 @@ final class SearchViewModel: ObservableObject, @unchecked Sendable {
     @Published var state: State = .movies
     @Published var isLoading = false
     
+    let navigationEvents = PassthroughSubject<SearchNavigationEvents, Never>()
     private let serviceManager: NetworkManagerType
     
     private var cancelSet = Set<AnyCancellable>()
@@ -45,6 +46,10 @@ final class SearchViewModel: ObservableObject, @unchecked Sendable {
                 
                 self.searchMovies(using: text)
             }.store(in: &cancelSet)
+    }
+    
+    func didTapMovieCell(_ movie: MovieViewData) {
+        navigationEvents.send(.details(movie: movie))
     }
     
     private func getPopularMovies() {

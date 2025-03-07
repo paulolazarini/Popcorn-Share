@@ -13,18 +13,21 @@ import PopcornShareUtilities
 struct HomeCarouselView: View {
     @Binding var headerMovies: [MovieViewData]
     
+    var didTapMovieImage: (MovieViewData) -> Void
+    
     var body: some View {
         TabView {
             ForEach(headerMovies, id: \.self) { movie in
-                NavigationLinkToMovieDetails(movie: movie) {
-                    PSMovieImage(for: movie)
-                        .overlay {
-                            LinearGradient(
-                                colors: [.clear, .white],
-                                startPoint: .center,
-                                endPoint: .bottom)
-                        }
-                }
+                PSMovieImage(for: movie)
+                    .overlay {
+                        LinearGradient(
+                            colors: [.clear, .white],
+                            startPoint: .center,
+                            endPoint: .bottom)
+                    }
+                    .onTapGesture {
+                        didTapMovieImage(movie)
+                    }
             }
         }
         .tabViewStyle(.page)
@@ -40,7 +43,7 @@ struct HomeCarouselView: View {
     ScrollView {
         HomeCarouselView(headerMovies: .constant(
             [.mock(), .mock(), .mock(), .mock(), .mock()]
-        ))
+        )) { _ in }
     }
 }
 

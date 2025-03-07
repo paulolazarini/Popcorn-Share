@@ -11,13 +11,9 @@ import SwiftUI
 @MainActor
 public protocol Coordinator: AnyObject {
     var navigationController: UINavigationController { get set }
-    var childCoordinators: [Coordinator] { get set }
-    var type: CoordinatorType { get set }
 }
 
 public extension Coordinator {
-    var childCoordinators: [Coordinator] { [] }
-    
     func dismiss() {
         navigationController.dismiss(animated: true)
     }
@@ -40,8 +36,4 @@ public extension Coordinator {
         let viewController = UIHostingController(rootView: view)
         navigationController.pushViewController(viewController, animated: animated)
     }
-}
-
-public enum CoordinatorType {
-    case app, auth, tab, tabItem, profile, home, search
 }

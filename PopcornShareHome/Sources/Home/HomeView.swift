@@ -31,7 +31,9 @@ struct HomeView: View {
     }
     
     private var homeCarouselView: some View {
-        HomeCarouselView(headerMovies: $viewModel.headerMovies)
+        HomeCarouselView(headerMovies: $viewModel.headerMovies) { movie in
+            viewModel.navigationEvents.send(.details(movie: movie))
+        }
     }
     
     private func makeMovieSection(_ category: MovieCategory) -> some View {
@@ -43,8 +45,8 @@ struct HomeView: View {
                 
                 Spacer()
                 
-                NavigationLink {
-                    makeMovieCategoryExpandedGrid(category)
+                Button {
+                    viewModel.navigationEvents.send(.seeMore(category))
                 } label: {
                     Text("See more")
                         .font(.callout)
@@ -58,21 +60,7 @@ struct HomeView: View {
         }
         .padding(.large)
     }
-        
-    @ViewBuilder
-    private func makeMovieCategoryExpandedGrid(_ category: MovieCategory) -> some View {
-        switch category {
-        case .popular:
-            MoviesCategoryView(viewModel: PopularMoviesViewModel())
-        case .topRated:
-            MoviesCategoryView(viewModel: TopRatedMoviesViewModel())
-        case .nowPlaying:
-            MoviesCategoryView(viewModel: NowPlayingMoviesViewModel())
-        case .upcoming:
-            MoviesCategoryView(viewModel: UpcomingMoviesViewModel())
-        }
-    }
-    
+            
     @ViewBuilder
     private func makeMoviesGrid(_ category: MovieCategory) -> some View {
         switch category {
@@ -124,18 +112,12 @@ struct HomeView: View {
     }
     
     private func makeNavigationLink(movie: Binding<MovieViewData>) -> some View {
-        NavigationLinkToMovieDetails(movie: movie.wrappedValue) {
-            PSCardView(
-                movie: movie,
-                onFavoriteTapped: { movie in }
-            )
+        PSCardView(
+            movie: movie,
+            onFavoriteTapped: { movie in }
+        )
+        .onTapGesture {
+            viewModel.navigationEvents.send(.details(movie: movie.wrappedValue))
         }
-    }
-
-}
-
-#Preview {
-    NavigationView {
-        HomeView(viewModel: HomeViewModel())
     }
 }

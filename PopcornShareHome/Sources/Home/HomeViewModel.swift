@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 import PopcornShareUtilities
 import PopcornShareNetworkModel
@@ -36,10 +37,16 @@ public final class HomeViewModel: ObservableObject, @unchecked Sendable {
     @Published var upcomingMovies: [MovieViewData] = []
     @Published var nowPlayingMovies: [MovieViewData] = []
 
+    let navigationEvents: PassthroughSubject<HomeNavigationEvents, Never>
+    
     private let serviceManager: NetworkManagerType
 
-    public init(serviceManager: NetworkManagerType = NetworkManager()) {
+    init(
+        serviceManager: NetworkManagerType = NetworkManager(),
+        navigationEvents: PassthroughSubject<HomeNavigationEvents, Never>
+    ) {
         self.serviceManager = serviceManager
+        self.navigationEvents = navigationEvents
         
         Task(priority: .utility) {
             await fetchMovies()

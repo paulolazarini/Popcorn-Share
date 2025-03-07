@@ -7,17 +7,11 @@
 
 import UIKit
 import SwiftUI
+import PopcornShareUtilities
 import PopcornShareAuthentication
 
-import FirebaseCore
-import FirebaseAuth
-
 final class AppCoordinator: Coordinator {
-    let navigationController: UINavigationController
-    
-    var childCoordinators = [Coordinator]()
-
-    let type: CoordinatorType = .app
+    public var navigationController: UINavigationController
 
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -46,7 +40,6 @@ final class AppCoordinator: Coordinator {
         authCoordinator?.delegate = self
         guard let authCoordinator else { return }
         authCoordinator.start()
-        childCoordinators.append(authCoordinator as! Coordinator)
     }
     
     @MainActor
@@ -56,20 +49,19 @@ final class AppCoordinator: Coordinator {
         tabCoordinator?.delegate = self
         guard let tabCoordinator else { return }
         tabCoordinator.start()
-        childCoordinators.append(tabCoordinator)
     }
 }
 
 extension AppCoordinator: AuthCoordinatorDelegate {
     func didFinishAuthFlow() {
         navigationController.viewControllers.removeAll()
-        Task { await start() }
+        start()
     }
 }
 
 extension AppCoordinator: TabCoordinatorDelegate {
     func didSignOut() {
         navigationController.viewControllers.removeAll()
-        Task { await start() }
+        start()
     }
 }

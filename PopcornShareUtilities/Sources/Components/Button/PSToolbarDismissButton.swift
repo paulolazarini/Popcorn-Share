@@ -8,9 +8,11 @@
 import SwiftUI
 
 public struct PSToolbarDismissButton: ToolbarContent {
-    @Environment(\.dismiss) private var dismiss
+    let dismiss: () -> Void
     
-    public init() {}
+    public init(dismiss: @escaping () -> Void) {
+        self.dismiss = dismiss
+    }
 
     public var body: some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {

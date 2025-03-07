@@ -129,7 +129,3 @@ struct ProfileView: View {
             .shadow(radius: .medium)
     }
 }
-
-//#Preview {
-//    ProfileView(viewModel: ProfileViewModel(user: .init(userId: "")))
-//}

@@ -58,8 +58,3 @@ struct MovieCategoryCell: View {
         .padding(.medium)
     }
 }
-
-
-#Preview {
-    MoviesCategoryView(viewModel: PopularMoviesViewModel())
-}

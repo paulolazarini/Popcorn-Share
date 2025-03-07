@@ -56,7 +56,6 @@ struct SignUpView: View {
             }
             .padding(.horizontal, .large)
         }
-        .toolbarVisibility(.hidden, for: .navigationBar)
         .safeAreaInset(
             edge: .bottom,
             content: footerView
