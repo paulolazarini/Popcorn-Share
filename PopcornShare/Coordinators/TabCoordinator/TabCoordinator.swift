@@ -10,6 +10,9 @@ import SwiftUI
 import Combine
 
 import PopcornShareHome
+import PopcornShareSearch
+import PopcornShareProfile
+
 import PopcornShareNetwork
 import PopcornShareUtilities
 
@@ -17,88 +20,80 @@ protocol TabCoordinatorDelegate: AnyObject {
     func didSignOut()
 }
 
+@MainActor
 public final class TabCoordinator: NSObject, Coordinator {
-
+    public var navigationController: UINavigationController
     weak var delegate: TabCoordinatorDelegate?
-
-    var navigationController: UINavigationController
     
-    var childCoordinators: [Coordinator] = []
+    let tabBarController: UITabBarController
     
-    var tabBarController: UITabBarController
+    var homeCoordinator: HomeCoordinator?
+    var searchCoordinator: SearchCoordinator?
+    var profileCoordinator: ProfileCoordinator?
     
-    var type: CoordinatorType = .tab
-    
-    var cancelSet = Set<AnyCancellable>()
-    
-    let networkManager: NetworkManagerType = NetworkManager()
+    private var cancelSet = Set<AnyCancellable>()
+    private let networkManager: NetworkManagerType = NetworkManager()
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
         self.tabBarController = UITabBarController()
     }
     
-    func start() {
+    public func start() {
         tabBarController.viewControllers = [
-            makePopularMovies(),
+            makeHomeMovies(),
             makeSearchMovies(),
-            makeFavoriteMovies(),
             makeProfile()
         ]
+        
         tabBarController.tabBar.tintColor = UIColor(.primaryRed)
-
         navigationController.setNavigationBarHidden(true, animated: false)
         navigationController.setViewControllers([tabBarController], animated: false)
     }
     
     private func makeSearchMovies() -> UINavigationController {
-        let view = SearchView(viewModel: SearchViewModel())
-        let viewController = UIHostingController(rootView: view)
-        viewController.tabBarItem = TabBarPage.search.tabBarItem
+        searchCoordinator = SearchCoordinator(tabBarItem: TabBarPage.search.tabBarItem)
+        searchCoordinator?.detailsDelegate = self
+        searchCoordinator?.start()
+        
+        return searchCoordinator?.navigationController ?? UINavigationController()
+    }
+    
+    private func makeHomeMovies() -> UINavigationController {
+        homeCoordinator = HomeCoordinator(tabBarItem: TabBarPage.movies.tabBarItem)
+        homeCoordinator?.detailsDelegate = self
+        homeCoordinator?.start()
+        
+        return homeCoordinator?.navigationController ?? UINavigationController()
+    }
+    
+    func makeProfile() -> UINavigationController {
+        profileCoordinator = ProfileCoordinator(
+            tabBarItem: TabBarPage.profile.tabBarItem,
+            userManager: UserManager.shared,
+            authManager: AuthenticationManager.shared,
+            userUuid: try! AuthenticationManager.shared.currentUser().uid
+        )
+        profileCoordinator?.delegate = self
+        profileCoordinator?.start()
+        
+        return profileCoordinator?.navigationController ?? UINavigationController()
+    }
+}
 
-        let navController = UINavigationController(rootViewController: viewController)
-        navController.setNavigationBarHidden(true, animated: false)
-        return navController
+extension TabCoordinator: ProfileCoordinatorDelegate {
+    public func didSignOut() {
+        delegate?.didSignOut()
     }
-    
-    private func makePopularMovies() -> UINavigationController {
-        let view = HomeView(viewModel: HomeViewModel())
-        let viewController = UIHostingController(rootView: view)
-        viewController.tabBarItem = TabBarPage.movies.tabBarItem
+}
 
-        let navController = UINavigationController(rootViewController: viewController)
-        navController.setNavigationBarHidden(true, animated: false)
-        return navController
-    }
-    
-    func makeFavoriteMovies() -> UIViewController {
-        let viewModel = FavoriteMoviesViewModel(serviceManager: networkManager)
-        let view = FavoriteMoviesView(viewModel: viewModel)
+extension TabCoordinator: MovieDetailsDelegate {
+    public func presentMovieDetails(for movie: MovieViewData) {
+        let view = DetailsMovieView(viewModel: DetailsMovieViewModel(movieId: movie.id), onDismiss: dismiss)
         let viewController = UIHostingController(rootView: view)
-        viewController.tabBarItem = TabBarPage.favorite.tabBarItem
+        let navigationController = UINavigationController(rootViewController: viewController)
+        navigationController.modalPresentationStyle = .fullScreen
         
-        let navController = UINavigationController(rootViewController: viewController)
-        navController.setNavigationBarHidden(true, animated: false)
-        return navController
-    }
-    
-    func makeProfile() -> UIViewController {
-        let viewModel = ProfileViewModel()
-        let view = ProfileView(viewModel: viewModel)
-        let viewController = UIHostingController(rootView: view)
-        viewController.tabBarItem = TabBarPage.profile.tabBarItem
-        
-        viewModel.events
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] events in
-                switch events {
-                case .onSignOutTapped:
-                    self?.delegate?.didSignOut()
-                }
-            }.store(in: &cancelSet)
-        
-        let navController = UINavigationController(rootViewController: viewController)
-        navController.setNavigationBarHidden(true, animated: false)
-        return navController
+        self.navigationController.present(navigationController, animated: true)
     }
 }

@@ -16,17 +16,14 @@ import FirebaseFirestoreSwift
 
 protocol MoviesManagerType: ObservableObject {
     var favoritedMovies: [MovieViewData] { get set }
-    var popularMovies: [MovieViewData] { get set }
     
     func toogleFavorite(userId: String, movieId: String) async
-    func getPopularMovies(page: Int) async throws
     func fetchFavoritedMovie(using id: String) async throws
     func getFavoriteIds(userId: String) async throws
 }
 
 final class MoviesManager: MoviesManagerType {
     @Published var favoritedMovies: [MovieViewData] = []
-    @Published var popularMovies: [MovieViewData] = []
     
     static let shared = MoviesManager()
     
@@ -75,49 +72,11 @@ extension MoviesManager {
     @MainActor
     func toogleFavorite(userId: String, movieId: String) async {
         let userRef = Firestore.firestore().collection("users").document(userId)
-        
-        if currentFavoriteMoviesId.contains(movieId) {
-            currentFavoriteMoviesId.remove(movieId)
-            
-            if let index = favoritedMovies.firstIndex(where: { $0.id == movieId }) {
-                favoritedMovies.remove(at: index)
-            }
-            
-            if let index = popularMovies.firstIndex(where: { $0.id == movieId }) {
-                popularMovies[index].favorite = false
-            }
-        } else {
-            currentFavoriteMoviesId.insert(movieId)
-            
-            if let index = popularMovies.firstIndex(where: { $0.id == movieId }) {
-                popularMovies[index].favorite = true
-            }
-        }
-        
         let favorriteMoviesIdArray = Array(currentFavoriteMoviesId)
-        Task.detached(priority: .background) {
-            try await userRef.updateData([
-                "favorite_ids": favorriteMoviesIdArray
-            ])
-        }
-    }
-}
-
-// MARK: - Popular
-
-extension MoviesManager {
-    public func getPopularMovies(page: Int = 1) async throws {
-        let result = await self.serviceManager.getPopularMovies(page: page)
         
-        switch result {
-        case let .success(movies):
-            let movies = movies.results.map { $0.toMovieViewData }
-            let newMovies = movies.filter { !popularMovies.contains($0) }
-            await MainActor.run {
-                popularMovies.append(contentsOf: newMovies)
-            }
-        case let .failure(error):
-            throw error
+        Task.detached(priority: .background) {
+            let dictData = ["favorite_ids": favorriteMoviesIdArray]
+            try await userRef.updateData(dictData)
         }
     }
 }

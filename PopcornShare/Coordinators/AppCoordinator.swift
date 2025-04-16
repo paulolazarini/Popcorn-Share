@@ -7,19 +7,12 @@
 
 import UIKit
 import SwiftUI
-import FirebaseCore
-import FirebaseAuth
+import PopcornShareUtilities
+import PopcornShareAuthentication
 
-protocol AppCoordinatorProtocol: Coordinator {
-    func start()
-}
-
-class AppCoordinator: AppCoordinatorProtocol {
-    var navigationController: UINavigationController
-    
-    var childCoordinators = [Coordinator]()
-
-    var type: CoordinatorType = .app
+@MainActor
+final class AppCoordinator: Coordinator {
+    public var navigationController: UINavigationController
 
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -29,7 +22,7 @@ class AppCoordinator: AppCoordinatorProtocol {
     var tabCoordinator: TabCoordinator?
     
     func start() {
-        let user = try? AuthenticationManager.shared.getAuthenticatedUser()
+        let user = try? AuthenticationManager.shared.currentUser()
         if user != nil {
             presentTabCoordinator()
         } else {
@@ -39,11 +32,13 @@ class AppCoordinator: AppCoordinatorProtocol {
     
     private func presentAuthCoordinator() {
         navigationController.viewControllers.removeAll()
-        authCoordinator = AuthCoordinator(navigationController: navigationController)
+        authCoordinator = AuthCoordinator(
+            navigationController: navigationController,
+            authManager: AuthenticationManager.shared
+        )
         authCoordinator?.delegate = self
         guard let authCoordinator else { return }
         authCoordinator.start()
-        childCoordinators.append(authCoordinator)
     }
     
     private func presentTabCoordinator() {
@@ -52,18 +47,17 @@ class AppCoordinator: AppCoordinatorProtocol {
         tabCoordinator?.delegate = self
         guard let tabCoordinator else { return }
         tabCoordinator.start()
-        childCoordinators.append(tabCoordinator)
     }
 }
 
-extension AppCoordinator: AuthCoordinatorDelegate {
+extension AppCoordinator: @preconcurrency AuthCoordinatorDelegate {
     func didFinishAuthFlow() {
         navigationController.viewControllers.removeAll()
         start()
     }
 }
 
-extension AppCoordinator: TabCoordinatorDelegate {
+extension AppCoordinator: @preconcurrency TabCoordinatorDelegate {
     func didSignOut() {
         navigationController.viewControllers.removeAll()
         start()
