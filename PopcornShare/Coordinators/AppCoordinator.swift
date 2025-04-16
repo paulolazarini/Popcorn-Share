@@ -10,6 +10,7 @@ import SwiftUI
 import PopcornShareUtilities
 import PopcornShareAuthentication
 
+@MainActor
 final class AppCoordinator: Coordinator {
     public var navigationController: UINavigationController
 
@@ -20,7 +21,6 @@ final class AppCoordinator: Coordinator {
     var authCoordinator: AuthCoordinator?
     var tabCoordinator: TabCoordinator?
     
-    @MainActor
     func start() {
         let user = try? AuthenticationManager.shared.currentUser()
         if user != nil {
@@ -30,7 +30,6 @@ final class AppCoordinator: Coordinator {
         }
     }
     
-    @MainActor
     private func presentAuthCoordinator() {
         navigationController.viewControllers.removeAll()
         authCoordinator = AuthCoordinator(
@@ -42,7 +41,6 @@ final class AppCoordinator: Coordinator {
         authCoordinator.start()
     }
     
-    @MainActor
     private func presentTabCoordinator() {
         navigationController.viewControllers.removeAll()
         tabCoordinator = TabCoordinator(navigationController: navigationController)
@@ -52,14 +50,14 @@ final class AppCoordinator: Coordinator {
     }
 }
 
-extension AppCoordinator: AuthCoordinatorDelegate {
+extension AppCoordinator: @preconcurrency AuthCoordinatorDelegate {
     func didFinishAuthFlow() {
         navigationController.viewControllers.removeAll()
         start()
     }
 }
 
-extension AppCoordinator: TabCoordinatorDelegate {
+extension AppCoordinator: @preconcurrency TabCoordinatorDelegate {
     func didSignOut() {
         navigationController.viewControllers.removeAll()
         start()

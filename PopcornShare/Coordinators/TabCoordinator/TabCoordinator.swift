@@ -26,6 +26,7 @@ public final class TabCoordinator: NSObject, Coordinator {
     weak var delegate: TabCoordinatorDelegate?
     
     let tabBarController: UITabBarController
+    
     var homeCoordinator: HomeCoordinator?
     var searchCoordinator: SearchCoordinator?
     var profileCoordinator: ProfileCoordinator?
@@ -38,7 +39,7 @@ public final class TabCoordinator: NSObject, Coordinator {
         self.tabBarController = UITabBarController()
     }
     
-    func start() {
+    public func start() {
         tabBarController.viewControllers = [
             makeHomeMovies(),
             makeSearchMovies(),
