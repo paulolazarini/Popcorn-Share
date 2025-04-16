@@ -36,7 +36,7 @@ public final class SeeMoreCategoryViewModel: ObservableObject, @unchecked Sendab
         self.navigationTitle = type.title
         self.navigationEvents = navigationEvents
         
-        Task(priority: .high) {
+        Task {
             await getMovies()
         }
     }

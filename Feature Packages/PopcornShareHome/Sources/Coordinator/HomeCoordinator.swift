@@ -33,24 +33,7 @@ public final class HomeCoordinator: Coordinator {
         
         self.setupNavigationBindings()
     }
-    
-    func setupNavigationBindings() {
-        navigationEvents
-            .sink { [weak self] event in
-                switch event {
-                case .details(let movie):
-                    self?.detailsDelegate?.presentMovieDetails(for: movie)
-                case .seeMore(let category):
-                    self?.presentSeeMore(for: category)
-                case .pop:
-                    self?.popVC()
-                case .dismiss:
-                    self?.dismiss()
-                }
-                
-            }.store(in: &cancelSet)
-    }
-    
+        
     public func start() {
         let viewModel = HomeViewModel(navigationEvents: navigationEvents)
         let view = HomeView(viewModel: viewModel)
@@ -66,5 +49,26 @@ public final class HomeCoordinator: Coordinator {
         let view = SeeMoreCategoryView(viewModel: viewModel)
         
         push(view)
+    }
+}
+
+// MARK: - Navigation Events
+
+private extension HomeCoordinator {
+    func setupNavigationBindings() {
+        navigationEvents
+            .sink { [weak self] event in
+                switch event {
+                case .details(let movie):
+                    self?.detailsDelegate?.presentMovieDetails(for: movie)
+                case .seeMore(let category):
+                    self?.presentSeeMore(for: category)
+                case .pop:
+                    self?.popVC()
+                case .dismiss:
+                    self?.dismiss()
+                }
+                
+            }.store(in: &cancelSet)
     }
 }

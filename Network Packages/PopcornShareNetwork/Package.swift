@@ -20,7 +20,7 @@ let package = Package(
         .target(
             name: "PopcornShareNetwork",
             dependencies: [
-                .product(name: "PopcornShareNetworkCore", package: "PopcornShareNetworkCore"),
+                "PopcornShareNetworkCore",
                 "PopcornShareNetworkModel"
             ],
             path: "Sources/Network"

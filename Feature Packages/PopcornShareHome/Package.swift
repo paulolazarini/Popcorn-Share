@@ -13,15 +13,15 @@ let package = Package(
             targets: ["PopcornShareHome"])
     ],
     dependencies: [
-        .package(path: "PopcornShareUtilities"),
-        .package(path: "PopcornShareNetwork/PopcornShareNetwork")
+        .package(path: "../SupportPackages/PopcornShareUtilities"),
+        .package(path: "../NetworkPackages/PopcornShareNetwork")
     ],
     targets: [
         .target(
             name: "PopcornShareHome",
             dependencies: [
-                .product(name: "PopcornShareUtilities", package: "PopcornShareUtilities"),
-                .product(name: "PopcornShareNetwork", package: "PopcornShareNetwork")
+                "PopcornShareUtilities",
+                "PopcornShareNetwork"
             ],
             path: "Sources/",
             resources: [.process("Resources")]

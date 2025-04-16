@@ -1,3 +1,11 @@
+//
+//  Localizable.swift
+//  PopcornShareUtilities
+//
+//  Created by Paulo Lazarini on 16/04/25.
+//
+
+
 import Foundation
 import UIKit
 

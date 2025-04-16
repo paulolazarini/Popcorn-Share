@@ -11,6 +11,7 @@ import SwiftUI
 @MainActor
 public protocol Coordinator: AnyObject {
     var navigationController: UINavigationController { get set }
+    func start()
 }
 
 public extension Coordinator {

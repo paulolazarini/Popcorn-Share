@@ -84,12 +84,9 @@
 			children = (
 				E0BA93162D5FBDCD00F09E93 /* Secrets.xcconfig */,
 				E041C8FE2C0024BB002100BE /* PopcornShare */,
-				E067312C2D773DF500CE9DBD /* PopcornShareSearch */,
-				E067312A2D773B8C00CE9DBD /* PopcornShareProfile */,
-				E0D6C77B2D77398700E7EAB2 /* PopcornShareAuthentication */,
-				E08839192D487ED900F2BAAB /* PopcornShareHome */,
-				E0BAE3CB2D1530040098FBC9 /* PopcornShareUtilities */,
-				E0B242002D49242700A2D436 /* PopcornShareNetwork */,
+				E0F18AF32DAF4BB100AD15CE /* Feature Packages */,
+				E0F18AF22DAF4B5B00AD15CE /* Support Packages */,
+				E0B242002D49242700A2D436 /* Network Packages */,
 				E041C8FD2C0024BB002100BE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -134,14 +131,14 @@
 			path = Firestore;
 			sourceTree = "<group>";
 		};
-		E0B242002D49242700A2D436 /* PopcornShareNetwork */ = {
+		E0B242002D49242700A2D436 /* Network Packages */ = {
 			isa = PBXGroup;
 			children = (
 				E0B242012D49252E00A2D436 /* PopcornShareNetwork */,
 				E09220D22D3ACA9B002DABE5 /* PopcornShareNetworkCore */,
 				E09C78812D78F55100967A23 /* PopcornShareFirebase */,
 			);
-			path = PopcornShareNetwork;
+			path = "Network Packages";
 			sourceTree = "<group>";
 		};
 		E0C616EC2D3A8E7F00318155 /* Utils */ = {
@@ -179,6 +176,25 @@
 				E041C90A2C0024C8002100BE /* LaunchScreen.storyboard */,
 			);
 			path = Application;
+			sourceTree = "<group>";
+		};
+		E0F18AF22DAF4B5B00AD15CE /* Support Packages */ = {
+			isa = PBXGroup;
+			children = (
+				E0BAE3CB2D1530040098FBC9 /* PopcornShareUtilities */,
+			);
+			path = "Support Packages";
+			sourceTree = "<group>";
+		};
+		E0F18AF32DAF4BB100AD15CE /* Feature Packages */ = {
+			isa = PBXGroup;
+			children = (
+				E067312C2D773DF500CE9DBD /* PopcornShareSearch */,
+				E067312A2D773B8C00CE9DBD /* PopcornShareProfile */,
+				E0D6C77B2D77398700E7EAB2 /* PopcornShareAuthentication */,
+				E08839192D487ED900F2BAAB /* PopcornShareHome */,
+			);
+			path = "Feature Packages";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
