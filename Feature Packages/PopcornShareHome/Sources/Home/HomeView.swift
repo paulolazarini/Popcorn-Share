@@ -28,6 +28,7 @@ struct HomeView: View {
         }
         .toolbarVisibility(.hidden, for: .navigationBar)
         .ignoresSafeArea(edges: .top)
+        .task { await viewModel.fetchMovies() }
     }
     
     private var homeCarouselView: some View {
@@ -118,7 +119,7 @@ struct HomeView: View {
     private func makeCell(for movie: Binding<MovieViewData>) -> some View {
         PSCardView(
             movie: movie,
-            onFavoriteTapped: { movie in }
+            onFavoriteTapped: { viewModel.toggleFavorite(movieId: $0.id) }
         )
         .onTapGesture {
             viewModel.navigationEvent(.details(movie: movie.wrappedValue))

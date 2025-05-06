@@ -1,4 +1,13 @@
-protocol MoviesManagerType: ObservableObject {
+//
+//  MoviesManagerType.swift
+//  PopcornShareUtilities
+//
+//  Created by Paulo Lazarini on 04/05/25.
+//
+
+import SwiftUI
+
+public protocol MoviesManagerType {
     var favoritedMovies: [MovieViewData] { get set }
     
     func toggleFavorite(userId: String, movieId: String) async

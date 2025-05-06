@@ -15,12 +15,10 @@ public protocol ProfileCoordinatorDelegate: NSObject {
     func didSignOut()
 }
 
-@MainActor
 public final class ProfileCoordinator: Coordinator {
     public weak var delegate: ProfileCoordinatorDelegate?
     public var navigationController: UINavigationController
     
-    private let tabBarItem: UITabBarItem
     private let userUuid: String
     private let userManager: UserManagerType
     private let authManager: AuthenticationManagerType
@@ -28,12 +26,10 @@ public final class ProfileCoordinator: Coordinator {
     private var cancelSet = Set<AnyCancellable>()
     
     public init(
-        tabBarItem: UITabBarItem,
         userManager: UserManagerType,
         authManager: AuthenticationManagerType,
         userUuid: String
     ) {
-        self.tabBarItem = tabBarItem
         self.userUuid = userUuid
         self.userManager = userManager
         self.authManager = authManager
@@ -58,7 +54,7 @@ public final class ProfileCoordinator: Coordinator {
                 }
             }.store(in: &cancelSet)
 
-        push(view, tabBarItem: tabBarItem)
+        push(view)
     }
     
     private func signOut() {

@@ -16,29 +16,37 @@ enum HomeNavigationEvents {
     case seeMore(_ category: MovieCategory)
 }
 
-@MainActor
 public final class HomeCoordinator: Coordinator {
     public weak var detailsDelegate: MovieDetailsDelegate?
     public var navigationController: UINavigationController
     
-    let tabBarItem: UITabBarItem
+    private let userUuid: String
+    private let moviesManager: MoviesManagerType
     
     private let navigationEvents = PassthroughSubject<HomeNavigationEvents, Never>()
-    
     private var cancelSet = Set<AnyCancellable>()
     
-    public init(tabBarItem: UITabBarItem) {
-        self.tabBarItem = tabBarItem
-        self.navigationController = UINavigationController()
+    public init(
+        navigationController: UINavigationController = UINavigationController(),
+        moviesManager: MoviesManagerType,
+        userUuid: String
+    ) {
+        self.navigationController = navigationController
+        self.moviesManager = moviesManager
+        self.userUuid = userUuid
         
         self.setupNavigationBindings()
     }
         
     public func start() {
-        let viewModel = HomeViewModel(navigationEvents: navigationEvents)
+        let viewModel = HomeViewModel(
+            moviesManager: moviesManager,
+            userUuid: userUuid,
+            navigationEvents: navigationEvents
+        )
         let view = HomeView(viewModel: viewModel)
         
-        push(view, tabBarItem: tabBarItem)
+        push(view)
     }
     
     private func presentSeeMore(for category: MovieCategory) {

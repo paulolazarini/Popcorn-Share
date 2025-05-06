@@ -20,19 +20,21 @@ public final class HomeViewModel: ObservableObject, @unchecked Sendable {
     @Published var upcomingMovies: [MovieViewData] = []
     @Published var nowPlayingMovies: [MovieViewData] = []
 
+    private let userUuid: String
     private let serviceManager: NetworkManagerType
+    private let moviesManager: MoviesManagerType
     private let navigationEvents: PassthroughSubject<HomeNavigationEvents, Never>
 
     init(
         serviceManager: NetworkManagerType = NetworkManager(),
+        moviesManager: MoviesManagerType,
+        userUuid: String,
         navigationEvents: PassthroughSubject<HomeNavigationEvents, Never>
     ) {
         self.serviceManager = serviceManager
+        self.moviesManager = moviesManager
+        self.userUuid = userUuid
         self.navigationEvents = navigationEvents
-        
-        Task(priority: .utility) {
-            await fetchMovies()
-        }
     }
     
     func navigationEvent(_ event: HomeNavigationEvents) {
@@ -95,6 +97,15 @@ public final class HomeViewModel: ObservableObject, @unchecked Sendable {
         case .failure(let error):
             print("Error fetching \(type): \(error)")
             return nil
+        }
+    }
+    
+    func toggleFavorite(movieId: String) {
+        Task {
+            await moviesManager.toggleFavorite(
+                userId: userUuid,
+                movieId: movieId
+            )
         }
     }
 }

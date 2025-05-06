@@ -36,14 +36,9 @@ public extension Coordinator {
     
     func push(
         _ view: some View,
-        animated: Bool = true,
-        tabBarItem: UITabBarItem? = nil
+        animated: Bool = true
     ) {
         let viewController = UIHostingController(rootView: view)
-        
-        if let tabBarItem {
-            viewController.tabBarItem = tabBarItem
-        }
         
         navigationController.pushViewController(viewController, animated: animated)
     }
