@@ -20,7 +20,6 @@ protocol TabCoordinatorDelegate: AnyObject {
     func didSignOut()
 }
 
-@MainActor
 public final class TabCoordinator: NSObject, Coordinator {
     public var navigationController: UINavigationController
     weak var delegate: TabCoordinatorDelegate?
@@ -52,7 +51,8 @@ public final class TabCoordinator: NSObject, Coordinator {
     }
     
     private func makeSearchMovies() -> UINavigationController {
-        searchCoordinator = SearchCoordinator(tabBarItem: TabBarPage.search.tabBarItem)
+        searchCoordinator = SearchCoordinator()
+        searchCoordinator?.navigationController.tabBarItem = TabBarPage.search.tabBarItem
         searchCoordinator?.detailsDelegate = self
         searchCoordinator?.start()
         
@@ -60,7 +60,11 @@ public final class TabCoordinator: NSObject, Coordinator {
     }
     
     private func makeHomeMovies() -> UINavigationController {
-        homeCoordinator = HomeCoordinator(tabBarItem: TabBarPage.movies.tabBarItem)
+        homeCoordinator = HomeCoordinator(
+            moviesManager: MoviesManager.shared,
+            userUuid: try! AuthenticationManager.shared.currentUser().uid
+        )
+        homeCoordinator?.navigationController.tabBarItem = TabBarPage.movies.tabBarItem
         homeCoordinator?.detailsDelegate = self
         homeCoordinator?.start()
         
@@ -69,11 +73,11 @@ public final class TabCoordinator: NSObject, Coordinator {
     
     func makeProfile() -> UINavigationController {
         profileCoordinator = ProfileCoordinator(
-            tabBarItem: TabBarPage.profile.tabBarItem,
             userManager: UserManager.shared,
             authManager: AuthenticationManager.shared,
             userUuid: try! AuthenticationManager.shared.currentUser().uid
         )
+        profileCoordinator?.navigationController.tabBarItem = TabBarPage.profile.tabBarItem
         profileCoordinator?.delegate = self
         profileCoordinator?.start()
         

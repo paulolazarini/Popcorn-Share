@@ -14,14 +14,6 @@ import PopcornShareUtilities
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-protocol MoviesManagerType: ObservableObject {
-    var favoritedMovies: [MovieViewData] { get set }
-    
-    func toogleFavorite(userId: String, movieId: String) async
-    func fetchFavoritedMovie(using id: String) async throws
-    func getFavoriteIds(userId: String) async throws
-}
-
 final class MoviesManager: MoviesManagerType {
     @Published var favoritedMovies: [MovieViewData] = []
     
@@ -37,9 +29,17 @@ final class MoviesManager: MoviesManagerType {
 // MARK: - Favorite
 
 extension MoviesManager {
-    func getFavoritedMovies() async throws {
-        for id in currentFavoriteMoviesId {
-            try await fetchFavoritedMovie(using: id)
+    func getFavoritedMovies(userId: String) async throws {
+        try await getFavoriteIds(userId: userId)
+        
+        try await withThrowingTaskGroup(of: Void.self) { group in
+            for id in currentFavoriteMoviesId {
+                group.addTask {
+                    try await self.fetchFavoritedMovie(using: id)
+                }
+            }
+
+            try await group.waitForAll()
         }
     }
     
@@ -69,14 +69,20 @@ extension MoviesManager {
         }
     }
     
-    @MainActor
-    func toogleFavorite(userId: String, movieId: String) async {
+    func toggleFavorite(userId: String, movieId: String) async {
         let userRef = Firestore.firestore().collection("users").document(userId)
-        let favorriteMoviesIdArray = Array(currentFavoriteMoviesId)
         
-        Task.detached(priority: .background) {
-            let dictData = ["favorite_ids": favorriteMoviesIdArray]
-            try await userRef.updateData(dictData)
+        if currentFavoriteMoviesId.contains(movieId) {
+            currentFavoriteMoviesId.remove(movieId)
+        } else {
+            currentFavoriteMoviesId.insert(movieId)
+        }
+
+        let updatedFavorites = Array(currentFavoriteMoviesId)
+        
+        Task {
+            let dictData = ["favorite_ids": updatedFavorites]
+            try? await userRef.updateData(dictData)
         }
     }
 }
