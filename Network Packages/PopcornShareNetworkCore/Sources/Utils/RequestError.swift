@@ -15,6 +15,7 @@ public enum RequestError: Error {
     case invalidImageData
     case networkError(Error)
     case unexpectedStatusCode
+    case encode
     case unknown
     
     var customMessage: String {

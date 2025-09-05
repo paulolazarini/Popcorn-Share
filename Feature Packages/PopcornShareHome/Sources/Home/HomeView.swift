@@ -16,10 +16,7 @@ struct HomeView: View {
         count: 1)
     
     public var body: some View {
-        ScrollView(
-            .vertical,
-            showsIndicators: false
-        ) {
+        ScrollView(showsIndicators: false) {
             homeCarouselView
             
             ForEach(MovieCategory.allCases, id: \.self) { category in
@@ -119,7 +116,9 @@ struct HomeView: View {
     private func makeCell(for movie: Binding<MovieViewData>) -> some View {
         PSCardView(
             movie: movie,
-            onFavoriteTapped: { viewModel.toggleFavorite(movieId: $0.id) }
+            onFavoriteTapped: {
+                viewModel.toggleFavorite(movieId: $0.id)
+            }
         )
         .onTapGesture {
             viewModel.navigationEvent(.details(movie: movie.wrappedValue))

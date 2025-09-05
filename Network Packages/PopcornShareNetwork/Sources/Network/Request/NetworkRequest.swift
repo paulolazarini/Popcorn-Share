@@ -63,6 +63,12 @@ extension NetworkRequest: Endpoint {
         }
     }
     
+    var body: Encodable? {
+        switch self {
+        default: return nil
+        }
+    }
+    
     var method: RequestMethod {
         return .get
     }

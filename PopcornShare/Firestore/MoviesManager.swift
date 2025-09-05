@@ -53,6 +53,7 @@ extension MoviesManager {
         currentFavoriteMoviesId = Set(favoriteIds)
     }
     
+    @MainActor
     func fetchFavoritedMovie(using id: String) async throws {
         let result = await self.serviceManager.getMovie(using: id)
         
@@ -61,9 +62,7 @@ extension MoviesManager {
             let movie = movie.toMovieViewData
             guard !self.favoritedMovies.contains(movie) else { return }
             
-            await MainActor.run {
-                self.favoritedMovies.append(movie)
-            }
+            self.favoritedMovies.append(movie)
         case let .failure(error):
             throw error
         }

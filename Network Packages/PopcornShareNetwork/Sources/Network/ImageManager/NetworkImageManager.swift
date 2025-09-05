@@ -12,31 +12,46 @@ public protocol NetworkImageManagerType {
     func getMovieImage(using imageUrl: String) async -> Result<UIImage, RequestError>
 }
 
-public final class NetworkImageManager: NetworkImageManagerType, Sendable {
+public actor NetworkImageManager: NetworkImageManagerType {
     public static let shared = NetworkImageManager()
     
-    private let cacheManager: ImageCache = ImageCache()
+    private let cacheManager = ImageCache()
+    private var ongoingTasks: [String: Task<Result<UIImage, RequestError>, Never>] = [:]
     
     private init() {}
     
     public func getMovieImage(using imageUrl: String) async -> Result<UIImage, RequestError> {
-        guard let url = URL(string: imageUrl) else { return .failure(.invalidURL) }
-        
         if let image = await cacheManager.image(forKey: imageUrl) {
             return .success(image)
         }
         
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            
-            if let image = UIImage(data: data) {
-                await cacheManager.setImage(image, forKey: imageUrl)
-                return .success(image)
-            } else {
-                return .failure(.invalidImageData)
-            }
-        } catch {
-            return .failure(.networkError(error))
+        if let ongoingTask = ongoingTasks[imageUrl] {
+            return await ongoingTask.value
         }
+        
+        let task = Task { () -> Result<UIImage, RequestError> in
+            defer {
+                ongoingTasks[imageUrl] = nil
+            }
+            
+            guard let url = URL(string: imageUrl) else { return .failure(.invalidURL) }
+            
+            do {
+                let (data, _) = try await URLSession.shared.data(from: url)
+                
+                if let image = UIImage(data: data) {
+                    await cacheManager.setImage(image, forKey: imageUrl)
+                    return .success(image)
+                } else {
+                    return .failure(.invalidImageData)
+                }
+            } catch {
+                return .failure(.networkError(error))
+            }
+        }
+        
+        ongoingTasks[imageUrl] = task
+        
+        return await task.value
     }
 }

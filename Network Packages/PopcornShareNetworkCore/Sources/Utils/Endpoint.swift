@@ -16,6 +16,8 @@ public protocol Endpoint {
     
     var parameters: [URLQueryItem] { get }
     
+    var body: Encodable? { get }
+    
     var method: RequestMethod { get }
     
     var headers: [String: String] { get }

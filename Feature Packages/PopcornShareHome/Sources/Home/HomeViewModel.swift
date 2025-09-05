@@ -40,7 +40,8 @@ public final class HomeViewModel: ObservableObject, @unchecked Sendable {
     func navigationEvent(_ event: HomeNavigationEvents) {
         navigationEvents.send(event)
     }
-        
+    
+    @MainActor
     func fetchMovies() async {
         async let popularMovies = fetchMovies(type: .popular)
         async let topRatedMovies = fetchMovies(type: .topRated)
@@ -53,24 +54,22 @@ public final class HomeViewModel: ObservableObject, @unchecked Sendable {
             nowPlayingMovies,
             upcomingMovies
         )
-
-        await MainActor.run {
-            if let popular = popular {
-                self.popularMovies = popular
-                self.headerMovies = Array(popular.prefix(5))
-            }
-            
-            if let topRated = topRated {
-                self.topRatedMovies = topRated
-            }
-            
-            if let nowPlaying = nowPlaying {
-                self.nowPlayingMovies = nowPlaying
-            }
-            
-            if let upcoming = upcoming {
-                self.upcomingMovies = upcoming
-            }
+        
+        if let popular {
+            self.popularMovies = popular
+            self.headerMovies = Array(popular.prefix(5))
+        }
+        
+        if let topRated {
+            self.topRatedMovies = topRated
+        }
+        
+        if let nowPlaying {
+            self.nowPlayingMovies = nowPlaying
+        }
+        
+        if let upcoming {
+            self.upcomingMovies = upcoming
         }
     }
     

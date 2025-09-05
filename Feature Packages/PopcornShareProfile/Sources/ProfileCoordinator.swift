@@ -28,12 +28,13 @@ public final class ProfileCoordinator: Coordinator {
     public init(
         userManager: UserManagerType,
         authManager: AuthenticationManagerType,
-        userUuid: String
+        userUuid: String,
+        navigationController: UINavigationController = UINavigationController()
     ) {
         self.userUuid = userUuid
         self.userManager = userManager
         self.authManager = authManager
-        self.navigationController = UINavigationController()
+        self.navigationController = navigationController
     }
     
     public func start() {

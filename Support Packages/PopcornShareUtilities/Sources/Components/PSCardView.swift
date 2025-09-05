@@ -82,3 +82,7 @@ private extension PSCardView {
         .padding(.medium)
     }
 }
+
+#Preview {
+    PSCardView(movie: .constant(.mock())) { _ in }
+}
