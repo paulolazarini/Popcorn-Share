@@ -26,7 +26,7 @@ struct SearchMovieCell: View {
         .frame(height: 130)
         .padding(.horizontal, .medium)
         .background(
-            .gray.quaternary,
+            .gray,
             in: .rect(cornerRadius: .small)
         )
         .overlay(alignment: .topTrailing) {

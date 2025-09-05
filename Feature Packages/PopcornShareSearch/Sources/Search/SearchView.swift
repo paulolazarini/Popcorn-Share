@@ -23,7 +23,6 @@ struct SearchView: View {
             contentView
         }
         .overlay(alignment: .center) { loadingView }
-        .toolbarVisibility(.hidden, for: .navigationBar)
         .vAlignment(.top)
     }
     

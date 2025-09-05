@@ -21,7 +21,6 @@ struct SeeMoreCategoryView: View {
     var body: some View {
         moviesGridView
             .navigationTitle(viewModel.navigationTitle)
-            .toolbarVisibility(.visible, for: .navigationBar)
             .navigationBarTitleDisplayMode(.large)
             .navigationBarBackButtonHidden()
             .toolbar {

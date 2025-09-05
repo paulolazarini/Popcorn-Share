@@ -23,7 +23,6 @@ struct HomeView: View {
                 makeMovieSection(category)
             }
         }
-        .toolbarVisibility(.hidden, for: .navigationBar)
         .ignoresSafeArea(edges: .top)
         .task { await viewModel.fetchMovies() }
     }

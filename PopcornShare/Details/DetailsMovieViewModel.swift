@@ -40,8 +40,8 @@ public final class DetailsMovieViewModel: ObservableObject, @unchecked Sendable 
     }
     
     private func fetchAllData(using id: String) async throws {
-        try await fetchMoviesAndCredits(using: id)
-        try await fetchImages(using: id)
+        async let _ = fetchMoviesAndCredits(using: id)
+        async let _ = fetchImages(using: id)
     }
     
     private func fetchMoviesAndCredits(using id: String) async throws {
