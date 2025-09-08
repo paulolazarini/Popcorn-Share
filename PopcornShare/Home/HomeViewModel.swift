@@ -1,8 +1,8 @@
 //
 //  HomeViewModel.swift
-//  PopcornShareHome
+//  PopcornShare
 //
-//  Created by Paulo Lazarini on 29/01/25.
+//  Created by Paulo Lazarini on 08/09/25.
 //
 
 import SwiftUI
@@ -22,22 +22,19 @@ public final class HomeViewModel: ObservableObject, @unchecked Sendable {
 
     private let userUuid: String
     private let serviceManager: NetworkManagerType
-    private let moviesManager: MoviesManagerType
-    private let navigationEvents: PassthroughSubject<HomeNavigationEvents, Never>
+    private let navigationEvents: PassthroughSubject<NavigationEvents, Never>
 
     init(
         serviceManager: NetworkManagerType = NetworkManager(),
-        moviesManager: MoviesManagerType,
-        userUuid: String,
-        navigationEvents: PassthroughSubject<HomeNavigationEvents, Never>
+        navigationEvents: PassthroughSubject<NavigationEvents, Never>,
+        userUuid: String
     ) {
         self.serviceManager = serviceManager
-        self.moviesManager = moviesManager
         self.userUuid = userUuid
         self.navigationEvents = navigationEvents
     }
     
-    func navigationEvent(_ event: HomeNavigationEvents) {
+    func navigationEvent(_ event: NavigationEvents) {
         navigationEvents.send(event)
     }
     
@@ -56,8 +53,8 @@ public final class HomeViewModel: ObservableObject, @unchecked Sendable {
         )
         
         if let popular {
-            self.popularMovies = popular
             self.headerMovies = Array(popular.prefix(5))
+            self.popularMovies = Array(popular.dropFirst(5))
         }
         
         if let topRated {
@@ -96,15 +93,6 @@ public final class HomeViewModel: ObservableObject, @unchecked Sendable {
         case .failure(let error):
             print("Error fetching \(type): \(error)")
             return nil
-        }
-    }
-    
-    func toggleFavorite(movieId: String) {
-        Task {
-            await moviesManager.toggleFavorite(
-                userId: userUuid,
-                movieId: movieId
-            )
         }
     }
 }

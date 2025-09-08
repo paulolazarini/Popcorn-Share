@@ -9,8 +9,8 @@ import UIKit
 import SwiftUI
 import Combine
 
-import PopcornShareHome
-import PopcornShareSearch
+//import PopcornShareHome
+//import PopcornShareSearch
 import PopcornShareProfile
 
 import PopcornShareNetwork
@@ -20,10 +20,11 @@ protocol TabCoordinatorDelegate: AnyObject {
     func didSignOut()
 }
 
-public enum NavigationEvents {
-//    case movieDetails(MovieViewData)
+enum NavigationEvents {
+    case movieList(MovieCategory)
+    case movieDetails(MovieViewData)
     case addWatchlist(MovieViewData)
-//    case createWatchlist(MovieViewData)
+    case createWatchlist
 }
 
 public final class TabCoordinator: NSObject, Coordinator {
@@ -32,8 +33,6 @@ public final class TabCoordinator: NSObject, Coordinator {
     
     let tabBarController: UITabBarController
     
-    var homeCoordinator: HomeCoordinator?
-    var searchCoordinator: SearchCoordinator?
     var profileCoordinator: ProfileCoordinator?
     
     private var cancelSet = Set<AnyCancellable>()
@@ -55,6 +54,12 @@ public final class TabCoordinator: NSObject, Coordinator {
                 switch event {
                 case let .addWatchlist(movie):
                     presentAddToWatchlist(movie)
+                case let .movieDetails(movie):
+                    presentMovieDetails(for: movie)
+                case .createWatchlist:
+                    break
+                case let .movieList(category):
+                    presentMovieList(for: category)
                 }
             }.store(in: &cancelSet)
     }
@@ -62,7 +67,6 @@ public final class TabCoordinator: NSObject, Coordinator {
     public func start() {
         tabBarController.viewControllers = [
             makeHomeMovies(),
-            makeSearchMovies(),
             makeProfile()
         ]
         
@@ -71,25 +75,16 @@ public final class TabCoordinator: NSObject, Coordinator {
         navigationController.setViewControllers([tabBarController], animated: false)
     }
     
-    private func makeSearchMovies() -> UINavigationController {
-        searchCoordinator = SearchCoordinator()
-        searchCoordinator?.navigationController.tabBarItem = TabBarPage.search.tabBarItem
-        searchCoordinator?.detailsDelegate = self
-        searchCoordinator?.start()
-        
-        return searchCoordinator?.navigationController ?? UINavigationController()
-    }
-    
-    private func makeHomeMovies() -> UINavigationController {
-        homeCoordinator = HomeCoordinator(
-            moviesManager: MoviesManager.shared,
+    private func makeHomeMovies() -> UIViewController {
+        let viewModel = HomeViewModel(
+            navigationEvents: navigationEvents,
             userUuid: try! AuthenticationManager.shared.currentUser().uid
         )
-        homeCoordinator?.navigationController.tabBarItem = TabBarPage.movies.tabBarItem
-        homeCoordinator?.detailsDelegate = self
-        homeCoordinator?.start()
-        
-        return homeCoordinator?.navigationController ?? UINavigationController()
+        let view = HomeView(viewModel: viewModel)
+        let viewController = UIHostingController(rootView: view)
+        viewController.tabBarItem = TabBarPage.movies.tabBarItem
+           
+        return viewController
     }
     
     func makeProfile() -> UINavigationController {
@@ -111,16 +106,8 @@ public final class TabCoordinator: NSObject, Coordinator {
         
         navigationController.topMostViewController.present(viewController, animated: true)
     }
-}
-
-extension TabCoordinator: ProfileCoordinatorDelegate {
-    public func didSignOut() {
-        delegate?.didSignOut()
-    }
-}
-
-extension TabCoordinator: MovieDetailsDelegate {
-    public func presentMovieDetails(for movie: MovieViewData) {
+    
+    private func presentMovieDetails(for movie: MovieViewData) {
         let viewModel = DetailsMovieViewModel(
             navigationEvents: navigationEvents,
             movieId: movie.id
@@ -131,5 +118,21 @@ extension TabCoordinator: MovieDetailsDelegate {
         navigationController.modalPresentationStyle = .fullScreen
         
         self.navigationController.present(navigationController, animated: true)
+    }
+    
+    private func presentMovieList(for category: MovieCategory) {
+        let viewModel = MovieListViewModel(
+            type: category,
+            navigationEvents: navigationEvents
+        )
+        let view = MovieListView(viewModel: viewModel)
+        
+        push(view)
+    }
+}
+
+extension TabCoordinator: ProfileCoordinatorDelegate {
+    public func didSignOut() {
+        delegate?.didSignOut()
     }
 }

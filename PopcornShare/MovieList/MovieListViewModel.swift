@@ -1,5 +1,5 @@
 //
-//  SeeMoreCategoryViewModel.swift
+//  MovieListViewModel.swift
 //  PopcornShareHome
 //
 //  Created by Paulo Lazarini on 11/02/25.
@@ -13,7 +13,7 @@ import PopcornShareNetwork
 import PopcornShareNetworkCore
 import PopcornShareNetworkModel
 
-public final class SeeMoreCategoryViewModel: ObservableObject, @unchecked Sendable {
+public final class MovieListViewModel: ObservableObject, @unchecked Sendable {
     @Published var movies: [MovieViewData] = []
     @Published private(set) var isLoading: Bool = false
     
@@ -24,12 +24,12 @@ public final class SeeMoreCategoryViewModel: ObservableObject, @unchecked Sendab
     
     private let type: MovieCategory
     private let networkManager: NetworkManagerType
-    private let navigationEvents: PassthroughSubject<HomeNavigationEvents, Never>
+    private let navigationEvents: PassthroughSubject<NavigationEvents, Never>
     
     init(
         networkManager: NetworkManagerType = NetworkManager(),
         type: MovieCategory,
-        navigationEvents: PassthroughSubject<HomeNavigationEvents, Never>
+        navigationEvents: PassthroughSubject<NavigationEvents, Never>
     ) {
         self.networkManager = networkManager
         self.type = type
@@ -41,7 +41,7 @@ public final class SeeMoreCategoryViewModel: ObservableObject, @unchecked Sendab
         }
     }
     
-    func navigationEvent(_ event: HomeNavigationEvents) {
+    func navigationEvent(_ event: NavigationEvents) {
         navigationEvents.send(event)
     }
     

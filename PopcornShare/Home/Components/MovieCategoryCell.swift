@@ -24,7 +24,6 @@ struct MovieCategoryCell: View {
             moviePoster
             movieTitle
         }
-        .overlay(alignment: .topTrailing) { favoriteButton }
     }
     
     private var moviePoster: some View {
@@ -41,20 +40,5 @@ struct MovieCategoryCell: View {
             .lineLimit(1)
             .foregroundStyle(.black)
             .frame(maxWidth: .infinity)
-    }
-    
-    private var favoriteButton: some View {
-        Button {
-            onFavoriteTapped(movie)
-        } label: {
-            if movie.isLoadingFavorite {
-                ProgressView()
-                    .tint(.white)
-            } else {
-                Image(systemName: movie.favorite ? "heart.fill" : "heart")
-                    .foregroundStyle(movie.favorite ? Color.yellow : Color.Background.yellow)
-            }
-        }
-        .padding(.medium)
     }
 }

@@ -1,36 +1,51 @@
 //
 //  HomeView.swift
-//  PopcornShareHome
+//  PopcornShare
 //
-//  Created by Paulo Lazarini on 28/01/25.
+//  Created by Paulo Lazarini on 08/09/25.
 //
 
 import SwiftUI
+import Combine
 import PopcornShareUtilities
 
+enum MovieCategory: CaseIterable {
+    case popular, topRated, nowPlaying, upcoming
+    
+    var title: String {
+        switch self {
+        case .popular:
+            "Populares"
+        case .topRated:
+            "Melhor avaliados"
+        case .nowPlaying:
+            "Lançamento"
+        case .upcoming:
+            "Por vir"
+        }
+    }
+}
+
 struct HomeView: View {
-    @StateObject var viewModel: HomeViewModel
+    @ObservedObject var viewModel: HomeViewModel
     
     private let gridItems = Array(
         repeating: GridItem(spacing: .small),
         count: 1)
     
-    public var body: some View {
-        ScrollView(showsIndicators: false) {
-            homeCarouselView
+    var body: some View {
+        ScrollView {
+            HomeCarouselView(headerMovies: viewModel.headerMovies) {
+                viewModel.navigationEvent(.movieDetails($0))
+            }
             
             ForEach(MovieCategory.allCases, id: \.self) { category in
                 makeMovieSection(category)
             }
         }
+        .scrollIndicators(.hidden)
         .ignoresSafeArea(edges: .top)
         .task { await viewModel.fetchMovies() }
-    }
-    
-    private var homeCarouselView: some View {
-        HomeCarouselView(headerMovies: $viewModel.headerMovies) { movie in
-            viewModel.navigationEvent(.details(movie: movie))
-        }
     }
     
     private func makeMovieSection(_ category: MovieCategory) -> some View {
@@ -38,9 +53,8 @@ struct HomeView: View {
             categoryTitle(category)
                 
             makeMoviesGrid(category)
-                .fixedSize(horizontal: false, vertical: true)
         }
-        .padding(.large)
+        .padding(.horizontal, .large)
     }
     
     private func categoryTitle(_ category: MovieCategory) -> some View {
@@ -52,12 +66,12 @@ struct HomeView: View {
             Spacer()
             
             Button {
-                viewModel.navigationEvent(.seeMore(category))
+                viewModel.navigationEvent(.movieList(category))
             } label: {
-                Text("See more")
+                Text("Ver mais")
                     .font(.callout)
                     .bold()
-                    .foregroundStyle(Color.yellow)
+                    .foregroundStyle(Color.primaryRed)
             }
         }
     }
@@ -81,7 +95,7 @@ struct HomeView: View {
             gridItems: gridItems,
             orientation: .horizontal,
             data: $viewModel.popularMovies) { index, _ in
-                makeCell(for: $viewModel.popularMovies[index])
+                makeCell(for: viewModel.popularMovies[index])
             }
     }
     
@@ -90,7 +104,7 @@ struct HomeView: View {
             gridItems: gridItems,
             orientation: .horizontal,
             data: $viewModel.nowPlayingMovies) { index, _ in
-                makeCell(for: $viewModel.nowPlayingMovies[index])
+                makeCell(for: viewModel.nowPlayingMovies[index])
             }
     }
     
@@ -99,7 +113,7 @@ struct HomeView: View {
             gridItems: gridItems,
             orientation: .horizontal,
             data: $viewModel.upcomingMovies) { index, _ in
-                makeCell(for: $viewModel.upcomingMovies[index])
+                makeCell(for: viewModel.upcomingMovies[index])
             }
     }
     
@@ -108,19 +122,21 @@ struct HomeView: View {
             gridItems: gridItems,
             orientation: .horizontal,
             data: $viewModel.topRatedMovies) { index, _ in
-                makeCell(for: $viewModel.topRatedMovies[index])
+                makeCell(for: viewModel.topRatedMovies[index])
             }
     }
     
-    private func makeCell(for movie: Binding<MovieViewData>) -> some View {
+    private func makeCell(for movie: MovieViewData) -> some View {
         PSCardView(
-            movie: movie,
-            onFavoriteTapped: {
-                viewModel.toggleFavorite(movieId: $0.id)
-            }
+            movie: movie
         )
         .onTapGesture {
-            viewModel.navigationEvent(.details(movie: movie.wrappedValue))
+            viewModel.navigationEvent(.movieDetails(movie))
         }
     }
+}
+
+
+#Preview {
+    HomeView(viewModel: .init(navigationEvents: PassthroughSubject<NavigationEvents, Never>(), userUuid: .empty))
 }

@@ -1,5 +1,5 @@
 //
-//  MoviesCategory.swift
+//  MovieListView.swift
 //  PopcornShareHome
 //
 //  Created by Paulo Lazarini on 10/02/25.
@@ -10,8 +10,9 @@ import Combine
 import PopcornShareUtilities
 import PopcornShareNetwork
 
-struct SeeMoreCategoryView: View {
-    @ObservedObject var viewModel: SeeMoreCategoryViewModel
+struct MovieListView: View {
+    @ObservedObject var viewModel: MovieListViewModel
+    @Environment(\.dismiss) var dismiss
     
     let gridItems = Array(
         repeating: GridItem(spacing: .small),
@@ -23,11 +24,7 @@ struct SeeMoreCategoryView: View {
             .navigationTitle(viewModel.navigationTitle)
             .navigationBarTitleDisplayMode(.large)
             .navigationBarBackButtonHidden()
-            .toolbar {
-                PSToolbarDismissButton() {
-                    viewModel.navigationEvent(.pop)
-                }
-            }
+            .toolbar { PSToolbarDismissButton() { dismiss() } }
             .background(Color.Background.white)
     }
     
@@ -46,7 +43,7 @@ struct SeeMoreCategoryView: View {
                 )
                 .padding(.small)
                 .onTapGesture {
-                    viewModel.navigationEvent(.details(movie: movie))
+                    viewModel.navigationEvent(.movieDetails(movie))
                 }
             }
             .safeAreaInset(edge: .bottom) {

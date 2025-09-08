@@ -11,9 +11,8 @@ import PopcornShareNetwork
 import PopcornShareUtilities
 
 struct HomeCarouselView: View {
-    @Binding var headerMovies: [MovieViewData]
-    
-    var didTapMovieImage: (MovieViewData) -> Void
+    let headerMovies: [MovieViewData]
+    let didTapMovieImage: (MovieViewData) -> Void
     
     var body: some View {
         TabView {
@@ -41,9 +40,9 @@ struct HomeCarouselView: View {
 
 #Preview {
     ScrollView {
-        HomeCarouselView(headerMovies: .constant(
+        HomeCarouselView(headerMovies:
             [.mock(), .mock(), .mock(), .mock(), .mock()]
-        )) { _ in }
+        ) { _ in }
     }
 }
 

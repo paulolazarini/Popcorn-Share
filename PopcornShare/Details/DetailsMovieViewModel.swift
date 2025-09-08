@@ -12,7 +12,7 @@ import PopcornShareFirebase
 import PopcornShareUtilities
 import PopcornShareNetworkModel
 
-public final class DetailsMovieViewModel: ObservableObject, @unchecked Sendable {
+final class DetailsMovieViewModel: ObservableObject, @unchecked Sendable {
     enum State {
         case loading, details
     }
@@ -26,7 +26,7 @@ public final class DetailsMovieViewModel: ObservableObject, @unchecked Sendable 
     private let serviceManager: NetworkManagerType
     private let navigationEvents: PassthroughSubject<NavigationEvents, Never>
     
-    public init(
+    init(
         serviceManager: NetworkManagerType = NetworkManager(),
         watchlistService: WatchlistProviding = FirebaseWatchlistService(),
         navigationEvents: PassthroughSubject<NavigationEvents, Never>,

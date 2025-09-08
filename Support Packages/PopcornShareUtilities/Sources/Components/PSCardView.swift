@@ -13,15 +13,10 @@ public struct PSCardView: View {
         static let movieCardWidth: CGFloat = 150
     }
     
-    @Binding var movie: MovieViewData
-    let onFavoriteTapped: (MovieViewData) -> Void
+    let movie: MovieViewData
     
-    public init(
-        movie: Binding<MovieViewData>,
-        onFavoriteTapped: @escaping (MovieViewData) -> Void
-    ) {
-        self._movie = movie
-        self.onFavoriteTapped = onFavoriteTapped
+    public init(movie: MovieViewData) {
+        self.movie = movie
     }
     
     public var body: some View {
@@ -34,7 +29,6 @@ public struct PSCardView: View {
             width: Constants.movieCardWidth,
             height: Constants.movieCardHeight
         )
-        .overlay(alignment: .topTrailing) { favoriteButton }
         .overlay(alignment: .bottom) { movieCardFooter }
         .clipShape(.rect(cornerRadius: .medium))
     }
@@ -66,23 +60,8 @@ private extension PSCardView {
             .foregroundStyle(Color.Background.white)
             .frame(maxWidth: .infinity)
     }
-    
-    var favoriteButton: some View {
-        Button {
-            onFavoriteTapped(movie)
-        } label: {
-            if movie.isLoadingFavorite {
-                ProgressView()
-                    .tint(.white)
-            } else {
-                Image(systemName: movie.favorite ? "heart.fill" : "heart")
-                    .foregroundStyle(movie.favorite ? Color.yellow : Color.Background.yellow)
-            }
-        }
-        .padding(.medium)
-    }
 }
 
 #Preview {
-    PSCardView(movie: .constant(.mock())) { _ in }
+    PSCardView(movie: .mock())
 }
