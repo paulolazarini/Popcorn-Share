@@ -63,7 +63,7 @@ public struct MovieViewData: Hashable, Identifiable, Equatable, Sendable {
         }
     }
     
-    public var releaseDateString: String? {
+    public var releaseDateString: String {
         let inputDateString = releaseDate
         let inputFormatter = DateFormatter()
         inputFormatter.dateFormat = "yyyy-MM-dd"
@@ -76,7 +76,7 @@ public struct MovieViewData: Hashable, Identifiable, Equatable, Sendable {
             outputDateString = outputFormatter.string(from: date)
         }
         
-        return outputDateString
+        return outputDateString ?? .empty
     }
 }
 

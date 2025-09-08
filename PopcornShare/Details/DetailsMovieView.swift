@@ -6,111 +6,143 @@
 //
 
 import SwiftUI
+import Combine
 import PopcornShareUtilities
 import PopcornShareNetworkModel
 
 struct DetailsMovieView: View {
     @ObservedObject var viewModel: DetailsMovieViewModel
-    
     let onDismiss: () -> Void
-
+    
     var body: some View {
         stateView
-            .background(Color.Background.yellow)
             .ignoresSafeArea(edges: .top)
             .navigationBarBackButtonHidden()
-            .toolbarBackground(.hidden, for: .navigationBar)
-            .toolbar {
-                PSToolbarDismissButton { onDismiss() }
-            }
+            .toolbar { toolbar }
     }
-
+    
+    @ToolbarContentBuilder
+    private var toolbar: some ToolbarContent {
+        ToolbarItem(placement: .topBarLeading) {
+            Button {
+                onDismiss()
+            } label: {
+                Image(systemName: "xmark")
+                    .foregroundStyle(Color(UIColor.systemBackground))
+                    .padding(.small)
+            }
+        }
+    }
+    
     @ViewBuilder
-    var stateView: some View {
+    private var stateView: some View {
         switch viewModel.state {
-        case .details:
-            detailsView
-        case .loading:
-            loadingView
+        case .details: detailsView
+        case .loading: loadingView
         }
     }
-
-    var detailsView: some View {
-        ScrollView {
-            backdropImageView
-            
-            VStack(alignment: .leading, spacing: .medium) {
-                if let movie = viewModel.movie,
-                   let credits = viewModel.credits {
-                    movieHeaderInfo(movie, credits: credits)
-                }
+    
+    private var detailsView: some View {
+        VStack(spacing: .zero) {
+            if let movie = viewModel.movie {
+                PSMovieImage(for: movie, type: .backdrop)
+                    .blur(radius: .extraSmall, opaque: true)
+                    .overlay {
+                        PSMovieImage(for: movie, type: .poster)
+                            .clipShape(.rect(cornerRadius: .small))
+                            .frame(width: 200, height: 300)
+                            .offset(y: .small + .extraLarge)
+                    }
+                    .frame(
+                        width: UIScreen.main.bounds.width,
+                        height: 350
+                    )
+                    .padding(.bottom)
                 
-                Text(viewModel.movie?.overview ?? .empty)
+                VStack(alignment: .leading, spacing: .large) {
+                    if let credits = viewModel.credits {
+                        movieHeaderInfo(movie, credits: credits)
+                    }
+                    
+                    actionButtons
+                    
+                    VStack(
+                        alignment: .leading,
+                        spacing: .medium
+                    ) {
+                        Text("Sinopse")
+                            .font(.headline)
+                        Text(movie.overview)
+                            .font(.subheadline)
+                            .multilineTextAlignment(.leading)
+                            .foregroundStyle(Color.Gray.primary)
+                    }
+                }
+                .padding()
             }
-            .padding(.horizontal, .medium)
-            .frame(width: UIScreen.main.bounds.width)
         }
+        .vAlignment(.top)
     }
-
-    func movieHeaderInfo(
-        _ movie: MovieViewData,
-        credits: CreditsResponse
-    ) -> some View {
-        VStack(alignment: .leading, spacing: .medium) {
+    
+    private var actionButtons: some View {
+        HStack(spacing: .medium) {
+            Button {
+                
+            } label: {
+                Label("Assistir Trailer", systemImage: "play.fill")
+                    .frame(maxWidth: .infinity)
+            }
+            .buttonStyle(.borderedProminent)
+            .controlSize(.large)
+            
+            Button {
+                viewModel.didTapAddToWatchlist()
+            } label: {
+                Image(systemName: "bookmark")
+            }
+            .buttonStyle(.bordered)
+            .controlSize(.large)
+            
+            Button(action: {}) {
+                Image(systemName: "checkmark")
+            }
+            .buttonStyle(.bordered)
+            .controlSize(.large)
+        }
+        .font(.headline)
+    }
+    
+    @ViewBuilder
+    private func movieHeaderInfo(_ movie: MovieViewData, credits: CreditsResponse) -> some View {
+        VStack(alignment: .leading, spacing: .small) {
             Text(movie.title)
-                .font(.title2)
-                .foregroundColor(.primary)
+                .font(.title)
                 .bold()
             
             if let director = credits.crew.first(where: { $0.knownForDepartment == "Directing" }) {
-                Text("Directed by \(director.name ?? .empty)")
+                Text("Dirigido por \(director.name ?? .empty)")
                     .font(.subheadline)
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(Color.Gray.primary)
             }
             
-            HStack {
-                Label("\(movie.runtimeString)", systemImage: "clock")
-                    .font(.footnote)
-                    .foregroundColor(.primary)
-                
-                Label(movie.releaseDateString ?? .empty, systemImage: "calendar")
-                    .font(.footnote)
-                    .foregroundColor(.primary)
-                
-                Label("Not Watched", systemImage: "eye.slash")
-                    .font(.footnote)
-                    .foregroundColor(.primary)
+            HStack(spacing: .medium) {
+                Label(movie.runtimeString, systemImage: "clock")
+                Label(movie.releaseDateString, systemImage: "calendar")
             }
+            .font(.footnote)
+            .padding(.top, .extraSmall)
         }
-    }
-
-    @ViewBuilder
-    var backdropImageView: some View {
-        if let movie = viewModel.movie {
-            PSMovieImage(for: movie, type: .backdrop)
-                .frame(height: 300)
-                .overlay(gradientOverlay)
-        }
-    }
-
-    var loadingView: some View {
-        ProgressView()
-            .controlSize(.extraLarge)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
-    var gradientOverlay: some View {
-        LinearGradient(
-            colors: [
-                .Background.yellow,
-                .clear
-            ],
-            startPoint: .bottom,
-            endPoint: UnitPoint(x: 0.5, y: 0.3)
-        )
+    private var loadingView: some View {
+        ProgressView()
+            .controlSize(.large)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 
 #Preview {
-    DetailsMovieView(viewModel: DetailsMovieViewModel(movieId: "1")) {}
+    DetailsMovieView(
+        viewModel: .init(navigationEvents: PassthroughSubject<NavigationEvents, Never>(), movieId: "755898")
+    ) {}
 }

@@ -8,6 +8,7 @@
 import SwiftUI
 import Combine
 import PopcornShareNetwork
+import PopcornShareFirebase
 import PopcornShareUtilities
 import PopcornShareNetworkModel
 
@@ -23,25 +24,31 @@ public final class DetailsMovieViewModel: ObservableObject, @unchecked Sendable 
     @Published var backdropImage: Image?
     
     private let serviceManager: NetworkManagerType
+    private let navigationEvents: PassthroughSubject<NavigationEvents, Never>
     
     public init(
         serviceManager: NetworkManagerType = NetworkManager(),
+        watchlistService: WatchlistProviding = FirebaseWatchlistService(),
+        navigationEvents: PassthroughSubject<NavigationEvents, Never>,
         movieId: String
     ) {
         self.serviceManager = serviceManager
+        self.navigationEvents = navigationEvents
         
-        Task(priority: .high) {
-            do {
-                try await fetchAllData(using: movieId)
-            } catch {
-                print(error.localizedDescription)
-            }
+        Task {
+            try? await fetchAllData(using: movieId)
         }
     }
     
+    func didTapAddToWatchlist() {
+        guard let movie else { return }
+        
+        navigationEvents.send(.addWatchlist(movie))
+    }
+    
     private func fetchAllData(using id: String) async throws {
-        async let _ = fetchMoviesAndCredits(using: id)
-        async let _ = fetchImages(using: id)
+        try? await fetchMoviesAndCredits(using: id)
+        try? await fetchImages(using: id)
     }
     
     private func fetchMoviesAndCredits(using id: String) async throws {
@@ -71,52 +78,35 @@ public final class DetailsMovieViewModel: ObservableObject, @unchecked Sendable 
         }
     }
 
-    
     private func getMovie(using id: String) async throws -> MovieViewData {
         let result = await self.serviceManager.getMovie(using: id)
-        
         switch result {
-        case let .success(movie):
-            return movie.toMovieViewData
-        case let .failure(error):
-            throw error
+        case let .success(movie): return movie.toMovieViewData
+        case let .failure(error): throw error
         }
     }
     
-    private func getCredits(using id: String) async throws  -> CreditsResponse {
+    private func getCredits(using id: String) async throws -> CreditsResponse {
         let result = await self.serviceManager.getCredits(using: id)
-        
         switch result {
-        case let .success(credits):
-            return credits
-        case let .failure(error):
-            throw error
+        case let .success(credits): return credits
+        case let .failure(error): throw error
         }
     }
     
     private func getMoviePoster() async throws -> Image {
-        let result = await NetworkImageManager.shared
-            .getMovieImage(using: .makePosterPath(movie?.posterPath ?? .empty))
-        
+        let result = await NetworkImageManager.shared.getMovieImage(using: .makePosterPath(movie?.posterPath ?? .empty))
         switch result {
-        case .success(let image):
-            return Image(uiImage: image)
-        case .failure(let error):
-            print(error)
-            throw error
+        case .success(let image): return Image(uiImage: image)
+        case .failure(let error): throw error
         }
     }
     
     private func getMovieBackdrop() async throws -> Image {
-        let result = await NetworkImageManager.shared
-            .getMovieImage(using: .makePosterPath(movie?.backdropPath ?? .empty))
-        
+        let result = await NetworkImageManager.shared.getMovieImage(using: .makePosterPath(movie?.backdropPath ?? .empty))
         switch result {
-        case .success(let image):
-            return Image(uiImage: image)
-        case .failure(let error):
-            print(error)
-            throw error
+        case .success(let image): return Image(uiImage: image)
+        case .failure(let error): throw error
         }
     }
 }

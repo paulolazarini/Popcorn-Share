@@ -20,6 +20,12 @@ protocol TabCoordinatorDelegate: AnyObject {
     func didSignOut()
 }
 
+public enum NavigationEvents {
+//    case movieDetails(MovieViewData)
+    case addWatchlist(MovieViewData)
+//    case createWatchlist(MovieViewData)
+}
+
 public final class TabCoordinator: NSObject, Coordinator {
     public var navigationController: UINavigationController
     weak var delegate: TabCoordinatorDelegate?
@@ -32,10 +38,25 @@ public final class TabCoordinator: NSObject, Coordinator {
     
     private var cancelSet = Set<AnyCancellable>()
     private let networkManager: NetworkManagerType = NetworkManager()
+    private let navigationEvents = PassthroughSubject<NavigationEvents, Never>()
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
         self.tabBarController = UITabBarController()
+        super.init()
+        
+        self.setupBinding()
+    }
+    
+    private func setupBinding() {
+        navigationEvents
+            .sink { [weak self] event in
+                guard let self else { return }
+                switch event {
+                case let .addWatchlist(movie):
+                    presentAddToWatchlist(movie)
+                }
+            }.store(in: &cancelSet)
     }
     
     public func start() {
@@ -83,6 +104,13 @@ public final class TabCoordinator: NSObject, Coordinator {
         
         return profileCoordinator?.navigationController ?? UINavigationController()
     }
+    
+    private func presentAddToWatchlist(_ movie: MovieViewData) {
+        let view = AddToWatchlistView(movie: movie)
+        let viewController = UIHostingController(rootView: view)
+        
+        navigationController.topMostViewController.present(viewController, animated: true)
+    }
 }
 
 extension TabCoordinator: ProfileCoordinatorDelegate {
@@ -93,7 +121,11 @@ extension TabCoordinator: ProfileCoordinatorDelegate {
 
 extension TabCoordinator: MovieDetailsDelegate {
     public func presentMovieDetails(for movie: MovieViewData) {
-        let view = DetailsMovieView(viewModel: DetailsMovieViewModel(movieId: movie.id), onDismiss: dismiss)
+        let viewModel = DetailsMovieViewModel(
+            navigationEvents: navigationEvents,
+            movieId: movie.id
+        )
+        let view = DetailsMovieView(viewModel: viewModel, onDismiss: dismiss)
         let viewController = UIHostingController(rootView: view)
         let navigationController = UINavigationController(rootViewController: viewController)
         navigationController.modalPresentationStyle = .fullScreen

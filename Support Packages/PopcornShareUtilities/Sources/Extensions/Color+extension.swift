@@ -19,6 +19,11 @@ public extension Color {
         public static let gray: Color = buildCustomColor(51,51,51)
     }
     
+    enum Gray {
+        public static let primary: Color = buildCustomColor(114,125,141)
+        public static let secondary: Color = buildCustomColor(51,51,51)
+    }
+    
     static let primaryRed: Color = buildCustomColor(142,1,5)
     
     static func buildCustomColor(_ red: CGFloat, _ green: CGFloat, _ blue: CGFloat, alpha: CGFloat = 1.0) -> Color {

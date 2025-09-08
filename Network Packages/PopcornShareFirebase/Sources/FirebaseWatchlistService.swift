@@ -9,34 +9,80 @@ import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-public struct DBWatchlist {
-    let watchlistId: String
-    let name: String
-    let description: String?
-    let ownerId: String
-    let createdAt: Date?
-    var members: [String: UserRole]
-    var isCollaborative: Bool
-    var movieCount: Int
-    var recentMovies: [RecentMovie]
+public struct DBWatchlist: Identifiable {
+    public let id: String
+    public let name: String
+    public let description: String?
+    public let ownerId: String
+    public let createdAt: Date?
+    public var members: [String: UserRole]
+    public var isCollaborative: Bool
+    public var movieCount: Int
+    public var recentMovies: [RecentMovie]
     
     public enum UserRole: String {
        case owner, editor
     }
+    
+    public init(
+        watchlistId: String,
+        name: String,
+        description: String?,
+        ownerId: String,
+        createdAt: Date?,
+        members: [String : UserRole],
+        isCollaborative: Bool,
+        movieCount: Int,
+        recentMovies: [RecentMovie]
+    ) {
+        self.id = watchlistId
+        self.name = name
+        self.description = description
+        self.ownerId = ownerId
+        self.createdAt = createdAt
+        self.members = members
+        self.isCollaborative = isCollaborative
+        self.movieCount = movieCount
+        self.recentMovies = recentMovies
+    }
 }
 
 public struct RecentMovie {
-    let movieId: Int
-    let posterPath: String?
+    public let movieId: Int
+    public let posterPath: String?
+    
+    public init(
+        movieId: Int,
+        posterPath: String?
+    ) {
+        self.movieId = movieId
+        self.posterPath = posterPath
+    }
 }
 
 public struct DBWatchlistMovie {
-    let movieId: Int
-    let title: String
-    let posterPath: String?
-    let releaseYear: Int?
-    let addedAt: Date?
-    let addedBy: DBUser
+    public let movieId: String
+    public let title: String
+    public let posterPath: String?
+    public let releaseYear: Int?
+    public let addedAt: Date?
+    public let addedBy: DBUser
+    
+    public init(
+        movieId: String,
+        title: String,
+        posterPath: String?,
+        releaseYear: Int?,
+        addedAt: Date?,
+        addedBy: DBUser
+    ) {
+        self.movieId = movieId
+        self.title = title
+        self.posterPath = posterPath
+        self.releaseYear = releaseYear
+        self.addedAt = addedAt
+        self.addedBy = addedBy
+    }
 }
 
 public protocol WatchlistProviding {
@@ -214,7 +260,7 @@ public final class FirebaseWatchlistService: WatchlistProviding {
         
         return try snapshot.documents.map { doc -> DBWatchlistMovie in
             let data = doc.data()
-            let movieId = Int(doc.documentID) ?? 0
+            let movieId = doc.documentID
             
             let title = data["title"] as? String ?? "Título não encontrado"
             let posterPath = data["posterPath"] as? String

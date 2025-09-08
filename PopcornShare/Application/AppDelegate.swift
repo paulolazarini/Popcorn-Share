@@ -35,3 +35,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+extension UIApplication {
+    static var topViewController: UIViewController? {
+        guard let window = UIApplication.shared.connectedScenes
+                .compactMap({ $0 as? UIWindowScene })
+                .flatMap({ $0.windows })
+                .first(where: { $0.isKeyWindow }),
+              let rootVC = window.rootViewController else {
+            return nil
+        }
+        return rootVC.topMostViewController
+    }
+}
+
+extension UIViewController {
+    var topMostViewController: UIViewController {
+        if let nav = self as? UINavigationController,
+           let visible = nav.visibleViewController {
+            return visible.topMostViewController
+        }
+        if let tab = self as? UITabBarController,
+           let selected = tab.selectedViewController {
+            return selected.topMostViewController
+        }
+        if let presented = self.presentedViewController {
+            return presented.topMostViewController
+        }
+        return self
+    }
+}
